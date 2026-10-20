@@ -3,7 +3,7 @@
 [![Déploiement](https://github.com/Oleexo/Convergence-Compass/actions/workflows/pages.yml/badge.svg)](https://github.com/Oleexo/Convergence-Compass/actions/workflows/pages.yml)
 [![Licence MIT](https://img.shields.io/github/license/Oleexo/Convergence-Compass)](LICENSE)
 
-**Guide interactif (en français) des 27 classes du mod Elden Ring *The Convergence*.**
+**Guide interactif (français et anglais) des 27 classes du mod Elden Ring *The Convergence*.**
 
 👉 **<https://oleexo.github.io/Convergence-Compass/>**
 
@@ -32,6 +32,7 @@ pnpm dev
 | `pnpm dev` | Serveur de développement avec rechargement à chaud |
 | `pnpm build` | Vérifie les types (`tsc`) puis produit le site dans `dist/` |
 | `pnpm preview` | Sert le build de `dist/` en local |
+| `pnpm check:i18n` | Vérifie que chaque texte français des données a sa traduction anglaise, et que `fr.json` et `en.json` ont les mêmes clés |
 
 ## Structure
 
@@ -47,9 +48,16 @@ pnpm dev
 | `src/data/zones.ts` | Classement des lieux par région |
 | `src/data/prec.ts` | Précisions par objet issues du wiki du mod (pour l'instant Glint Sorcerer uniquement) |
 | `src/data/fiche.ts` | Entrées d'une fiche, types d'obtention, progression |
+| `src/i18n.ts` | Configuration de react-i18next, choix et mémorisation de la langue (`cv-lang`), helper `td` pour les données |
+| `src/locales/fr.json`, `en.json` | Textes de l'interface |
+| `src/locales/en-data.json` | Traduction anglaise des textes des données, indexée par le texte français |
 | `public/classe.html` | Redirige les anciens liens `classe.html#glint` vers `./#glint` |
 
 La progression est enregistrée dans le `localStorage` du navigateur, sous la clé `cv-done-v1`. Chaque case est identifiée par la classe, le nom de l'objet et le texte de son emplacement (voir `entries` dans `src/data/fiche.ts`) : corriger ces textes dans `src/data/det.ts` décoche la case chez les visiteurs qui l'avaient cochée.
+
+### Traductions
+
+Les données (`src/data/*.ts`) restent écrites en français : le classement par zone et par type d'obtention s'appuie sur ce texte. À l'affichage, `td()` remplace chaque texte par sa version de `src/locales/en-data.json` quand la langue est l'anglais. Après avoir ajouté ou modifié un texte français dans les données, ajoute sa traduction dans `en-data.json` et lance `pnpm check:i18n`.
 
 ### Ajouter des précisions pour une classe
 

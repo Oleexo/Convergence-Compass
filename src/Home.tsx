@@ -3,20 +3,22 @@ import CV from './data/classes';
 import D from './data/det';
 import F from './data/fiche';
 import type { Cls, Det } from "./data/types";
+import { Trans, useTranslation } from "react-i18next";
+import i18n, { td } from "./i18n";
 
 const { STATS, STAT_FR, FAM, FAM_VAR, REGIONS, DMGS, C, BY } = CV;
 
+// Names and texts live in locales under home.styles.<id>.
 const STYLES = [
-  { id:'rempart', name:'Rempart', ids:['dreadnought','retainer','vanguard'], text:'Armure lourde ou moyenne à lourde, Force en tête. Dreadnought démarre avec Vigueur 16 et Endurance 15, les plus hautes valeurs de la liste. Retainer ajoute une arbalète et un bouclier kite.' },
-  { id:'brute', name:'Force brute', ids:['berserker','dreadnought'], text:'Grandes armes, peu de finesse. Berserker démarre à Force 18, le maximum de la liste, au niveau 7 avec une grande hache. Dreadnought préfère le maul et le grand bouclier.' },
-  { id:'agile', name:'Agilité et précision', ids:['sellsword','rogue','marksman'], text:'Dextérité de 15 à 18, armure légère à moyenne. Sellsword joue les doubles lames, Rogue l\'estoc et l\'arc court, Marksman les armes à distance avec 50 flèches enflammées.' },
-  { id:'sorcery', name:'Sorcellerie pure', ids:['glint','starcaller','underworld','frost','aberrant'], text:'Intelligence en stat principale, Esprit entre 12 et 15. Glint Sorcerer part au niveau 6 avec INT 16. Chaque classe a sa spécialité : glintstone, gravité, foudre gelée, givre, ronces.' },
-  { id:'hybrid', name:'Mage-guerrier INT + FTH', ids:['volcanist','stormcaller','nox','necromancer','godskin','frenzied'], text:'Deux stats à nourrir, 14 à 16 chacune au départ. Ces classes démarrent entre les niveaux 11 et 15 avec un bâton ou un sceau et une arme : magma, tempête, nuit, esprits, flamme noire, frénésie.' },
-  { id:'priest', name:'Prêtre', ids:['fundamentalist','flame','bestial','dragoncultist'], text:'Foi de 16 à 18, un sceau d\'incantation et une arme de corps à corps. Fundamentalist a la Foi la plus haute (18), Flame Prophet démarre au niveau 7 avec 17.' },
-  { id:'status', name:'Statuts et corruption', ids:['rot','mystic','blood','perfumer'], text:'Foi et Arcanes conjugués, 14 à 16. Pourriture et poison pour Servant of Rot, sommeil pour Mystic, flamme de sang pour Blood Initiate. Perfumer fabrique ses propres consommables.' },
-  { id:'odd', name:'Départs atypiques', ids:['prisoner','perfumer'], text:'Prisoner : niveau 1, 10 partout, un gourdin. Perfumer : niveau 5, parfums, pots et arbalète, sans sorts de départ.' }
+  { id:'rempart', ids:['dreadnought','retainer','vanguard'] },
+  { id:'brute', ids:['berserker','dreadnought'] },
+  { id:'agile', ids:['sellsword','rogue','marksman'] },
+  { id:'sorcery', ids:['glint','starcaller','underworld','frost','aberrant'] },
+  { id:'hybrid', ids:['volcanist','stormcaller','nox','necromancer','godskin','frenzied'] },
+  { id:'priest', ids:['fundamentalist','flame','bestial','dragoncultist'] },
+  { id:'status', ids:['rot','mystic','blood','perfumer'] },
+  { id:'odd', ids:['prisoner','perfumer'] }
 ];
-const SORTS = [['order','Ordre du mod'],['name','Nom'],['lvl','Niveau de départ']].concat(STATS.map(k => [k, STAT_FR[k]]));
 const RANGE = STATS.map((k, i) => { const v = C.map(x => x.s[i]); return [Math.min(...v), Math.max(...v)]; });
 const LVL = [Math.min(...C.map(x => x.lvl)), Math.max(...C.map(x => x.lvl))];
 // Opening state: a ready example comparison so the sheet shows what it does.
@@ -33,11 +35,13 @@ const count = (k: "fam" | "region" | "dmg", v: string) => C.filter(x => x[k] ===
 
 export const fam = (x: Cls) => ({ "--fam": famVar(x) }) as CSSProperties;
 
+export const kitList = (x: Cls) => x.kit.map(td).join(' · ');
+
 export function Bars({ x }: { x: Cls }) {
   return (
     <div className="bars">
       {STATS.map((k, i) => (
-        <div className="bar" key={k} title={STAT_FR[k] + ' ' + x.s[i]}>
+        <div className="bar" key={k} title={td(STAT_FR[k]) + ' ' + x.s[i]}>
           <span className="k">{k}</span><span className="track"><i style={{ width: Math.min(100, x.s[i] / 18 * 100) + '%' }} /></span><span className="v">{x.s[i]}</span>
         </div>
       ))}
@@ -46,45 +50,46 @@ export function Bars({ x }: { x: Cls }) {
 }
 
 function Chips({ items, k, S, set }: { items: [string, string][]; k: "fam" | "region" | "dmg"; S: State; set: Set }) {
-  return ([["all", "Toutes"]] as [string, string][]).concat(items).map(it => (
+  return ([["all", i18n.t("f.all")]] as [string, string][]).concat(items).map(it => (
     <button key={it[0]} className="chip" aria-pressed={S[k] === it[0]} onClick={() => set({ [k]: it[0] })}>
-      {it[1]}{it[0] !== 'all' && <span className="n mono">{count(k, it[0])}</span>}
+      {td(it[1])}{it[0] !== 'all' && <span className="n mono">{count(k, it[0])}</span>}
     </button>
   ));
 }
 
 function DmgFacts({ x }: { x: Cls }) {
   return <>
-    {x.dmg ? <><dt>Dégâts</dt><dd>{x.dmg}{x.theme && ' · ' + x.theme}</dd></> : x.theme && <><dt>Thème</dt><dd>{x.theme}</dd></>}
-    {x.armor && <><dt>Armure</dt><dd>{x.armor}</dd></>}
+    {x.dmg ? <><dt>{i18n.t('f.dmg')}</dt><dd>{td(x.dmg)}{x.theme && ' · ' + td(x.theme)}</dd></> : x.theme && <><dt>{i18n.t('f.theme')}</dt><dd>{td(x.theme)}</dd></>}
+    {x.armor && <><dt>{i18n.t('f.armor')}</dt><dd>{td(x.armor)}</dd></>}
   </>;
 }
 
 function Card({ x, on, pick }: { x: Cls; on: boolean; pick: (id: string) => void }) {
-  const p = F.progress(x.id);
+  const p = F.progress(x.id), t = i18n.t;
   return (
     <article className={'card' + (on ? ' on' : '')} style={fam(x)}>
-      <div className="card-top"><h3>{x.name}</h3><span className="tag">{FAM[x.fam]}</span></div>
-      <p className="blurb">{x.blurb}</p>
+      <div className="card-top"><h3>{x.name}</h3><span className="tag">{td(FAM[x.fam])}</span></div>
+      <p className="blurb">{td(x.blurb)}</p>
       <dl className="facts">
-        <dt>Stats clés</dt><dd className="mono">{x.prim}</dd><dt>Niveau</dt><dd className="mono">{x.lvl}</dd><dt>Départ</dt><dd>{x.region}</dd>
+        <dt>{t('f.keyStats')}</dt><dd className="mono">{td(x.prim)}</dd><dt>{t('f.level')}</dt><dd className="mono">{x.lvl}</dd><dt>{t('f.start')}</dt><dd>{x.region}</dd>
         <DmgFacts x={x} />
       </dl>
       <Bars x={x} />
       <p className="kit">
-        <span><b>Matériel</b> {x.kit.join(' · ')}</span><span><b>Set</b> {D[x.id].set}</span>
-        {x.spells && <span><b>Sorts</b> {x.spells.join(' · ')}</span>}<span><b>Lieu</b> {x.place}</span>
+        <span><b>{t('f.kit')}</b> {kitList(x)}</span><span><b>{t('f.set')}</b> {D[x.id].set}</span>
+        {x.spells && <span><b>{t('f.spells')}</b> {x.spells.join(' · ')}</span>}<span><b>{t('f.place')}</b> {td(x.place)}</span>
       </p>
-      {p.done > 0 && <p className="prog"><span>Progression <b className="mono">{p.done}/{p.total}</b></span><span className="pb"><i style={{ width: p.done / p.total * 100 + '%' }} /></span></p>}
+      {p.done > 0 && <p className="prog"><span>{t('home.progress')} <b className="mono">{p.done}/{p.total}</b></span><span className="pb"><i style={{ width: p.done / p.total * 100 + '%' }} /></span></p>}
       <div className="acts">
-        <a className="det-btn" href={'#' + x.id}>Détails</a>
-        <button className="cmp-btn" aria-pressed={on} onClick={() => pick(x.id)}>{on ? 'Dans le comparatif' : 'Comparer'}</button>
+        <a className="det-btn" href={'#' + x.id}>{t('f.details')}</a>
+        <button className="cmp-btn" aria-pressed={on} onClick={() => pick(x.id)}>{on ? t('home.inCompare') : t('home.compare')}</button>
       </div>
     </article>
   );
 }
 
 function Table({ rows, S, sortBy, pick }: { rows: Cls[]; S: State; sortBy: (k: SortKey) => void; pick: (id: string) => void }) {
+  const t = i18n.t;
   const heat = (v: number, r: number[]) => ((v - r[0]) / (r[1] - r[0] || 1)).toFixed(2);
   const th = (k: SortKey, label: string, title?: string) => (
     <th key={k} scope="col" aria-sort={S.sort === k ? (S.dir === 1 ? 'ascending' : 'descending') : undefined}>
@@ -94,31 +99,31 @@ function Table({ rows, S, sortBy, pick }: { rows: Cls[]; S: State; sortBy: (k: S
   return <>
     <div className="tbl-wrap"><table>
       <thead><tr>
-        {th("name", "Classe")}<th scope="col">Famille</th><th scope="col">Stats clés</th>{th("lvl", "Niv.")}
-        {STATS.map(k => th(k, k, STAT_FR[k]))}
-        <th scope="col">Départ</th><th scope="col">Fiche</th>
+        {th("name", t('home.class'))}<th scope="col">{t('home.family')}</th><th scope="col">{t('f.keyStats')}</th>{th("lvl", t('home.lvlShort'))}
+        {STATS.map(k => th(k, k, td(STAT_FR[k])))}
+        <th scope="col">{t('f.start')}</th><th scope="col">{t('home.sheet')}</th>
       </tr></thead>
       <tbody>{rows.map(x => {
         const on = S.sel.includes(x.id);
         return (
           <tr key={x.id} className={on ? 'on' : ''} style={fam(x)}>
-            <th scope="row"><span className="dot" /><button className="rowbtn" title={on ? 'Retirer du comparatif' : 'Ajouter au comparatif'} onClick={() => pick(x.id)}>{x.name}{on && ' ✓'}</button></th>
-            <td>{FAM[x.fam]}</td><td className="mono">{x.prim}</td>
+            <th scope="row"><span className="dot" /><button className="rowbtn" title={on ? t('home.remove') : t('home.add')} onClick={() => pick(x.id)}>{x.name}{on && ' ✓'}</button></th>
+            <td>{td(FAM[x.fam])}</td><td className="mono">{td(x.prim)}</td>
             <td className="num heat" style={{ "--p": heat(x.lvl, LVL) } as CSSProperties}>{x.lvl}</td>
             {x.s.map((v, i) => <td key={i} className="num heat" style={{ "--p": heat(v, RANGE[i]) } as CSSProperties}>{v}</td>)}
-            <td>{x.region}</td><td><a className="wk" href={'#' + x.id}>Détails</a></td>
+            <td>{x.region}</td><td><a className="wk" href={'#' + x.id}>{t('f.details')}</a></td>
           </tr>
         );
       })}</tbody>
     </table></div>
-    <p className="note" style={{ marginTop: 12 }}>Chaque colonne est colorée de la valeur la plus basse à la plus haute de la liste. Clique un nom pour l'ajouter au comparatif.</p>
+    <p className="note" style={{ marginTop: 12 }}>{t('home.tableNote')}</p>
   </>;
 }
 
 const lines = (a: string[]) => a.map((s, i) => <span key={i}>{i > 0 && <br />}{s}</span>);
 
 function Sheet({ sel }: { sel: string[] }) {
-  const X = sel.map(id => BY[id]);
+  const X = sel.map(id => BY[id]), t = i18n.t;
   const txt = (label: string, fn: (x: Cls) => ReactNode) => <tr key={label}><th className="rowh" scope="row">{label}</th>{X.map(x => <td key={x.id}>{fn(x)}</td>)}</tr>;
   const num = (label: string, fn: (x: Cls) => number, max: number) => {
     const vals = X.map(fn), top = Math.max(...vals), best = vals.filter(n => n === top).length < X.length;
@@ -134,25 +139,26 @@ function Sheet({ sel }: { sel: string[] }) {
     <table>
       <thead><tr><th className="rowh" />{X.map(x => <th key={x.id} className="col" style={fam(x)}>{x.name}</th>)}</tr></thead>
       <tbody>
-        {txt("Famille", x => FAM[x.fam])}
-        {txt("Stats clés", x => <span className="mono">{x.prim}</span>)}
-        {txt("Dégâts", x => x.dmg ? x.dmg + (x.theme ? ' · ' + x.theme : '') : (x.theme || '—'))}
-        {txt("Armure", x => x.armor || '—')}
-        {num("Niveau", x => x.lvl, 15)}
-        {STATS.map((k, i) => num(STAT_FR[k], x => x.s[i], 18))}
-        {txt("Départ", x => <>{x.region}<br /><span style={{ color: 'var(--muted)', fontSize: 13 }}>{x.place}</span></>)}
-        {txt("Matériel", x => lines(x.kit))}
-        {txt("Set de départ", x => D[x.id].set)}
-        {txt("Sorts de départ", x => x.spells ? lines(x.spells) : '—')}
-        {txt("Runes de sorts", x => { const d = D[x.id]; return d.runes ? d.runes.length + ' paliers · ' + nSpells(d) + ' sorts' : '—'; })}
-        {txt("Catalyseur", x => { const d = D[x.id]; return d.cat ? lines(d.cat.map(r => r[0])) : '—'; })}
-        {txt("Objet de classe", x => { const u = D[x.id].uniq; return u ? u[0] : '—'; })}
+        {txt(t('home.family'), x => td(FAM[x.fam]))}
+        {txt(t('f.keyStats'), x => <span className="mono">{td(x.prim)}</span>)}
+        {txt(t('f.dmg'), x => x.dmg ? td(x.dmg) + (x.theme ? ' · ' + td(x.theme) : '') : (x.theme ? td(x.theme) : '—'))}
+        {txt(t('f.armor'), x => x.armor ? td(x.armor) : '—')}
+        {num(t('f.level'), x => x.lvl, 15)}
+        {STATS.map((k, i) => num(td(STAT_FR[k]), x => x.s[i], 18))}
+        {txt(t('f.start'), x => <>{x.region}<br /><span style={{ color: 'var(--muted)', fontSize: 13 }}>{td(x.place)}</span></>)}
+        {txt(t('f.kit'), x => lines(x.kit.map(td)))}
+        {txt(t('home.startSet'), x => D[x.id].set)}
+        {txt(t('home.startSpells'), x => x.spells ? lines(x.spells) : '—')}
+        {txt(t('home.runes'), x => { const d = D[x.id]; return d.runes ? t('home.runesVal', { tiers: d.runes.length, spells: nSpells(d) }) : '—'; })}
+        {txt(t('home.catalyst'), x => { const d = D[x.id]; return d.cat ? lines(d.cat.map(r => r[0])) : '—'; })}
+        {txt(t('home.classItem'), x => { const u = D[x.id].uniq; return u ? u[0] : '—'; })}
       </tbody>
     </table>
   );
 }
 
 export default function Home({ active }: { active: boolean }) {
+  const { t } = useTranslation();
   const [S, setS] = useState<State>(INIT);
   const set: Set = p => setS(s => ({ ...s, ...p }));
   useEffect(() => { if (active) document.title = 'Convergence Compass'; }, [active]);
@@ -177,19 +183,19 @@ export default function Home({ active }: { active: boolean }) {
     <div className="home">
       <div className="wrap" style={{ paddingBottom: n ? (S.sheet ? '64vh' : '90px') : 0 }}>
         <header className="mast">
-          <span className="eyebrow">Elden Ring · mod The Convergence</span>
-          <h1>Classes de Convergence</h1>
-          <p>27 classes, 27 points de départ. Compare les stats, le matériel et le style de jeu de chacune. Ouvre la fiche d'une classe pour ses armures, ses armes, ses sorts et leurs emplacements dans le monde, puis sélectionne jusqu'à quatre classes pour les mettre côte à côte.</p>
+          <span className="eyebrow">{t('home.eyebrow')}</span>
+          <h1>{t('home.title')}</h1>
+          <p>{t('home.intro')}</p>
         </header>
 
         <section aria-labelledby="h-styles">
           <div className="sec-head">
-            <h2 id="h-styles">Styles de jeu</h2>
-            <p>Mon regroupement d'après les kits de départ. Clique un style pour filtrer les classes.</p>
+            <h2 id="h-styles">{t('home.stylesTitle')}</h2>
+            <p>{t('home.stylesIntro')}</p>
           </div>
           <div className="styles">{STYLES.map(s => (
             <button key={s.id} className="tile" aria-pressed={S.style === s.id} onClick={() => set({ style: S.style === s.id ? null : s.id })}>
-              <h3>{s.name}</h3><p>{s.text}</p>
+              <h3>{t(`home.styles.${s.id}.name`)}</h3><p>{t(`home.styles.${s.id}.text`)}</p>
               <div className="pills">{s.ids.map(id => <span key={id} className="pill" style={fam(BY[id])}>{BY[id].name}</span>)}</div>
             </button>
           ))}</div>
@@ -197,54 +203,55 @@ export default function Home({ active }: { active: boolean }) {
 
         <section aria-labelledby="h-explore" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div className="sec-head" style={{ marginBottom: 0 }}>
-            <h2 id="h-explore">Toutes les classes</h2>
-            <p className="mono">{rows.length} / {C.length} classes</p>
+            <h2 id="h-explore">{t('home.allTitle')}</h2>
+            <p className="mono">{t('home.count', { n: rows.length, total: C.length })}</p>
           </div>
           <div className="controls">
-            <div className="row"><span className="eyebrow lbl">Famille</span><div className="row"><Chips items={Object.entries(FAM)} k="fam" S={S} set={set} /></div></div>
-            <div className="row"><span className="eyebrow lbl">Zone de départ</span><div className="row"><Chips items={REGIONS.map(r => [r, r])} k="region" S={S} set={set} /></div></div>
-            <div className="row"><span className="eyebrow lbl">Dégâts (lanceurs)</span><div className="row"><Chips items={DMGS.map(r => [r, r])} k="dmg" S={S} set={set} /></div></div>
+            <div className="row"><span className="eyebrow lbl">{t('home.family')}</span><div className="row"><Chips items={Object.entries(FAM)} k="fam" S={S} set={set} /></div></div>
+            <div className="row"><span className="eyebrow lbl">{t('home.region')}</span><div className="row"><Chips items={REGIONS.map(r => [r, r])} k="region" S={S} set={set} /></div></div>
+            <div className="row"><span className="eyebrow lbl">{t('home.dmgFilter')}</span><div className="row"><Chips items={DMGS.map(r => [r, r])} k="dmg" S={S} set={set} /></div></div>
           </div>
           <div className="toolbar">
             <div className="left">
-              <label htmlFor="sort" className="eyebrow">Trier par</label>
+              <label htmlFor="sort" className="eyebrow">{t('home.sortBy')}</label>
               <select id="sort" value={S.sort} onChange={e => { const k = e.target.value; set({ sort: k, dir: (k === 'name' || k === 'order' || k === 'lvl') ? 1 : -1 }); }}>
-                {SORTS.map(o => <option key={o[0]} value={o[0]}>{o[1]}</option>)}
+                {(['order', 'name', 'lvl'] as const).map(k => <option key={k} value={k}>{t('home.sort.' + k)}</option>)}
+                {STATS.map(k => <option key={k} value={k}>{td(STAT_FR[k])}</option>)}
               </select>
-              <button className="link" onClick={() => set({ fam: 'all', region: 'all', dmg: 'all', style: null })}>Réinitialiser les filtres</button>
+              <button className="link" onClick={() => set({ fam: 'all', region: 'all', dmg: 'all', style: null })}>{t('home.reset')}</button>
             </div>
             <div className="right">
-              <div className="seg" role="group" aria-label="Affichage">
-                <button aria-pressed={S.view === 'cards'} onClick={() => set({ view: 'cards' })}>Cartes</button>
-                <button aria-pressed={S.view === 'table'} onClick={() => set({ view: 'table' })}>Tableau</button>
+              <div className="seg" role="group" aria-label={t('home.view')}>
+                <button aria-pressed={S.view === 'cards'} onClick={() => set({ view: 'cards' })}>{t('home.cards')}</button>
+                <button aria-pressed={S.view === 'table'} onClick={() => set({ view: 'table' })}>{t('home.table')}</button>
               </div>
             </div>
           </div>
-          <p className="note">Les classes martiales (mêlée et distance) ont des capacités d'armure qui ne fonctionnent que sans arme ni catalyseur à scaling Intelligence ou Foi équipé. Marksman fait exception pour ses arcs, arbalètes et balistes. Le Prisoner ne profite pleinement de ses armures notables qu'au Rune Level 1.</p>
+          <p className="note">{t('home.martialNote')}</p>
           <div>
-            {!rows.length ? <p className="empty">Aucune classe ne correspond à ces filtres.</p>
+            {!rows.length ? <p className="empty">{t('home.empty')}</p>
               : S.view === 'cards' ? <div className="grid">{rows.map(x => <Card key={x.id} x={x} on={S.sel.includes(x.id)} pick={pick} />)}</div>
               : <Table rows={rows} S={S} sortBy={sortBy} pick={pick} />}
           </div>
         </section>
 
         <footer>
-          Données : fiches de classes du site officiel <a href="https://www.convergencemod.com/classes/" target="_blank" rel="noopener">convergencemod.com</a>, consultées le 19 octobre 2026. Niveaux et stats de départ recopiés des fiches, descriptions traduites. Les regroupements en styles de jeu sont mon interprétation, pas un classement officiel. Le mod évolue : vérifie en jeu si un chiffre te semble décalé.
-          <br /><br />Pages de détail : armures, armes, catalyseurs et runes de sorts relevés sur les fiches de classes et les pages de runes du même site. Les conditions d'obtention sont traduites, les noms d'objets et de lieux restent en anglais. Les armes listées sont celles de la fiche de la classe, pas un guide de build. Les pages du site se contredisent parfois sur un lieu (la rune de Blood Initiate, le départ de Mystic) : en cas de doute, fie-toi à ce que tu vois en jeu. Les zones (Limgrave, Liurnia…) sont classées d'après ma connaissance du jeu et recoupées sur le wiki quand c'était possible, « zone à préciser » signale un doute. Les liens ↗ mènent au wiki Fextralife et à Map Genie ; je n'ai pas pu tester les cartes interactives depuis ici.
+          <Trans i18nKey="home.footer1" components={{ site: <a href="https://www.convergencemod.com/classes/" target="_blank" rel="noopener" /> }} />
+          <br /><br />{t('home.footer2')}
         </footer>
       </div>
 
       {n > 0 && (
         <div className="tray">
           <div className="tray-bar">
-            <strong className="mono">Comparer {n}/4</strong>
+            <strong className="mono">{t('home.tray', { n })}</strong>
             <div className="chips">{S.sel.map(id => (
-              <span key={id} className="sel" style={fam(BY[id])}>{BY[id].name}<button aria-label={'Retirer ' + BY[id].name} onClick={() => pick(id)}>×</button></span>
+              <span key={id} className="sel" style={fam(BY[id])}>{BY[id].name}<button aria-label={t('home.removeName', { name: BY[id].name })} onClick={() => pick(id)}>×</button></span>
             ))}</div>
-            <button className="primary" aria-expanded={S.sheet} disabled={n < 2} title={n < 2 ? 'Choisis au moins deux classes' : ''} style={{ opacity: n < 2 ? 0.5 : 1 }} onClick={() => set({ sheet: !S.sheet })}>
-              {S.sheet ? 'Masquer le comparatif' : 'Voir le comparatif'}
+            <button className="primary" aria-expanded={S.sheet} disabled={n < 2} title={n < 2 ? t('home.needTwo') : ''} style={{ opacity: n < 2 ? 0.5 : 1 }} onClick={() => set({ sheet: !S.sheet })}>
+              {S.sheet ? t('home.hideSheet') : t('home.showSheet')}
             </button>
-            <button className="ghost" onClick={() => set({ sel: [], sheet: false })}>Vider</button>
+            <button className="ghost" onClick={() => set({ sel: [], sheet: false })}>{t('home.clear')}</button>
           </div>
           {S.sheet && <div className="sheet"><Sheet sel={S.sel} /></div>}
         </div>
