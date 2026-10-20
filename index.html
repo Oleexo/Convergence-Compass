@@ -1,0 +1,400 @@
+<title>Convergence Compass</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: masthead left-aligned, style tiles as a filter row, then an explorer (cards or heat table) with a bottom comparison sheet. */
+:root {
+  --bg: #ECEEF1;
+  --surface: #F7F8F9;
+  --ink: #1A1D23;
+  --muted: #566070;
+  --line: #CBD0D8;
+  --accent: #96560F;
+  --accent-ink: #FFFFFF;
+  --c-martial: #A8452F;
+  --c-sorcery: #2D6AAE;
+  --c-incant: #2A7A66;
+  --c-special: #6A5C9E;
+  --font-display: "IM Fell English SC", "Iowan Old Style", Georgia, serif;
+  --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101216; --surface: #181B21; --ink: #E5E7EB; --muted: #98A0AD; --line: #2B303A;
+    --accent: #E2A94F; --accent-ink: #1A1305;
+    --c-martial: #E27F63; --c-sorcery: #74ABE8; --c-incant: #5EC6AA; --c-special: #AC9EE3;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101216; --surface: #181B21; --ink: #E5E7EB; --muted: #98A0AD; --line: #2B303A;
+  --accent: #E2A94F; --accent-ink: #1A1305;
+  --c-martial: #E27F63; --c-sorcery: #74ABE8; --c-incant: #5EC6AA; --c-special: #AC9EE3;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.5;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 36px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: 0.01em; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+/* masthead */
+.mast { display: flex; flex-direction: column; gap: 10px; max-width: 70ch; }
+.mast h1 { font-size: clamp(34px, 6vw, 56px); line-height: 1.05; }
+.mast p { margin: 0; color: var(--muted); font-size: 17px; }
+
+/* style tiles */
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 14px; }
+.sec-head h2 { font-size: 26px; }
+.sec-head p { margin: 0; color: var(--muted); font-size: 14px; }
+.styles { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.tile {
+  text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 3px;
+  padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 8px; min-width: 0;
+}
+.tile[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.tile h3 { font-size: 20px; }
+.tile p { margin: 0; font-size: 14px; color: var(--muted); }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 4px; }
+.pill { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--fam) 55%, transparent); color: var(--fam); background: color-mix(in srgb, var(--fam) 9%, transparent); }
+
+/* controls */
+.controls { display: flex; flex-direction: column; gap: 12px; padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 3px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+.row .lbl { width: 108px; flex: none; }
+.chip { border: 1px solid var(--line); background: transparent; border-radius: 99px; padding: 3px 12px; font-size: 14px; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.chip .n { opacity: 0.65; margin-left: 4px; font-size: 12px; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.toolbar .left, .toolbar .right { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+select { font: inherit; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 3px; padding: 5px 8px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.seg button { background: transparent; border: 0; padding: 5px 12px; font-size: 14px; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.link { background: none; border: 0; color: var(--accent); text-decoration: underline; padding: 4px; font-size: 14px; }
+.note { font-size: 14px; color: var(--muted); border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; max-width: 90ch; }
+
+/* cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--fam); border-radius: 3px; padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card.on { box-shadow: 0 0 0 2px var(--accent); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.card h3 { font-size: 24px; line-height: 1.1; }
+.tag { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: var(--fam); white-space: nowrap; padding-top: 4px; }
+.blurb { margin: 0; font-size: 14px; color: var(--muted); }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 14px; margin: 0; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.bars { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 16px; }
+.bar { display: grid; grid-template-columns: 30px 1fr 22px; align-items: center; gap: 6px; font-size: 12px; }
+.bar .k { color: var(--muted); font-family: var(--font-mono); }
+.bar .v { text-align: right; font-family: var(--font-mono); }
+.track { height: 6px; background: var(--line); border-radius: 1px; position: relative; overflow: hidden; }
+.track i { position: absolute; inset: 0 auto 0 0; background: var(--fam); }
+.prog { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); margin: 0; }
+.prog b { color: var(--ink); }
+.prog .pb { flex: 1; height: 5px; background: var(--line); border-radius: 1px; overflow: hidden; }
+.prog .pb i { display: block; height: 100%; background: var(--fam); }
+.kit { font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 3px; margin: 0; }
+.kit b { color: var(--ink); font-weight: 600; }
+.cmp-btn { margin-top: auto; border: 1px solid var(--line); background: transparent; border-radius: 3px; padding: 6px 10px; font-size: 14px; font-weight: 600; }
+.cmp-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* heat table */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 3px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+thead th { position: sticky; top: 0; background: var(--surface); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+th button { background: none; border: 0; padding: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; font-weight: 700; }
+th[aria-sort] button { color: var(--ink); }
+td.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+td.heat { background: color-mix(in srgb, var(--accent) calc(var(--p) * 42%), transparent); }
+tbody th { font-weight: 600; position: sticky; left: 0; background: var(--surface); text-transform: none; font-size: 14px; letter-spacing: 0; color: var(--ink); }
+tbody tr.on th, tbody tr.on td:not(.heat) { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--fam); margin-right: 8px; }
+.rowbtn { background: none; border: 0; padding: 0; font-weight: 600; text-align: left; }
+.rowbtn:hover { text-decoration: underline; }
+
+/* comparison sheet */
+.tray { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--surface); border-top: 2px solid var(--accent); box-shadow: 0 -8px 24px rgba(0,0,0,0.18); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.tray-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px)); }
+.tray-bar .chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; min-width: 0; }
+.sel { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-left: 4px solid var(--fam); border-radius: 3px; padding: 2px 4px 2px 8px; font-size: 14px; background: var(--bg); }
+.sel button { background: none; border: 0; padding: 0 4px; font-size: 16px; line-height: 1; color: var(--muted); }
+.primary { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 3px; padding: 7px 14px; font-weight: 700; }
+.ghost { background: transparent; border: 1px solid var(--line); border-radius: 3px; padding: 7px 12px; }
+.sheet { max-height: 62vh; overflow: auto; border-top: 1px solid var(--line); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px)); }
+.sheet table { min-width: 560px; }
+.sheet th.col { white-space: normal; min-width: 150px; font-family: var(--font-display); font-size: 18px; letter-spacing: 0; text-transform: none; color: var(--ink); border-top: 3px solid var(--fam); }
+.sheet td { white-space: normal; vertical-align: top; }
+.sheet .rowh { color: var(--muted); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; white-space: nowrap; position: sticky; left: 0; background: var(--surface); }
+.cellbar { display: flex; align-items: center; gap: 8px; }
+.cellbar .track { flex: 1; min-width: 50px; }
+.cellbar .v { font-family: var(--font-mono); width: 22px; text-align: right; font-variant-numeric: tabular-nums; }
+.best .v { font-weight: 700; color: var(--accent); }
+.spacer { height: 0; }
+.empty { padding: 28px 0; color: var(--muted); }
+footer { font-size: 13px; color: var(--muted); max-width: 90ch; }
+footer a { color: var(--accent); }
+a.wk { color: var(--accent); }
+.acts { margin-top: auto; display: flex; gap: 8px; }
+.acts .cmp-btn { margin-top: 0; flex: 1; }
+.det-btn { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--accent); color: var(--accent); background: transparent; border-radius: 3px; padding: 6px 12px; font-size: 14px; font-weight: 600; text-decoration: none; }
+.det-btn:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+
+@media (max-width: 520px) {
+  .row .lbl { width: 100%; }
+  .bars { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <span class="eyebrow">Elden Ring · mod The Convergence</span>
+    <h1>Classes de Convergence</h1>
+    <p>27 classes, 27 points de départ. Compare les stats, le matériel et le style de jeu de chacune. Ouvre la fiche d'une classe pour ses armures, ses armes, ses sorts et leurs emplacements dans le monde, puis sélectionne jusqu'à quatre classes pour les mettre côte à côte.</p>
+  </header>
+
+  <section aria-labelledby="h-styles">
+    <div class="sec-head">
+      <h2 id="h-styles">Styles de jeu</h2>
+      <p>Mon regroupement d'après les kits de départ. Clique un style pour filtrer les classes.</p>
+    </div>
+    <div class="styles" id="styles"></div>
+  </section>
+
+  <section aria-labelledby="h-explore" style="display:flex;flex-direction:column;gap:14px;">
+    <div class="sec-head" style="margin-bottom:0">
+      <h2 id="h-explore">Toutes les classes</h2>
+      <p id="count" class="mono"></p>
+    </div>
+    <div class="controls">
+      <div class="row"><span class="eyebrow lbl">Famille</span><div class="row" id="f-fam"></div></div>
+      <div class="row"><span class="eyebrow lbl">Zone de départ</span><div class="row" id="f-region"></div></div>
+      <div class="row"><span class="eyebrow lbl">Dégâts (lanceurs)</span><div class="row" id="f-dmg"></div></div>
+    </div>
+    <div class="toolbar">
+      <div class="left">
+        <label for="sort" class="eyebrow">Trier par</label>
+        <select id="sort"></select>
+        <button class="link" data-act="reset">Réinitialiser les filtres</button>
+      </div>
+      <div class="right">
+        <div class="seg" role="group" aria-label="Affichage">
+          <button data-act="view" data-v="cards" aria-pressed="true">Cartes</button>
+          <button data-act="view" data-v="table" aria-pressed="false">Tableau</button>
+        </div>
+      </div>
+    </div>
+    <p class="note">Les classes martiales (mêlée et distance) ont des capacités d'armure qui ne fonctionnent que sans arme ni catalyseur à scaling Intelligence ou Foi équipé. Marksman fait exception pour ses arcs, arbalètes et balistes. Le Prisoner ne profite pleinement de ses armures notables qu'au Rune Level 1.</p>
+    <div id="results"></div>
+  </section>
+
+  <footer>
+    Données : fiches de classes du site officiel <a href="https://www.convergencemod.com/classes/" target="_blank" rel="noopener">convergencemod.com</a>, consultées le 19 octobre 2026. Niveaux et stats de départ recopiés des fiches, descriptions traduites. Les regroupements en styles de jeu sont mon interprétation, pas un classement officiel. Le mod évolue : vérifie en jeu si un chiffre te semble décalé.
+    <br><br>Pages de détail : armures, armes, catalyseurs et runes de sorts relevés sur les fiches de classes et les pages de runes du même site. Les conditions d'obtention sont traduites, les noms d'objets et de lieux restent en anglais. Les armes listées sont celles de la fiche de la classe, pas un guide de build. Les pages du site se contredisent parfois sur un lieu (la rune de Blood Initiate, le départ de Mystic) : en cas de doute, fie-toi à ce que tu vois en jeu. Les zones (Limgrave, Liurnia…) sont classées d'après ma connaissance du jeu et recoupées sur le wiki quand c'était possible, « zone à préciser » signale un doute. Les liens ↗ mènent au wiki Fextralife et à Map Genie ; je n'ai pas pu tester les cartes interactives depuis ici.
+  </footer>
+</div>
+
+<div class="tray" id="tray" hidden>
+  <div class="tray-bar">
+    <strong id="tray-count" class="mono"></strong>
+    <div class="chips" id="tray-chips"></div>
+    <button class="primary" id="tray-open" data-act="sheet" aria-expanded="false">Voir le comparatif</button>
+    <button class="ghost" data-act="clear">Vider</button>
+  </div>
+  <div class="sheet" id="sheet" hidden></div>
+</div>
+
+<script src="classes.js"></script>
+<script src="det.js"></script>
+<script src="zones.js"></script>
+<script src="fiche.js"></script>
+<script>
+(function () {
+  var CV = window.CV, STATS = CV.STATS, STAT_FR = CV.STAT_FR, FAM = CV.FAM, FAM_VAR = CV.FAM_VAR, REGIONS = CV.REGIONS, DMGS = CV.DMGS, C = CV.C, BY = CV.BY;
+
+  var STYLES = [
+    { id:'rempart', name:'Rempart', ids:['dreadnought','retainer','vanguard'], text:'Armure lourde ou moyenne à lourde, Force en tête. Dreadnought démarre avec Vigueur 16 et Endurance 15, les plus hautes valeurs de la liste. Retainer ajoute une arbalète et un bouclier kite.' },
+    { id:'brute', name:'Force brute', ids:['berserker','dreadnought'], text:'Grandes armes, peu de finesse. Berserker démarre à Force 18, le maximum de la liste, au niveau 7 avec une grande hache. Dreadnought préfère le maul et le grand bouclier.' },
+    { id:'agile', name:'Agilité et précision', ids:['sellsword','rogue','marksman'], text:'Dextérité de 15 à 18, armure légère à moyenne. Sellsword joue les doubles lames, Rogue l\'estoc et l\'arc court, Marksman les armes à distance avec 50 flèches enflammées.' },
+    { id:'sorcery', name:'Sorcellerie pure', ids:['glint','starcaller','underworld','frost','aberrant'], text:'Intelligence en stat principale, Esprit entre 12 et 15. Glint Sorcerer part au niveau 6 avec INT 16. Chaque classe a sa spécialité : glintstone, gravité, foudre gelée, givre, ronces.' },
+    { id:'hybrid', name:'Mage-guerrier INT + FTH', ids:['volcanist','stormcaller','nox','necromancer','godskin','frenzied'], text:'Deux stats à nourrir, 14 à 16 chacune au départ. Ces classes démarrent entre les niveaux 11 et 15 avec un bâton ou un sceau et une arme : magma, tempête, nuit, esprits, flamme noire, frénésie.' },
+    { id:'priest', name:'Prêtre', ids:['fundamentalist','flame','bestial','dragoncultist'], text:'Foi de 16 à 18, un sceau d\'incantation et une arme de corps à corps. Fundamentalist a la Foi la plus haute (18), Flame Prophet démarre au niveau 7 avec 17.' },
+    { id:'status', name:'Statuts et corruption', ids:['rot','mystic','blood','perfumer'], text:'Foi et Arcanes conjugués, 14 à 16. Pourriture et poison pour Servant of Rot, sommeil pour Mystic, flamme de sang pour Blood Initiate. Perfumer fabrique ses propres consommables.' },
+    { id:'odd', name:'Départs atypiques', ids:['prisoner','perfumer'], text:'Prisoner : niveau 1, 10 partout, un gourdin. Perfumer : niveau 5, parfums, pots et arbalète, sans sorts de départ.' }
+  ];
+
+  var S = { fam:'all', region:'all', dmg:'all', style:null, sort:'order', dir:1, view:'cards', sel:[], sheet:false };
+  var $ = function (id) { return document.getElementById(id); };
+  var famVar = function (x) { return 'var(' + FAM_VAR[x.fam] + ')'; };
+
+  var SORTS = [['order','Ordre du mod'],['name','Nom'],['lvl','Niveau de départ']].concat(STATS.map(function (k) { return [k, STAT_FR[k]]; }));
+  $('sort').innerHTML = SORTS.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join('');
+
+  function val(x, k) { return k === 'order' ? x.order : k === 'name' ? x.name : k === 'lvl' ? x.lvl : x.s[STATS.indexOf(k)]; }
+  function list() {
+    var st = S.style ? STYLES.filter(function (s) { return s.id === S.style; })[0].ids : null;
+    var r = C.filter(function (x) {
+      return (S.fam === 'all' || x.fam === S.fam) && (S.region === 'all' || x.region === S.region) &&
+             (S.dmg === 'all' || x.dmg === S.dmg) && (!st || st.indexOf(x.id) > -1);
+    });
+    r.sort(function (a, b) {
+      var va = val(a, S.sort), vb = val(b, S.sort);
+      var d = typeof va === 'string' ? va.localeCompare(vb) : va - vb;
+      return (d || a.order - b.order) * S.dir;
+    });
+    return r;
+  }
+
+  function chips(host, items, key, countFn) {
+    $(host).innerHTML = [['all','Toutes']].concat(items).map(function (it) {
+      var n = it[0] === 'all' ? '' : '<span class="n mono">' + countFn(it[0]) + '</span>';
+      return '<button class="chip" data-act="flt" data-k="' + key + '" data-v="' + it[0] + '" aria-pressed="' + (S[key] === it[0]) + '">' + it[1] + n + '</button>';
+    }).join('');
+  }
+  function renderFilters() {
+    chips('f-fam', Object.keys(FAM).map(function (k) { return [k, FAM[k]]; }), 'fam', function (v) { return C.filter(function (x) { return x.fam === v; }).length; });
+    chips('f-region', REGIONS.map(function (r) { return [r, r]; }), 'region', function (v) { return C.filter(function (x) { return x.region === v; }).length; });
+    chips('f-dmg', DMGS.map(function (r) { return [r, r]; }), 'dmg', function (v) { return C.filter(function (x) { return x.dmg === v; }).length; });
+    $('sort').value = S.sort;
+    document.querySelectorAll('[data-act="view"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === S.view)); });
+  }
+  function renderStyles() {
+    $('styles').innerHTML = STYLES.map(function (s) {
+      var pills = s.ids.map(function (id) { var x = BY[id]; return '<span class="pill" style="--fam:' + famVar(x) + '">' + x.name + '</span>'; }).join('');
+      return '<button class="tile" data-act="style" data-id="' + s.id + '" aria-pressed="' + (S.style === s.id) + '"><h3>' + s.name + '</h3><p>' + s.text + '</p><div class="pills">' + pills + '</div></button>';
+    }).join('');
+  }
+
+  function bars(x) {
+    return '<div class="bars">' + STATS.map(function (k, i) {
+      var v = x.s[i];
+      return '<div class="bar" title="' + STAT_FR[k] + ' ' + v + '"><span class="k">' + k + '</span><span class="track"><i style="width:' + Math.min(100, v / 18 * 100) + '%"></i></span><span class="v">' + v + '</span></div>';
+    }).join('') + '</div>';
+  }
+  function prog(x) {
+    var p = window.FICHE.progress(x.id);
+    if (!p.done) return '';
+    return '<p class="prog"><span>Progression <b class="mono">' + p.done + '/' + p.total + '</b></span><span class="pb"><i style="width:' + (p.done / p.total * 100) + '%"></i></span></p>';
+  }
+  function card(x) {
+    var on = S.sel.indexOf(x.id) > -1;
+    var facts = '<dt>Stats clés</dt><dd class="mono">' + x.prim + '</dd><dt>Niveau</dt><dd class="mono">' + x.lvl + '</dd><dt>Départ</dt><dd>' + x.region + '</dd>';
+    if (x.dmg) facts += '<dt>Dégâts</dt><dd>' + x.dmg + (x.theme ? ' · ' + x.theme : '') + '</dd>';
+    else if (x.theme) facts += '<dt>Thème</dt><dd>' + x.theme + '</dd>';
+    if (x.armor) facts += '<dt>Armure</dt><dd>' + x.armor + '</dd>';
+    var kit = '<p class="kit"><span><b>Matériel</b> ' + x.kit.join(' · ') + '</span><span><b>Set</b> ' + D[x.id].set + '</span>' + (x.spells ? '<span><b>Sorts</b> ' + x.spells.join(' · ') + '</span>' : '') + '<span><b>Lieu</b> ' + x.place + '</span></p>';
+    return '<article class="card' + (on ? ' on' : '') + '" style="--fam:' + famVar(x) + '"><div class="card-top"><h3>' + x.name + '</h3><span class="tag">' + FAM[x.fam] + '</span></div><p class="blurb">' + x.blurb + '</p><dl class="facts">' + facts + '</dl>' + bars(x) + kit + '' + prog(x) + '<div class="acts"><a class="det-btn" href="classe.html#' + x.id + '">Détails</a><button class="cmp-btn" data-act="pick" data-id="' + x.id + '" aria-pressed="' + on + '">' + (on ? 'Dans le comparatif' : 'Comparer') + '</button></div></article>';
+  }
+
+  var RANGE = STATS.map(function (k, i) { var v = C.map(function (x) { return x.s[i]; }); return [Math.min.apply(null, v), Math.max.apply(null, v)]; });
+  var LVL = (function () { var v = C.map(function (x) { return x.lvl; }); return [Math.min.apply(null, v), Math.max.apply(null, v)]; })();
+  function table(rows) {
+    var arrow = function (k) { return S.sort === k ? (S.dir === 1 ? ' ↑' : ' ↓') : ''; };
+    var th = function (k, label, title) { return '<th scope="col"' + (S.sort === k ? ' aria-sort="' + (S.dir === 1 ? 'ascending' : 'descending') + '"' : '') + '><button data-act="th" data-k="' + k + '"' + (title ? ' title="' + title + '"' : '') + '>' + label + arrow(k) + '</button></th>'; };
+    var head = '<tr>' + th('name', 'Classe') + '<th scope="col">Famille</th><th scope="col">Stats clés</th>' + th('lvl', 'Niv.') + STATS.map(function (k) { return th(k, k, STAT_FR[k]); }).join('') + '<th scope="col">Départ</th><th scope="col">Fiche</th></tr>';
+    var body = rows.map(function (x) {
+      var on = S.sel.indexOf(x.id) > -1;
+      var heat = function (v, r) { return (v - r[0]) / (r[1] - r[0] || 1); };
+      return '<tr class="' + (on ? 'on' : '') + '" style="--fam:' + famVar(x) + '"><th scope="row"><span class="dot"></span><button class="rowbtn" data-act="pick" data-id="' + x.id + '" title="' + (on ? 'Retirer du comparatif' : 'Ajouter au comparatif') + '">' + x.name + (on ? ' ✓' : '') + '</button></th><td>' + FAM[x.fam] + '</td><td class="mono">' + x.prim + '</td><td class="num heat" style="--p:' + heat(x.lvl, LVL).toFixed(2) + '">' + x.lvl + '</td>' +
+        x.s.map(function (v, i) { return '<td class="num heat" style="--p:' + heat(v, RANGE[i]).toFixed(2) + '">' + v + '</td>'; }).join('') + '<td>' + x.region + '</td><td><a class="wk" href="classe.html#' + x.id + '">Détails</a></td></tr>';
+    }).join('');
+    return '<div class="tbl-wrap"><table><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div><p class="note" style="margin-top:12px">Chaque colonne est colorée de la valeur la plus basse à la plus haute de la liste. Clique un nom pour l\'ajouter au comparatif.</p>';
+  }
+
+  function renderResults() {
+    var rows = list();
+    $('count').textContent = rows.length + ' / ' + C.length + ' classes';
+    if (!rows.length) { $('results').innerHTML = '<p class="empty">Aucune classe ne correspond à ces filtres.</p>'; return; }
+    $('results').innerHTML = S.view === 'cards' ? '<div class="grid">' + rows.map(card).join('') + '</div>' : table(rows);
+  }
+
+  function sheet() {
+    var X = S.sel.map(function (id) { return BY[id]; });
+    var head = '<tr><th class="rowh"></th>' + X.map(function (x) { return '<th class="col" style="--fam:' + famVar(x) + '">' + x.name + '</th>'; }).join('') + '</tr>';
+    var txt = function (label, fn) { return '<tr><th class="rowh" scope="row">' + label + '</th>' + X.map(function (x) { return '<td>' + fn(x) + '</td>'; }).join('') + '</tr>'; };
+    var num = function (label, fn, max) {
+      var vals = X.map(fn), top = Math.max.apply(null, vals);
+      return '<tr><th class="rowh" scope="row">' + label + '</th>' + X.map(function (x, i) {
+        var v = vals[i];
+        return '<td><div class="cellbar' + (v === top && X.length > 1 && vals.filter(function (n) { return n === top; }).length < X.length ? ' best' : '') + '" style="--fam:' + famVar(x) + '"><span class="track"><i style="width:' + Math.min(100, v / max * 100) + '%"></i></span><span class="v">' + v + '</span></div></td>';
+      }).join('') + '</tr>';
+    };
+    var rows = txt('Famille', function (x) { return FAM[x.fam]; }) +
+      txt('Stats clés', function (x) { return '<span class="mono">' + x.prim + '</span>'; }) +
+      txt('Dégâts', function (x) { return x.dmg ? x.dmg + (x.theme ? ' · ' + x.theme : '') : (x.theme || '—'); }) +
+      txt('Armure', function (x) { return x.armor || '—'; }) +
+      num('Niveau', function (x) { return x.lvl; }, 15) +
+      STATS.map(function (k, i) { return num(STAT_FR[k], function (x) { return x.s[i]; }, 18); }).join('') +
+      txt('Départ', function (x) { return x.region + '<br><span style="color:var(--muted);font-size:13px">' + x.place + '</span>'; }) +
+      txt('Matériel', function (x) { return x.kit.join('<br>'); }) +
+      txt('Set de départ', function (x) { return D[x.id].set; }) +
+      txt('Sorts de départ', function (x) { return x.spells ? x.spells.join('<br>') : '—'; }) +
+      txt('Runes de sorts', function (x) { var r = D[x.id].runes; return r ? r.length + ' paliers · ' + nSpells(D[x.id]) + ' sorts' : '—'; }) +
+      txt('Catalyseur', function (x) { var d = D[x.id]; return d.cat ? d.cat.map(function (r) { return esc(r[0]); }).join('<br>') : '—'; }) +
+      txt('Objet de classe', function (x) { var u = D[x.id].uniq; return u ? esc(u[0]) : '—'; });
+    return '<table><thead>' + head + '</thead><tbody>' + rows + '</tbody></table>';
+  }
+  function renderTray() {
+    var n = S.sel.length;
+    $('tray').hidden = n === 0;
+    document.querySelector('.wrap').style.paddingBottom = n ? (S.sheet ? '64vh' : '90px') : '0';
+    if (!n) { S.sheet = false; return; }
+    $('tray-count').textContent = 'Comparer ' + n + '/4';
+    $('tray-chips').innerHTML = S.sel.map(function (id) { var x = BY[id]; return '<span class="sel" style="--fam:' + famVar(x) + '">' + x.name + '<button data-act="pick" data-id="' + id + '" aria-label="Retirer ' + x.name + '">×</button></span>'; }).join('');
+    var open = $('tray-open');
+    open.textContent = S.sheet ? 'Masquer le comparatif' : 'Voir le comparatif';
+    open.setAttribute('aria-expanded', String(S.sheet));
+    open.disabled = n < 2;
+    open.title = n < 2 ? 'Choisis au moins deux classes' : '';
+    open.style.opacity = n < 2 ? '0.5' : '1';
+    if (n < 2) S.sheet = false;
+    $('sheet').hidden = !S.sheet;
+    if (S.sheet) $('sheet').innerHTML = sheet();
+  }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function nSpells(d) { return (d.runes || []).reduce(function (n, r) { return n + r[0].split('; ').length; }, 0); }
+  var D = window.DET || {};
+
+  function renderAll() { renderStyles(); renderFilters(); renderResults(); renderTray(); }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-act]');
+    if (!el) return;
+    var a = el.dataset.act;
+    if (a === 'flt') { S[el.dataset.k] = el.dataset.v; renderFilters(); renderResults(); }
+    else if (a === 'style') { S.style = S.style === el.dataset.id ? null : el.dataset.id; renderStyles(); renderResults(); }
+    else if (a === 'reset') { S.fam = S.region = S.dmg = 'all'; S.style = null; renderAll(); }
+    else if (a === 'view') { S.view = el.dataset.v; renderFilters(); renderResults(); }
+    else if (a === 'th') { var k = el.dataset.k; if (S.sort === k) S.dir = -S.dir; else { S.sort = k; S.dir = (k === 'name' || k === 'order') ? 1 : -1; } renderFilters(); renderResults(); }
+    else if (a === 'pick') {
+      var id = el.dataset.id, i = S.sel.indexOf(id);
+      if (i > -1) S.sel.splice(i, 1);
+      else if (S.sel.length < 4) S.sel.push(id);
+      else { S.sel.shift(); S.sel.push(id); }
+      renderResults(); renderTray();
+    }
+    else if (a === 'sheet') { if (S.sel.length > 1) { S.sheet = !S.sheet; renderTray(); } }
+    else if (a === 'clear') { S.sel = []; S.sheet = false; renderResults(); renderTray(); }
+
+  });
+  $('sort').addEventListener('change', function (e) { S.sort = e.target.value; S.dir = (S.sort === 'name' || S.sort === 'order') ? 1 : (S.sort === 'lvl' ? 1 : -1); renderResults(); });
+
+  // Opening state: a ready example comparison so the sheet shows what it does.
+  S.sel = ['dreadnought', 'glint', 'servant'].map(function (x) { return x === 'servant' ? 'rot' : x; });
+  renderAll();
+  window.addEventListener('pageshow', function (e) { if (e.persisted) renderResults(); });
+})();
+</script>
