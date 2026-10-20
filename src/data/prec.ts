@@ -2,7 +2,9 @@
    Clé : nom de l'objet (armures, armes, catalyseurs) ou "runeN" (N = index du palier, 0 = Faint).
    note : traduction du texte du wiki ; page : page du wiki ; maps : fichiers d'images nommés « Map » sur la page ;
    acc : conditions d'accès ; place : lieu de regroupement ; zone : correction de zone ; alt : autre source en désaccord. */
-window.PREC = {
+import type { Prec } from "./types";
+
+const PREC: Record<string, Record<string, Prec>> = {
   glint: {
     'Spellblade Set': { page: 'Spellblade_Set', place: 'Roundtable Hold', zone: 'round', acc: ['Mort de Rogier'], note: 'Chapeau : sur le corps de Sorcerer Rogier, après sa mort. Le wiki n\'indique pas la source des trois autres pièces.' },
     'Preceptor\'s Set': { page: 'Preceptor%27s_Set', place: 'Carian Study Hall', acc: ['3 fantômes à battre'], note: 'Preceptor\'s Big Hat : tout en haut du Carian Study Hall (version non inversée), gardé par trois fantômes. Le wiki n\'indique pas la source des autres pièces.' },
@@ -26,3 +28,4 @@ window.PREC = {
     rune5: { page: 'Shadow_Glintstone_Rune', acc: ['DLC', 'Cloche'], alt: 'Divergence : le wiki indique Finger Ruins of Rhia, la page officielle Finger Ruins of Dheo (Hinterlands). Les deux se trouvent dans l\'extension.', note: 'Source du wiki : Finger Ruins of Rhia (Realm of Shadow uniquement).' }
   }
 };
+export default PREC;

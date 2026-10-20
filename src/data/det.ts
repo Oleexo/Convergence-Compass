@@ -1,11 +1,11 @@
+import type { Det, Row } from "./types";
 /* Détails par classe : sets, armes, runes de sorts, objets de classe.
    Source : fiches de classes et pages de runes de sorts de convergencemod.com. */
-(function () {
 var NOTE_M = "Capacités d'armure de classe martiale : elles ne fonctionnent que sans arme ni catalyseur à scaling Intelligence ou Foi équipé dans un emplacement actif.";
 var NOTE_MK = "Capacités d'armure de la classe : elles ne fonctionnent que sans arme ni catalyseur à scaling Intelligence ou Foi équipé dans un emplacement actif, sauf pour les arcs légers, arcs longs, grands arcs, arbalètes et balistes.";
 var NOTE_P = "Les armures notables de cette classe ne fonctionnent pleinement qu'au Rune Level 1, sans monter de niveau.";
 
-var WK = [
+var WK: Row[] = [
   ["Commander's Standard", "Commander O'Neil"],
   ["Ghiza's Wheel", "Volcano Manor"],
   ["Osian's Greatsword", "Au nord-est de Gatefront, Limgrave"],
@@ -18,7 +18,7 @@ var WK = [
   ["Pulley Bow", "À l'ouest de First Mt. Gelmir Campsite"],
   ["Greatbow", "Highway Lookout Tower, Altus"]
 ];
-var WM = [
+var WM: Row[] = [
   ["Red Branch Shortbow", "Au sud-ouest de Caria Manor"],
   ["Shortbow", "Marchand nomade de Mistwood"],
   ["Longbow", "Twin Maiden Husks"],
@@ -31,7 +31,7 @@ var WM = [
   ["Hand Ballista", "Forest Lookout Tower"],
   ["Jar Cannon", "Volcano Cave"]
 ];
-var WH = [
+var WH: Row[] = [
   ["Yura's Kanabo", "Au sud d'Agheel Lake"],
   ["Leaden Maul", "Highroad Cave"],
   ["Axe of Rust", "Subterranean Shunning-Grounds"],
@@ -44,7 +44,7 @@ var WH = [
   ["Longbow", "Vendu par Twin Maiden Husks"],
   ["Golem's Greatbow", "Castle Morne"]
 ];
-var WD = [
+var WD: Row[] = [
   ["Foil of Caddock", "Vendu par Blackguard Big Boggart près de Leyndell"],
   ["Flowing Curved Sword", "Lake of Rot"],
   ["Bloodhound Hookblade", "Au sud-est de Main Academy Gate"],
@@ -54,7 +54,7 @@ var WD = [
   ["Black Bow", "Leyndell"]
 ];
 
-window.DET = {
+const DET: Record<string, Det> = {
   /* ---------- Martiales ---------- */
   retainer: {
     set: "Knight Set", note: NOTE_M, wpn: WK,
@@ -684,4 +684,4 @@ window.DET = {
     ]
   }
 };
-})();
+export default DET;

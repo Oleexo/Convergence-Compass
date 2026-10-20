@@ -2,29 +2,34 @@
 
 **Convergence Compass** : guide interactif (en français) des 27 classes du mod Elden Ring **The Convergence** : comparatif des statistiques et des styles de jeu, fiche détaillée par classe (armures, armes, catalyseurs, runes de sorts), localisation des objets, filtres par zone et par type d'obtention, cases à cocher avec progression.
 
-Projet de fan, non officiel. Site statique : HTML, CSS et JavaScript, sans build ni dépendance (seules les polices viennent de Google Fonts).
+Projet de fan, non officiel. Application React 19 + TypeScript, construite avec Vite et pnpm, publiée en site statique sur GitHub Pages (seules les polices viennent de Google Fonts).
 
 ## Structure
 
 | Fichier | Rôle |
 | --- | --- |
-| `index.html` | Comparatif des classes (cartes, tableau, feuille de comparaison) |
-| `classe.html` | Fiche d'une classe, routée par le hash (`classe.html#glint`) |
-| `classes.js` | Données des 27 classes (`window.CV`) |
-| `det.js` | Équipement et localisations par classe (`window.DET`) |
-| `zones.js` | Classement des lieux par région (`window.ZONES`) |
-| `prec.js` | Précisions par objet issues du wiki du mod (`window.PREC`), pour l'instant Glint Sorcerer uniquement |
-| `fiche.js` | Entrées d'une fiche, types d'obtention, progression (`window.FICHE`) |
+| `src/App.tsx` | Routage par le hash : `#` → comparatif, `#glint` → fiche de la classe |
+| `src/Home.tsx` | Comparatif des classes (cartes, tableau, feuille de comparaison) |
+| `src/Classe.tsx` | Fiche d'une classe |
+| `src/styles.css` | Thème clair/sombre et styles, portés par `.home` et `.fiche` |
+| `src/data/types.ts` | Types des données |
+| `src/data/classes.ts` | Données des 27 classes |
+| `src/data/det.ts` | Équipement et localisations par classe |
+| `src/data/zones.ts` | Classement des lieux par région |
+| `src/data/prec.ts` | Précisions par objet issues du wiki du mod, pour l'instant Glint Sorcerer uniquement |
+| `src/data/fiche.ts` | Entrées d'une fiche, types d'obtention, progression |
+| `public/classe.html` | Redirige les anciens liens `classe.html#glint` vers `./#glint` |
 
 La progression (cases cochées) est enregistrée dans le `localStorage` du navigateur, sous la clé `cv-done-v1`.
 
 ## Développement local
 
 ```sh
-python3 -m http.server 8000
+pnpm install
+pnpm dev
 ```
 
-Puis ouvrir <http://localhost:8000>.
+`pnpm build` vérifie les types puis produit le site dans `dist/` ; `pnpm preview` le sert en local.
 
 ## Déploiement
 

@@ -1,14 +1,14 @@
+import type { Cls, Fam } from "./types";
 /* Données des classes, partagées par l'index et les pages de détail. */
-(function () {
   var STATS = ['VGR','MND','END','STR','DEX','INT','FTH','ARC'];
-  var STAT_FR = { VGR:'Vigueur', MND:'Esprit', END:'Endurance', STR:'Force', DEX:'Dextérité', INT:'Intelligence', FTH:'Foi', ARC:'Arcanes' };
+  var STAT_FR: Record<string, string> = { VGR:'Vigueur', MND:'Esprit', END:'Endurance', STR:'Force', DEX:'Dextérité', INT:'Intelligence', FTH:'Foi', ARC:'Arcanes' };
   var FAM = { martial:'Mêlée & distance', sorcery:'Sorcellerie', incant:'Incantations', special:'Départs atypiques' };
   var FAM_VAR = { martial:'--c-martial', sorcery:'--c-sorcery', incant:'--c-incant', special:'--c-special' };
   var REGIONS = ['Limgrave','Weeping Peninsula','Liurnia','Caelid','Siofra'];
   var DMGS = ['Magie','Physique','Foudre','Feu','Sacré'];
 
   // id, name, family, primary stats, damage, theme, armor, region, place, level, stats[VGR,MND,END,STR,DEX,INT,FTH,ARC], kit, spells, blurb
-  function c(id,name,fam,prim,dmg,theme,armor,region,place,lvl,s,kit,spells,blurb){ return {id:id,name:name,fam:fam,prim:prim,dmg:dmg,theme:theme,armor:armor,region:region,place:place,lvl:lvl,s:s,kit:kit,spells:spells,blurb:blurb}; }
+  function c(id: string, name: string, fam: Fam, prim: string, dmg: string | null, theme: string | null, armor: string | null, region: string, place: string, lvl: number, s: number[], kit: string[], spells: string[] | null, blurb: string): Cls { return {id:id,name:name,fam:fam,prim:prim,dmg:dmg,theme:theme,armor:armor,region:region,place:place,lvl:lvl,s:s,kit:kit,spells:spells,blurb:blurb,order:0}; }
   var C = [
     c('retainer','Retainer','martial','STR/DEX',null,null,'Lourde','Limgrave','Sur une tour, devant Coastal Cave',9,[15,10,11,14,13,9,9,7],['Blade of Valor','Soldier\'s Crossbow (45 carreaux)','Kite Shield'],null,'Chevalier loyal, formé à l\'épée et au bouclier.'),
     c('vanguard','Vanguard','martial','STR/DEX',null,null,'Moyenne à lourde','Limgrave','Stormgate Canopy, au nord-ouest de Gatefront Ruins',10,[15,9,14,15,15,7,8,6],['Phalanx Pike'],null,'Toujours en première ligne, réputé pour sa valeur au combat.'),
@@ -41,6 +41,5 @@
     c('perfumer','Perfumer','special','ARC',null,'Parfums, pots & crafting','Légère à moyenne','Liurnia','Cabane de pierre du Village of the Albinaurics',5,[10,11,10,9,13,9,7,15],['Firespark Perfume Bottle','Pulley Crossbow (40 carreaux + 20 de parfumeur)','Perfumer\'s Shield','Pots et aromates'],null,'Parfumeur renommé avant la Fracture, spécialisé dans la fabrication.'),
     c('prisoner','Prisoner','special','Aucune',null,null,null,'Limgrave','Cellule au bout de Gael Tunnel, à la frontière de Caelid',1,[10,10,10,10,10,10,10,10],['Club'],null,'Prisonnier misérable enfermé dans un cachot, un chemin peu engageant.')
   ];
-  var BY = {}; C.forEach(function (x, i) { x.order = i; BY[x.id] = x; });
-  window.CV = { STATS: STATS, STAT_FR: STAT_FR, FAM: FAM, FAM_VAR: FAM_VAR, REGIONS: REGIONS, DMGS: DMGS, C: C, BY: BY };
-})();
+  var BY: Record<string, Cls> = {}; C.forEach(function (x, i) { x.order = i; BY[x.id] = x; });
+  export default { STATS: STATS, STAT_FR: STAT_FR, FAM: FAM, FAM_VAR: FAM_VAR, REGIONS: REGIONS, DMGS: DMGS, C: C, BY: BY };
