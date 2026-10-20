@@ -1,84 +1,84 @@
 # Convergence Compass
 
-[![Déploiement](https://github.com/Oleexo/Convergence-Compass/actions/workflows/pages.yml/badge.svg)](https://github.com/Oleexo/Convergence-Compass/actions/workflows/pages.yml)
-[![Licence MIT](https://img.shields.io/github/license/Oleexo/Convergence-Compass)](LICENSE)
+[![Deploy](https://github.com/Oleexo/Convergence-Compass/actions/workflows/pages.yml/badge.svg)](https://github.com/Oleexo/Convergence-Compass/actions/workflows/pages.yml)
+[![MIT License](https://img.shields.io/github/license/Oleexo/Convergence-Compass)](LICENSE)
 
-**Guide interactif (français et anglais) des 27 classes du mod Elden Ring *The Convergence*.**
+**Interactive guide (French and English) to the 27 classes of the Elden Ring mod *The Convergence*.**
 
 👉 **<https://oleexo.github.io/Convergence-Compass/>**
 
-- **Comparatif** : cartes ou tableau coloré des stats de départ, filtres par famille, zone de départ et type de dégâts, regroupement par style de jeu, feuille de comparaison jusqu'à quatre classes.
-- **Fiche par classe** : armures, armes, catalyseurs, runes de sorts et objet de classe, avec leurs emplacements dans le monde.
-- **Où chercher** : filtres par zone et par type d'obtention, recherche, vue par région ou en itinéraire (regroupé par lieu).
-- **Progression** : cases à cocher enregistrées dans le navigateur, avec un compteur par zone.
+- **Comparison**: cards or a color-coded table of starting stats, filters by family, starting area and damage type, grouping by playstyle, and a comparison sheet for up to four classes.
+- **Class page**: armor, weapons, catalysts, spell runes and class item, with their locations in the world.
+- **Where to look**: filters by area and by acquisition type, search, view by region or as a route (grouped by location).
+- **Progress**: checkboxes saved in the browser, with a counter per area.
 
-Projet de fan, non officiel. Thème clair et sombre, utilisable sur mobile.
+Unofficial fan project. Light and dark themes, mobile friendly.
 
 ## Stack
 
-React 19, TypeScript, Vite, pnpm. Le site est statique : aucun serveur, aucune API, seules les polices viennent de Google Fonts.
+React 19, TypeScript, Vite, pnpm. The site is static: no server, no API; only the fonts come from Google Fonts.
 
-## Développement local
+## Local development
 
-Prérequis : Node.js LTS et pnpm (`npm install -g pnpm`). La version de pnpm attendue est fixée par `packageManager` dans `package.json`.
+Requirements: Node.js LTS and pnpm (`npm install -g pnpm`). The expected pnpm version is pinned by `packageManager` in `package.json`.
 
 ```sh
 pnpm install
 pnpm dev
 ```
 
-| Commande | Effet |
+| Command | Effect |
 | --- | --- |
-| `pnpm dev` | Serveur de développement avec rechargement à chaud |
-| `pnpm build` | Vérifie les types (`tsc`) puis produit le site dans `dist/` |
-| `pnpm preview` | Sert le build de `dist/` en local |
-| `pnpm check:i18n` | Vérifie que chaque texte français des données a sa traduction anglaise, et que `fr.json` et `en.json` ont les mêmes clés |
+| `pnpm dev` | Development server with hot reload |
+| `pnpm build` | Type-checks (`tsc`), then builds the site into `dist/` |
+| `pnpm preview` | Serves the `dist/` build locally |
+| `pnpm check:i18n` | Checks that every French data string has an English translation, and that `fr.json` and `en.json` have the same keys |
 
 ## Structure
 
-| Fichier | Rôle |
+| File | Role |
 | --- | --- |
-| `src/App.tsx` | Routage par le hash : `#` → comparatif, `#glint` → fiche de la classe |
-| `src/Home.tsx` | Comparatif des classes (cartes, tableau, feuille de comparaison) |
-| `src/Classe.tsx` | Fiche d'une classe |
-| `src/styles.css` | Thème clair/sombre et styles, portés par `.home` et `.fiche` |
-| `src/data/types.ts` | Types des données |
-| `src/data/classes.ts` | Les 27 classes : stats, niveau, matériel, lieu de départ |
-| `src/data/det.ts` | Équipement et emplacements par classe |
-| `src/data/zones.ts` | Classement des lieux par région |
-| `src/data/prec.ts` | Précisions par objet issues du wiki du mod (pour l'instant Glint Sorcerer uniquement) |
-| `src/data/fiche.ts` | Entrées d'une fiche, types d'obtention, progression |
-| `src/i18n.ts` | Configuration de react-i18next, choix et mémorisation de la langue (`cv-lang`), helper `td` pour les données |
-| `src/locales/fr.json`, `en.json` | Textes de l'interface |
-| `src/locales/en-data.json` | Traduction anglaise des textes des données, indexée par le texte français |
-| `public/classe.html` | Redirige les anciens liens `classe.html#glint` vers `./#glint` |
+| `src/App.tsx` | Hash routing: `#` → comparison, `#glint` → class page |
+| `src/Home.tsx` | Class comparison (cards, table, comparison sheet) |
+| `src/Classe.tsx` | Class page |
+| `src/styles.css` | Light/dark theme and styles, scoped under `.home` and `.fiche` |
+| `src/data/types.ts` | Data types |
+| `src/data/classes.ts` | The 27 classes: stats, level, gear, starting location |
+| `src/data/det.ts` | Equipment and locations per class |
+| `src/data/zones.ts` | Mapping of locations to regions |
+| `src/data/prec.ts` | Per-item details taken from the mod wiki (Glint Sorcerer only for now) |
+| `src/data/fiche.ts` | Class page entries, acquisition types, progress |
+| `src/i18n.ts` | react-i18next setup, language selection and persistence (`cv-lang`), `td` helper for data |
+| `src/locales/fr.json`, `en.json` | UI strings |
+| `src/locales/en-data.json` | English translation of data strings, keyed by the French text |
+| `public/classe.html` | Redirects old `classe.html#glint` links to `./#glint` |
 
-La progression est enregistrée dans le `localStorage` du navigateur, sous la clé `cv-done-v1`. Chaque case est identifiée par la classe, le nom de l'objet et le texte de son emplacement (voir `entries` dans `src/data/fiche.ts`) : corriger ces textes dans `src/data/det.ts` décoche la case chez les visiteurs qui l'avaient cochée.
+Progress is stored in the browser's `localStorage` under the key `cv-done-v1`. Each checkbox is identified by the class, the item name and its location text (see `entries` in `src/data/fiche.ts`): editing those texts in `src/data/det.ts` unchecks the box for visitors who had checked it.
 
-### Traductions
+### Translations
 
-Les données (`src/data/*.ts`) restent écrites en français : le classement par zone et par type d'obtention s'appuie sur ce texte. À l'affichage, `td()` remplace chaque texte par sa version de `src/locales/en-data.json` quand la langue est l'anglais. Après avoir ajouté ou modifié un texte français dans les données, ajoute sa traduction dans `en-data.json` et lance `pnpm check:i18n`.
+The data (`src/data/*.ts`) stays written in French: grouping by area and by acquisition type relies on that text. At render time, `td()` replaces each string with its version from `src/locales/en-data.json` when the language is English. After adding or changing a French string in the data, add its translation to `en-data.json` and run `pnpm check:i18n`.
 
-### Ajouter des précisions pour une classe
+### Adding details for a class
 
-Les précisions (lien vers le wiki, carte, conditions d'accès, lieu de regroupement) se trouvent dans `src/data/prec.ts`, indexées par l'identifiant de la classe puis par le nom exact de l'objet, ou par `runeN` pour le palier N des runes de sorts (0 = Faint). Le commentaire en tête du fichier décrit chaque champ, et le type `Prec` dans `src/data/types.ts` les vérifie.
+Details (wiki link, map, access conditions, grouping location) live in `src/data/prec.ts`, keyed by class identifier, then by exact item name, or by `runeN` for spell rune tier N (0 = Faint). The comment at the top of the file describes each field, and the `Prec` type in `src/data/types.ts` checks them.
 
-## Déploiement
+## Deployment
 
-Chaque push sur `main` lance le workflow `.github/workflows/pages.yml`, qui builde le site avec pnpm et le publie sur GitHub Pages. Le site utilise des chemins relatifs et un routage par hash : il fonctionne sous `/Convergence-Compass/` sans configuration de serveur.
+Every push to `main` runs the `.github/workflows/pages.yml` workflow, which builds the site with pnpm and publishes it to GitHub Pages. The site uses relative paths and hash routing, so it works under `/Convergence-Compass/` without any server configuration.
 
-Dependabot (`.github/dependabot.yml`) propose chaque semaine les mises à jour des dépendances npm et chaque mois celles des GitHub Actions, regroupées en PR.
+Dependabot (`.github/dependabot.yml`) opens grouped PRs for npm dependency updates weekly and GitHub Actions updates monthly.
 
-## Sources et limites
+## Sources and limitations
 
-- Fiches de classes et pages de runes : [convergencemod.com](https://www.convergencemod.com/classes/), consultées le 19 octobre 2026.
-- Précisions d'emplacement : [wiki du mod](https://wiki.convergencemod.com/), consulté le 20 octobre 2026. Les textes sont traduits, les noms d'objets et de lieux restent en anglais.
-- Les zones et les types d'obtention sont déduits des textes d'emplacement et peuvent contenir des erreurs. Quand deux sources se contredisent, la fiche le signale par ⚠.
-- Aucune source consultée ne donne la grâce la plus proche de chaque objet.
-- Le mod évolue : un chiffre ou un emplacement peut ne plus correspondre à la dernière version.
+- Class pages and rune pages: [convergencemod.com](https://www.convergencemod.com/classes/), accessed October 19, 2026.
+- Location details: [mod wiki](https://wiki.convergencemod.com/), accessed October 20, 2026. Text is translated; item and place names stay in English.
+- Areas and acquisition types are inferred from location text and may contain errors. When two sources disagree, the class page flags it with ⚠.
+- None of the sources consulted gives the nearest Site of Grace for each item.
+- The mod keeps evolving: a number or location may no longer match the latest version.
 
-## Licence
+## License
 
-Le code source est sous licence [MIT](LICENSE).
+The source code is licensed under the [MIT](LICENSE) license.
 
-Elle ne couvre pas le contenu tiers : *Elden Ring* et ses noms (objets, lieux, personnages) appartiennent à FromSoftware et Bandai Namco ; le mod *The Convergence*, ses fiches de classes et son wiki appartiennent à leurs auteurs. Les données de `src/data/` en sont tirées et restent soumises à leurs droits. Ce projet n'est affilié à aucun d'eux.
+It does not cover third-party content: *Elden Ring* and its names (items, places, characters) belong to FromSoftware and Bandai Namco; the mod *The Convergence*, its class pages and its wiki belong to their authors. The data in `src/data/` is derived from them and remains subject to their rights. This project is not affiliated with any of them.
