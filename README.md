@@ -41,3 +41,9 @@ Le workflow `.github/workflows/pages.yml` publie le site sur GitHub Pages à cha
 - Précisions d'emplacement : [wiki du mod](https://wiki.convergencemod.com/). Les textes sont traduits, les noms d'objets et de lieux restent en anglais.
 - Les zones et les types d'obtention sont déduits des textes d'emplacement et peuvent contenir des erreurs. Quand deux sources se contredisent, la fiche le signale par ⚠.
 - Aucune source consultée ne donne la grâce la plus proche de chaque objet.
+
+## Licence
+
+Le code source est sous licence [MIT](LICENSE).
+
+Elle ne couvre pas le contenu tiers : *Elden Ring* et ses noms (objets, lieux, personnages) appartiennent à FromSoftware et Bandai Namco ; le mod *The Convergence*, ses fiches de classes et son wiki appartiennent à leurs auteurs. Les données de `src/data/` en sont tirées et restent soumises à leurs droits. Ce projet n'est affilié à aucun d'eux.
