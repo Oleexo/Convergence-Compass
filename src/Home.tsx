@@ -186,6 +186,7 @@ export default function Home({ active }: { active: boolean }) {
           <span className="eyebrow">{t('home.eyebrow')}</span>
           <h1>{t('home.title')}</h1>
           <p>{t('home.intro')}</p>
+          <p><a className="det-btn" href="#items">{t('home.itemsLink')}</a></p>
         </header>
 
         <section aria-labelledby="h-styles">

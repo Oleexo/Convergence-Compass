@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
+import { Fragment, useEffect, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import CV from './data/classes';
 import D from './data/det';
 import Z from './data/zones';
@@ -7,6 +7,7 @@ import type { Entry } from './data/types';
 import { Bars, famVar, kitList, nSpells } from './Home';
 import { Trans, useTranslation } from 'react-i18next';
 import i18n, { td } from './i18n';
+import { PREFER_KIND, findItem, itemHash } from './data/items';
 
 const { FAM, C, BY } = CV;
 const ZL: Record<string, string> = {}, ZO: Record<string, number> = {};
@@ -44,8 +45,16 @@ function link(label: string, name?: string): ReactNode {
   const n = name && cleanName(name);
   return n ? <a className="wk" href={wiki(n)} {...EXT} title={i18n.t('cls.wikiFext')}>{label}</a> : label;
 }
+/* Lien vers la page interne de l'objet quand la base d'objets le connaît. */
+function inLink(label: ReactNode, name: string, kind?: string, cls = 'wk'): ReactNode {
+  const h = findItem(name, kind ? PREFER_KIND[kind] : undefined);
+  return h ? <a className={cls} href={itemHash(h.kind, h.name)} title={i18n.t('cls.itemPage')}>{label}</a> : null;
+}
 function nameLink(e: Entry, label = td(e.name)): ReactNode {
-  if (e.nolink || e.kind === 'Sorts') return label;
+  if (e.kind === 'Sorts') return label;
+  const own = inLink(label, e.name, e.kind);
+  if (own) return own;
+  if (e.nolink) return label;
   if (e.prec?.page) return <a className="wk" href={WIKI + e.prec.page} {...EXT} title={i18n.t('cls.wikiMod')}>{label}</a>;
   return link(label, e.name);
 }
@@ -144,10 +153,11 @@ export default function Classe({ id }: { id: string }) {
     }
     return <li key={first.key} className="it"><div className="nm"><span className="ck0" />{nm}</div><ul className="pcs">{items.map(piece)}</ul></li>;
   };
+  const spell = (s: string, hit = false) => inLink(s, s, 'Sorts', 'sp in' + (hit ? ' hit' : '')) ?? <span className={'sp' + (hit ? ' hit' : '')}>{s}</span>;
   const rune = (e: Entry) => (
     <section key={e.key} className={doneCls('rune', e)}>
       <div className="rh">{ck(e)}<h3 className="txt">{e.name.replace('Palier ', '')}</h3>{e.tier === 5 && <span className="badge">{t('cls.ext')}</span>}<span className="mono">{t('cls.nSpells', { n: e.spells!.length })}</span></div>
-      <div className="sps">{e.spells!.map(s => <span key={s} className={'sp' + (q && s.toLowerCase().includes(q) ? ' hit' : '')}>{s}</span>)}</div>
+      <div className="sps">{e.spells!.map(s => <Fragment key={s}>{spell(s, !!q && s.toLowerCase().includes(q))}</Fragment>)}</div>
       <p className="loc">{spellLoc(e)}</p>
       <Pdet e={e} />
     </section>
@@ -179,7 +189,7 @@ export default function Classe({ id }: { id: string }) {
     <li key={e.key} className={doneCls('it', e)}>
       <div className="nm">{ck(e)}<span className="kd">{td(e.kind)}</span><span className="txt">{nameLink(e)}</span>{badge(e)}</div>
       {e.kind === 'Sorts'
-        ? <><div className="sps">{e.spells!.map(s => <span key={s} className="sp">{s}</span>)}</div><span className="loc">{spellLoc(e)}</span></>
+        ? <><div className="sps">{e.spells!.map(s => <Fragment key={s}>{spell(s)}</Fragment>)}</div><span className="loc">{spellLoc(e)}</span></>
         : <span className="loc">{labelled(e)}<Tags e={e} /></span>}
       <Pdet e={e} />
     </li>

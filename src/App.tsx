@@ -1,28 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Home from './Home';
 import Classe from './Classe';
+import Items from './Items';
+import ItemDetail from './ItemDetail';
 import { useTranslation } from 'react-i18next';
 import { LANGS } from './i18n';
 
-const hashId = () => decodeURIComponent(location.hash.replace(/^#/, ''));
+const dec = (s: string) => { try { return decodeURIComponent(s); } catch { return s; } };
+const hashRaw = () => location.hash.replace(/^#/, '');
 
-// Routes: "#" → comparatif, "#<id>" → fiche de la classe.
+// Routes: "#" → comparatif, "#items" → base d'objets, "#item/<type>/<nom>" → page d'un objet, "#<id>" → fiche de la classe.
 export default function App() {
-  const [id, setId] = useState(hashId);
+  const [raw, setRaw] = useState(hashRaw);
+  const [seenItems, setSeenItems] = useState(false);
+  const itemsY = useRef(0); // scroll position of the item list, restored when coming back from an item page
+  const rawRef = useRef(raw);
   useEffect(() => {
-    const on = () => { setId(hashId()); window.scrollTo(0, 0); };
+    const on = () => {
+      const was = rawRef.current, now = hashRaw();
+      if (was === 'items') itemsY.current = window.scrollY;
+      rawRef.current = now;
+      setRaw(now);
+      if (now === 'items' && was.startsWith('item/')) requestAnimationFrame(() => window.scrollTo(0, itemsY.current));
+      else window.scrollTo(0, 0);
+    };
     window.addEventListener('hashchange', on);
     return () => window.removeEventListener('hashchange', on);
   }, []);
+  const item = raw.match(/^item\/([^/]+)\/(.+)$/);
+  const id = item ? '' : dec(raw);
+  const onItems = id === 'items';
+  if (onItems && !seenItems) setSeenItems(true);
   const { t, i18n } = useTranslation();
   return (
     <>
       <div className="lang" role="group" aria-label={t('lang.label')}>
         {LANGS.map(l => <button key={l} lang={l} aria-pressed={i18n.language === l} onClick={() => i18n.changeLanguage(l)}>{l.toUpperCase()}</button>)}
       </div>
-      {/* Home stays mounted so filters and the comparison survive a visit to a fiche. */}
-      <div hidden={!!id}><Home active={!id} /></div>
-      {id && <Classe key={id} id={id} />}
+      {/* Home and the item list stay mounted so filters, search and the comparison survive a visit to a fiche or an item page. */}
+      <div hidden={!!raw}><Home active={!raw} /></div>
+      {seenItems && <div hidden={!onItems}><Items active={onItems} /></div>}
+      {item ? <ItemDetail key={raw} kind={dec(item[1])} name={dec(item[2])} /> : id && !onItems && <Classe key={id} id={id} />}
     </>
   );
 }
