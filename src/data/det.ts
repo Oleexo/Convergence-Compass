@@ -16,7 +16,11 @@ var WK: Row[] = [
   ["Phalanx Pike", "Castle Morne"],
   ["Composite Bow", "Acheté au marchand de Bellum Highway"],
   ["Pulley Bow", "À l'ouest de First Mt. Gelmir Campsite"],
-  ["Greatbow", "Highway Lookout Tower, Altus"]
+  ["Greatbow", "Highway Lookout Tower, Altus"],
+  ["Bracelet of Gold", "Leyndell, Capital Outskirts : en battant Ulcerated Tree Spirit, près de la Minor Erdtree Church"],
+  ["Bracelet of Shadow", "Altus Plateau, sommet de Mirage Rise : après l'énigme des environs"],
+  ["Smithscript Rosary", "Scadu Altus, Ruined Forge of Starfall Past : sur l'autel au fond de la forge"],
+  ["Regal Splitblade", "Crumbling Farum Azula : coffre dans la gueule d'un crâne de dragon, à l'ouest de la grâce Dragonlord's Annex"]
 ];
 var WM: Row[] = [
   ["Red Branch Shortbow", "Au sud-ouest de Caria Manor"],
