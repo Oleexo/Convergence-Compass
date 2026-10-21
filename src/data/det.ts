@@ -52,8 +52,8 @@ var WD: Row[] = [
   ["Sulien's Razors", "Leyndell"],
   ["Emyr's Great Talons", "Champ de bataille près de Bridge of Iniquity"],
   ["Black Bow", "Leyndell"],
-  ["Bracelet of Shadow", "Mirage Rise"],
-  ["Nia's Passot", "Fog Rift Catacombs"]
+  ["Bracelet of Shadow", "Altus Plateau, sommet de Mirage Rise : après l'énigme des environs"],
+  ["Nia's Passot", "Scadu Altus, Fog Rift Catacombs : coffre au pied de la statue de Marika, derrière le Godskin Knight"]
 ];
 
 const DET: Record<string, Det> = {
