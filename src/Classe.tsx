@@ -124,7 +124,7 @@ export default function Classe({ id }: { id: string }) {
   if (!x || !d) return <div className="fiche"><div className="wrap">{back}<p className="empty"><Trans i18nKey="cls.notFoundBody" components={{ home: <a href="#" /> }} /></p></div></div>;
 
   const ENTS = F.entries(id);
-  const b = B.B[id], talDone = b ? b.tal.filter(n => F.isDone(id, { key: 'tal|' + n })).length : 0;
+  const b = B.B[id], talDone = b ? b.tal.filter(([n]) => F.isDone(id, { key: 'tal|' + n })).length : 0;
   const done = (e: Entry) => e.check && F.isDone(id, e);
   const doneCls = (base: string, e: Entry) => base + (done(e) ? ' done' : '');
   const q = S.q.trim().toLowerCase();
@@ -249,22 +249,29 @@ export default function Classe({ id }: { id: string }) {
 
         {b && <section className="build" aria-labelledby="play">
           <h2 id="play" className="sec">{t('cls.play', { name: x.name })}</h2>
+          <div className="panel">
+            <span className="eyebrow">{t('cls.stats')}</span><p className="lead">{td(b.stats)}</p>
+            <span className="eyebrow">{t('cls.route')}</span>
+            <ol className="plan">{b.plan.map((p, i) => <li key={i}><b>{t('cls.phase.' + i)}</b>{td(p)}</li>)}</ol>
+          </div>
+          <div className="prog-top"><span className="eyebrow">{t('cls.tal')}</span><span className="mono">{talDone} / {b.tal.length}</span></div>
           <div className="bgrid">
-            <div className="panel">
-              <span className="eyebrow">{t('cls.stats')}</span><p className="lead">{td(b.stats)}</p>
-              <span className="eyebrow">{t('cls.route')}</span>
-              <ol className="plan">{b.plan.map((p, i) => <li key={i}><b>{t('cls.phase.' + i)}</b>{td(p)}</li>)}</ol>
-            </div>
-            <div className="panel">
-              <div className="prog-top"><span className="eyebrow">{t('cls.tal')}</span><span className="mono">{talDone} / {b.tal.length}</span></div>
-              <ul className="tals">{b.tal.map(n => {
-                const k = { key: 'tal|' + n }, on = F.isDone(id, k), [fx, where] = B.TAL[n];
-                return <li key={n} className={on ? 'done' : ''}>
-                  <input type="checkbox" className="ckb" checked={on} onChange={ev => { F.setDone(id, k, ev.target.checked); setRev(r => r + 1); }} aria-label={t('cls.got', { name: n })} />
-                  <div><span className="txt">{inLink(n, n) ?? link(n, n)}</span><span className="loc">{td(fx)}{where && <> · <i>{td(where)}</i></>}</span></div>
-                </li>;
-              })}</ul>
-            </div>
+            {[false, true].map(alt => (
+              <div key={String(alt)} className="panel">
+                <h3 className="tal-h">{t(alt ? 'cls.talAlt' : 'cls.talCore')}</h3>
+                <ul className="tals">{b.tal.filter(x => !!x[2] === alt).map(([n, why]) => {
+                  const k = { key: 'tal|' + n }, on = F.isDone(id, k), [fx, where] = B.TAL[n];
+                  return <li key={n} className={on ? 'done' : ''}>
+                    <input type="checkbox" className="ckb" checked={on} onChange={ev => { F.setDone(id, k, ev.target.checked); setRev(r => r + 1); }} aria-label={t('cls.got', { name: n })} />
+                    <div>
+                      <span className="txt">{inLink(n, n) ?? link(n, n)}</span>
+                      <p className="why">{td(why)}</p>
+                      <span className="loc">{td(fx)} · <i>{td(where)}</i></span>
+                    </div>
+                  </li>;
+                })}</ul>
+              </div>
+            ))}
           </div>
           <span className="eyebrow">{t('cls.combos')}</span>
           <div className="combos">{b.combo.map(([title, items, why]) => (

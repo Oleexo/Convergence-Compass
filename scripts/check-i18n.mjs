@@ -14,7 +14,7 @@ F.OBT.forEach(o => add(o[1])); Object.values(F.OBT_SHORT).forEach(add); Z.list.f
 for (const x of CV.C) { [x.prim, x.dmg, x.theme, x.armor, x.place, x.blurb].forEach(add); x.kit.forEach(add); }
 for (const id in D) { add(D[id].note); add(D[id].wnote); }
 Object.values(B.TAL).forEach(t => t.forEach(add));
-for (const b of Object.values(B.B)) { add(b.stats); b.plan.forEach(add); b.combo.forEach(c => { add(c[0]); add(c[2]); }); }
+for (const b of Object.values(B.B)) { add(b.stats); b.plan.forEach(add); b.tal.forEach(x => add(x[1])); b.combo.forEach(c => { add(c[0]); add(c[2]); }); }
 for (const x of CV.C) for (const e of F.entries(x.id)) {
   [e.name, e.detail, e.how, e.kind, e.group, e.badge].forEach(add);
   if (e.prec) { [e.prec.note, e.prec.alt, e.prec.place].forEach(add); (e.prec.acc || []).forEach(add); }

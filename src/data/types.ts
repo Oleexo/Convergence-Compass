@@ -18,5 +18,5 @@ export interface Entry {
   zone: string; obt: Obt; check: boolean; key: string;
   badge?: string; nolink?: boolean; how?: string; spells?: string[]; tier?: number; prec?: Prec;
 }
-/** Idées de jeu : combo = [titre, objets séparés par « + », pourquoi] */
-export interface Build { stats: string; plan: [early: string, mid: string, late: string]; tal: string[]; combo: [title: string, items: string, why: string][] }
+/** Idées de jeu : tal = [nom, pourquoi, 1 = selon la situation] ; combo = [titre, objets séparés par « + », explication] */
+export interface Build { stats: string; plan: [early: string, mid: string, late: string]; tal: [name: string, why: string, alt?: 1][]; combo: [title: string, items: string, why: string][] }
