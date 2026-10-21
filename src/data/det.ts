@@ -17,10 +17,10 @@ var WK: Row[] = [
   ["Composite Bow", "Acheté au marchand de Bellum Highway"],
   ["Pulley Bow", "À l'ouest de First Mt. Gelmir Campsite"],
   ["Greatbow", "Highway Lookout Tower, Altus"],
-  ["Bracelet of Gold", "Leyndell, Capital Outskirts : en battant Ulcerated Tree Spirit, près de la Minor Erdtree Church"],
-  ["Bracelet of Shadow", "Altus Plateau, sommet de Mirage Rise : après l'énigme des environs"],
-  ["Smithscript Rosary", "Scadu Altus, Ruined Forge of Starfall Past : sur l'autel au fond de la forge"],
-  ["Regal Splitblade", "Crumbling Farum Azula : coffre dans la gueule d'un crâne de dragon, à l'ouest de la grâce Dragonlord's Annex"]
+  ["Bracelet of Gold", "Leyndell, Capital Outskirts, en battant Ulcerated Tree Spirit près de la Minor Erdtree Church"],
+  ["Bracelet of Shadow", "Altus Plateau, sommet de Mirage Rise, après l'énigme des environs"],
+  ["Smithscript Rosary", "Scadu Altus, Ruined Forge of Starfall Past, sur l'autel au fond de la forge"],
+  ["Regal Splitblade", "Crumbling Farum Azula, coffre dans la gueule d'un crâne de dragon, à l'ouest de la grâce Dragonlord's Annex"]
 ];
 var WM: Row[] = [
   ["Red Branch Shortbow", "Au sud-ouest de Caria Manor"],
@@ -33,7 +33,11 @@ var WM: Row[] = [
   ["Crepus's Black-Key Crossbow", "Roundtable Hold"],
   ["Repeating Crossbow", "Au sud de Moorth Ruins"],
   ["Hand Ballista", "Forest Lookout Tower"],
-  ["Jar Cannon", "Volcano Cave"]
+  ["Jar Cannon", "Volcano Cave"],
+  ["Bone Bow", "Belurat, Tower Settlement, cadavre d'une salle ronde gardée par deux Monstrous Spider Scorpions"],
+  ["Scadu Sapling", "Hinterlands, Shaman Village, cadavre dans l'arbre derrière la petite maison carrée, en haut de la colline"],
+  ["Ansbach's Longbow", "Shadow Keep, quête de Sir Ansbach (le battre ou l'aider contre Needle Knight Leda)"],
+  ["Devonia's Longbow", "Rauh Ruins, coffre au sommet de Temple Town Ruins"]
 ];
 var WH: Row[] = [
   ["Yura's Kanabo", "Au sud d'Agheel Lake"],
@@ -46,7 +50,9 @@ var WH: Row[] = [
   ["Gilded Quarterstaff", "Au nord de Church of Vows"],
   ["Red Branch Shortbow", "Au sud de Caria Manor"],
   ["Longbow", "Vendu par Twin Maiden Husks"],
-  ["Golem's Greatbow", "Castle Morne"]
+  ["Golem's Greatbow", "Castle Morne"],
+  ["Bracelet of Gold", "Leyndell, Capital Outskirts, en battant Ulcerated Tree Spirit près de la Minor Erdtree Church"],
+  ["Cragsplitter", "Fort Faroth"]
 ];
 var WD: Row[] = [
   ["Foil of Caddock", "Vendu par Blackguard Big Boggart près de Leyndell"],
@@ -56,8 +62,8 @@ var WD: Row[] = [
   ["Sulien's Razors", "Leyndell"],
   ["Emyr's Great Talons", "Champ de bataille près de Bridge of Iniquity"],
   ["Black Bow", "Leyndell"],
-  ["Bracelet of Shadow", "Altus Plateau, sommet de Mirage Rise : après l'énigme des environs"],
-  ["Nia's Passot", "Scadu Altus, Fog Rift Catacombs : coffre au pied de la statue de Marika, derrière le Godskin Knight"]
+  ["Bracelet of Shadow", "Altus Plateau, sommet de Mirage Rise, après l'énigme des environs"],
+  ["Nia's Passot", "Scadu Altus, Fog Rift Catacombs, coffre au pied de la statue de Marika, derrière le Godskin Knight"]
 ];
 
 const DET: Record<string, Det> = {
@@ -141,7 +147,10 @@ const DET: Record<string, Det> = {
       ["Crystal Spear", "Academy Crystal Cave"],
       ["Loretta's War Sickle", "Miquella's Haligtree"],
       ["Watchdog's Staff", "Road's End Catacombs"],
-      ["Troll Knight's Sword", "Academy of Raya Lucaria"]
+      ["Troll Knight's Sword", "Academy of Raya Lucaria"],
+      ["Rhys' Swordspear", "Caria Manor, en battant Rhys, Carian Paragon"],
+      ["Primeval Splinter", "Cerulean Coast, Finger Ruins of Rhia"],
+      ["Crystalline Claw", "Liurnia, Liurnia Highway Minor Erdtree, butin du Giant Crystal Crab"]
     ],
     runes: [
       ["Swift Glintstone Shard; Carian Slicer; Glintstone Arc; Energy Shell", "Liurnia, Academy Gate Town : point de départ"],
@@ -171,7 +180,8 @@ const DET: Record<string, Det> = {
       ["Bastard's Stars", "Acheté après Astel"],
       ["Fallingstar Beast Jaw", "Full-grown Fallingstar Beast, Mt. Gelmir"],
       ["Ruins Greatsword", "Après Dakk"],
-      ["Starscourge Greatsword", "Acheté après Radahn"]
+      ["Starscourge Greatsword", "Acheté après Radahn"],
+      ["Starcaller's Mattock", "Redmane Castle, cadavre au pied d'un grand arbre, à l'est de la grâce Redmane Staging Area"]
     ],
     runes: [
       ["Gravity Well; Shatter Earth; Rock Burst", "Weeping Peninsula, Crater-Pocked Glade : point de départ"],
@@ -193,7 +203,9 @@ const DET: Record<string, Det> = {
       ["Underworld Greatmace", "Fringefolk Hero's Grave"],
       ["Clayman's Harpoon", "Ainsel River"],
       ["Dragonkin Halberd", "Dragonkin Soldier de Siofra River"],
-      ["Daergraf's Opus", "Deeproot Depths"]
+      ["Daergraf's Opus", "Deeproot Depths"],
+      ["Galvanic Culling Blade", "Noxumbra, Eternal City"],
+      ["Transcendent Talons", "Vendu par Enia après Daergraf, Underworld Archmage"]
     ],
     runes: [
       ["Frozen Cragbolt; Cragbolt Bubbles; Frozen Lightning Armament; Cragbolt Wisp", "Lower Siofra River : butin d'un Teardrop Scarab sur un pilier, au nord-est de la grâce Siofra River Well Depths"],
@@ -250,7 +262,8 @@ const DET: Record<string, Det> = {
       ["Dyru's Greatsword", "Acheté à Enia après Dyru, Scavenger King"],
       ["Axe of Godrick", "Acheté après Godrick"],
       ["Eagle's Edge", "Chapel of Anticipation"],
-      ["Horned Warrior Greatsword", "Enir Elim"]
+      ["Horned Warrior Greatsword", "Enir Elim"],
+      ["Stormcaller Dirk", "Cliffbottom Catacombs, butin de Stormcaller Taran"]
     ],
     runes: [
       ["Storm Gust; Rebuff; Storm Armament; Air Tax", "Limgrave, Stormhill : point de départ"],
@@ -278,7 +291,9 @@ const DET: Record<string, Det> = {
       ["Star Shadow", "Après Nox Oracle Sadia, Sellia"],
       ["Sword of Darkness", "Obtenue en convertissant la Stone-Sheathed Sword ou la Sword of Light"],
       ["Sword of Night", "Iris of Occultation utilisé sur Jolán, Cathedral of Manus Metyr"],
-      ["Claws of Night", "Butin de Swordhand of Night Anna, Finger Ruins of Miyr"]
+      ["Claws of Night", "Butin de Swordhand of Night Anna, Finger Ruins of Miyr"],
+      ["Fingerslayer Blade", "Donné par Ranni en échange de la Fingerslayer Blade (quête de Ranni)"],
+      ["Quicksilver Fragment", "Noxumbra, Forsaken City, en battant le Quicksilver Husk"]
     ],
     runes: [
       ["Night Shard; Quicksilver Affliction; Night Maiden's Mist; Shadow Bait", "Liurnia, au nord d'Ainsel River Well : coffre au point de départ"],
@@ -310,7 +325,9 @@ const DET: Record<string, Det> = {
       ["Rosus Axe", "Black Knife Catacombs"],
       ["Death Ritual Spear", "Death Rite Bird, Mountaintops"],
       ["Rosus' Harvester", "Tibia Mariner, Altus"],
-      ["Rancor Touch", "Caelid Catacombs"]
+      ["Rancor Touch", "Caelid Catacombs"],
+      ["Spirit Glaive", "Cerulean Coast, Charo's Hidden Grave, cadavre dans un champ de lys araignées au nord de la grâce"],
+      ["Putrescence Cleaver", "Vendu par Enia après le Putrescent Knight (Stone Coffin Fissure)"]
     ],
     runes: [
       ["Fia's Mist; Tibia's Conversion; Tibia's Summons; Blighted Armament", "Weeping Peninsula, Church of Pilgrimage : point de départ"],
@@ -320,7 +337,10 @@ const DET: Record<string, Det> = {
       ["Ghostflame Embrace; Ritual of Ghostflame; Godwyn's Vengeance; Phoenix of Death", "Deeproot Depths : en battant Blighted Nox Ancestor"],
       ["Mass of Putrescence", "Cerulean Coast, Charo's Hidden Grave : devant une statue de Gravebird, accessible par une colline à l'est de la grâce"]
     ],
-    cat: [["Prince of Death's Staff", "Sage's Cave"]],
+    cat: [
+      ["Prince of Death's Staff", "Sage's Cave"],
+      ["Blightpole", "Crumbling Farum Azula, au pied d'un grand arbre au nord de la grâce Forum Ruins, passé le dragon endormi"]
+    ],
     uniq: ["Ghostflame Torch", "Death Bird en Liurnia"]
   },
   frost: {
@@ -339,7 +359,8 @@ const DET: Record<string, Det> = {
       ["Icerind Hatchet", "Temple Quarter"],
       ["Royal Greatsword", "Butin de Blaidd"],
       ["Rimeheart", "Butin de Borealis"],
-      ["Einar's Hammer", "Acheté après Einar, Ice Guardian"]
+      ["Einar's Hammer", "Acheté après Einar, Ice Guardian"],
+      ["Crescent Moons", "Scadu Altus, Fort of Reprimand, en haut de la tour voisine de la grille fermée"]
     ],
     runes: [
       ["Freezing Mist; Ice Dart; Frozen Armament", "Weeping Peninsula : point de départ"],
@@ -364,7 +385,8 @@ const DET: Record<string, Det> = {
       ["Thorn of the Guilty", "Fort Laiedd"],
       ["Crimson Briar-Bough", "Cave of Knowledge"],
       ["Hoslow's Petal Whip", "Après l'invasion de Juno Hoslow"],
-      ["Bloodhound Claws", "Volcano Manor"]
+      ["Bloodhound Claws", "Volcano Manor"],
+      ["Crucifix of Eochaid", "Mohgwyn Palace, près d'un corbeau en feu, en route vers la grâce Dynasty Mausoleum Entrance"]
     ],
     runes: [
       ["Body of Briar; Briars of Sin; Briar-Wrapped Armament", "Liurnia, Artist's Shack : point de départ"],
@@ -400,7 +422,8 @@ const DET: Record<string, Det> = {
       ["Grafted Dragon", "Acheté après Godrick"],
       ["Prelate's Inferno Crozier", "Camp du sud de Liurnia"],
       ["Monk's Flameblade", "Fort Laiedd"],
-      ["Furnace Fists", "Ruins of Unte"]
+      ["Furnace Fists", "Ruins of Unte"],
+      ["Glaive of the Crusade", "Gravesite Plain, coffre au sommet de Scorched Ruins"]
     ],
     runes: [
       ["Catch Flame; Flame Sling; Flame Whirl; Flaming Armament", "Caelid, Smoldering Church : point de départ"],
@@ -434,7 +457,8 @@ const DET: Record<string, Det> = {
       ["Cleanrot Spear", "War-Dead Catacombs"],
       ["Golden Halberd", "Après Tree Sentinel"],
       ["Halo Scythe", "Stillwater Cave"],
-      ["Golden Order Greatsword", "Cave of the Forlorn"]
+      ["Golden Order Greatsword", "Cave of the Forlorn"],
+      ["Scadu Sapling", "Hinterlands, Shaman Village, cadavre dans l'arbre derrière la petite maison carrée, en haut de la colline"]
     ],
     runes: [
       ["Rejection; Rune Shards; Sacred Ground; Blessing of Grace; Immutable Shield", "Limgrave, Third Church of Marika : point de départ"],
@@ -467,7 +491,10 @@ const DET: Record<string, Det> = {
       ["Beastman's Curved Sword", "Marchand du sud de Caelid"],
       ["Ordovis's Greatsword", "Auriza Hero's Grave"],
       ["Beastclaw Greathammer", "Dragonbarrow Cave"],
-      ["Beastman's Cleaver", "Dragonbarrow Cave"]
+      ["Beastman's Cleaver", "Dragonbarrow Cave"],
+      ["Greatsword of Damnation", "Vendu par Enia après Midra, Lord of Frenzied Flame"],
+      ["Halberd of Archea", "Crumbling Farum Azula, derrière le Large Hornsent Inquisitor, au nord-est de la grâce Garden Courtyard"],
+      ["Devonia's Longbow", "Rauh Ruins, coffre au sommet de Temple Town Ruins"]
     ],
     runes: [
       ["Beast Talons; Gravel Sling; Stone Throw; Crucible Horn; Crucible Feathers", "Limgrave, Groveside Cave : point de départ"],
@@ -555,7 +582,10 @@ const DET: Record<string, Det> = {
       ["Nomad's Kilij", "Butin de Shabriri's Chosen"],
       ["Three Finger Blade", "Yelough Anix Ruins"],
       ["Vyke's War Spear", "Butin de Festering Fingerprint Vyke"],
-      ["Blade of Distant Light", "Abandoned Church"]
+      ["Blade of Distant Light", "Abandoned Church"],
+      ["Maddening Brand", "Weeping Peninsula, Castle Morne Town, tas de cadavres en feu au pied d'un arbre, à l'ouest de la ville"],
+      ["Fingerprint Hexmark", "Frenzied Flame Proscription, en descendant par les poutres depuis la grâce Cathedral of the Forsaken"],
+      ["Greatsword of Midra", "Vendu par Enia après Midra, Lord of Frenzied Flame"]
     ],
     runes: [
       ["Frenzied Flare; Touch of Frenzy; The Flame of Frenzy", "Weeping Peninsula, Ailing Village Outskirts : point de départ"],
@@ -585,7 +615,8 @@ const DET: Record<string, Det> = {
       ["Mohgwyn's Sacred Spear", "Vendu par Enia après Mohg"],
       ["Varre's Bouquet", "Après l'invasion de White-Faced Varre"],
       ["Rivers of Blood", "Après l'invasion de Bloody Finger Okina"],
-      ["Bloodflame Kamas", "Sur un Sanguine Noble envahisseur, Consecrated Snowfield"]
+      ["Bloodflame Kamas", "Sur un Sanguine Noble envahisseur, Consecrated Snowfield"],
+      ["Konrad's Bloodletter", "Mohgwyn Palace, butin de Konrad, Pureblood Knight"]
     ],
     runes: [
       ["Blood Seeker; Bloodflame Talons; Siphon the Formless; Bloodflame Blade", "Liurnia, Rose Church : point de départ"],
@@ -644,7 +675,9 @@ const DET: Record<string, Det> = {
       ["Winged Greathorn", "Vendu par Enia après Regal Ancestor Spirit"],
       ["Spear of Tranquility", "Lake of Rot"],
       ["Caimar's Battlestaff", "Acheté après Spiritshaper Caimar"],
-      ["Spear of the Dreaming", "Volcano Cave"]
+      ["Spear of the Dreaming", "Volcano Cave"],
+      ["Goras' Claws", "Nokron, butin de Goras, Scourge of Dreams, sur le chemin du Siofra Plateau"],
+      ["Velvet Sword of St. Trina", "Cerulean Coast, petite grotte deux plateformes plus bas, au nord-ouest de la grâce Fissure Cross"]
     ],
     runes: [
       ["Soporific Fume; Dream Siphon; Spirit Vapor; Ancestral Conduit", "Liurnia, Uld Palace Ruins : point de départ"],

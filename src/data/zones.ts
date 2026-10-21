@@ -26,14 +26,14 @@ var SUFFIX: [string, string][] = [
   ['mountaintops', 'mount'], ['weeping peninsula', 'weeping'], ['consecrated snowfield', 'snow']
 ];
 var RULES: [string, string[]][] = [
-  ['dlc', ['shadow keep', 'scadu altus', 'cerulean coast', 'hinterlands', 'belurat', 'enir', 'finger ruins of', 'cathedral of manus', 'rauh', 'ruins of unte', 'charo', 'jarburg', 'abyssal woods', 'lamenter', 'bonny gaol', 'garden of deep purple', 'promised consort', 'messmer', 'thiollier', 'midra', 'hornsent', 'swordhand of night', 'ansbach', 'moore', 'nameless mausoleum', 'temple town ruins', 'count ymir', 'church of benediction', 'abandoned church', 'moorth ruins']],
+  ['dlc', ['shadow keep', 'gravesite plain', 'scadu altus', 'cerulean coast', 'hinterlands', 'belurat', 'enir', 'finger ruins of', 'cathedral of manus', 'rauh', 'ruins of unte', 'charo', 'jarburg', 'abyssal woods', 'lamenter', 'bonny gaol', 'garden of deep purple', 'promised consort', 'messmer', 'thiollier', 'midra', 'hornsent', 'swordhand of night', 'ansbach', 'moore', 'nameless mausoleum', 'temple town ruins', 'count ymir', 'church of benediction', 'abandoned church', 'moorth ruins']],
   ['round', ['enia', 'roundtable hold', 'acheté après', 'twin maiden']],
   ['quest', ['invasion', 'butin d\'istvan', 'obtenue en convertissant', 'dakk', 'sigur', 'devonia', 'rugalea', 'ralva', 'shabriri', 'bridge of iniquity', 'gateway to the forge', 'seki', 'juno hoslow', 'butin de blaidd', 'eleonora', 'quête', 'donné par', 'en aidant', 'vendu par patches', 'tableau', 'fin de la quête', 'frenzied flame proscription']],
   ['farum', ['farum azula', 'seera']],
   ['hali', ['haligtree', 'elphael']],
   ['snow', ['consecrated snowfield', 'hidden path to the haligtree', 'yelough', 'sanctum of eiglay', 'ordina', 'albinauric rise', 'grave warden duelist', 'cave of the forlorn']],
   ['mount', ['mountaintops', 'giant-conquering', 'guardian', 'castle sol', 'forbidden lands', 'stargazers', 'church of repose', 'spiritcaller cave', 'spirit caller cave', 'lord contender', 'giant\'s mountaintops', 'fire giant', 'borealis', 'black blade kindred', 'commander niall', 'après niall', 'zamor ruins']],
-  ['under', ['siluria', 'siofra', 'ainsel', 'nokron', 'deeproot', 'lake of rot', 'mohgwyn', 'mohg\'s', 'subterranean shunning', 'dragonkin soldier']],
+  ['under', ['siluria', 'noxumbra', 'siofra', 'ainsel', 'nokron', 'deeproot', 'lake of rot', 'mohgwyn', 'mohg\'s', 'subterranean shunning', 'dragonkin soldier']],
   ['leyndell', ['fell twins', 'leyndell', 'erdtree sanctuary', 'fortified manor', 'queen\'s bedchamber', 'sealed tunnel']],
   ['gelmir', ['fort laiedd', 'gelmir', 'volcano', 'seethewater', 'craftsman', 'frenzied flame camp', 'temple of eiglay', 'hermit village']],
   ['altus', ['elemer', 'altus', 'dominula', 'windmill', 'woodfolk', 'rampartside', 'minor erdtree church', 'shaded castle', 'writheblood', 'unsightly', 'sainted hero', 'auriza', 'mirage rise', 'second church of marika', 'stormcaller church', 'highway lookout', 'tree sentinel', 'lift of rold', 'sage\'s cave', 'fallingstar beast du', 'old altus', 'perfumer\'s ruins', 'perfumer\'s grotto', 'perfumer grotto', 'fourth church', 'wyndham', 'golden lineage']],
