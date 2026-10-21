@@ -9,6 +9,7 @@ import { Bars, famVar, kitList, nSpells } from './Home';
 import { Trans, useTranslation } from 'react-i18next';
 import i18n, { td } from './i18n';
 import { PREFER_KIND, findItem, itemHash } from './data/items';
+import { useGloss } from './Gloss';
 
 const { FAM, C, BY } = CV;
 const ZL: Record<string, string> = {}, ZO: Record<string, number> = {};
@@ -109,6 +110,7 @@ function Tags({ e }: { e: Entry }) {
 
 export default function Classe({ id }: { id: string }) {
   const { t } = useTranslation();
+  const g = useGloss();
   const x = BY[id], d = D[id];
   const [S, setS] = useState<State>({ tab: 'armor', v: 'tab', z: 'all', t: 'all', q: '', hide: false, rs: false });
   const [, setRev] = useState(0); // progression lives in fiche.ts; bump to re-render after a change
@@ -250,9 +252,9 @@ export default function Classe({ id }: { id: string }) {
         {b && <section className="build" aria-labelledby="play">
           <h2 id="play" className="sec">{t('cls.play', { name: x.name })}</h2>
           <div className="panel">
-            <span className="eyebrow">{t('cls.stats')}</span><p className="lead">{td(b.stats)}</p>
+            <span className="eyebrow">{t('cls.stats')}</span><p className="lead">{g(td(b.stats))}</p>
             <span className="eyebrow">{t('cls.route')}</span>
-            <ol className="plan">{b.plan.map((p, i) => <li key={i}><b>{t('cls.phase.' + i)}</b>{td(p)}</li>)}</ol>
+            <ol className="plan">{b.plan.map((p, i) => <li key={i}><b>{t('cls.phase.' + i)}</b>{g(td(p))}</li>)}</ol>
           </div>
           <div className="prog-top"><span className="eyebrow">{t('cls.tal')}</span><span className="mono">{talDone} / {b.tal.length}</span></div>
           <div className="bgrid">
@@ -265,8 +267,8 @@ export default function Classe({ id }: { id: string }) {
                     <input type="checkbox" className="ckb" checked={on} onChange={ev => { F.setDone(id, k, ev.target.checked); setRev(r => r + 1); }} aria-label={t('cls.got', { name: n })} />
                     <div>
                       <span className="txt">{inLink(n, n) ?? link(n, n)}</span>
-                      <p className="why">{td(why)}</p>
-                      <span className="loc">{td(fx)} · <i>{td(where)}</i></span>
+                      <p className="why">{g(td(why))}</p>
+                      <span className="loc">{g(td(fx))} · <i>{td(where)}</i></span>
                     </div>
                   </li>;
                 })}</ul>
@@ -278,7 +280,7 @@ export default function Classe({ id }: { id: string }) {
             <article key={title} className="combo">
               <h3>{td(title)}</h3>
               <div className="sps">{items.split(' + ').map(s => <span key={s} className="sp">{inLink(s, s) ?? link(s, s)}</span>)}</div>
-              <p className="loc">{td(why)}</p>
+              <p className="loc">{g(td(why))}</p>
             </article>
           ))}</div>
           <p className="note">{t('cls.buildNote')}</p>

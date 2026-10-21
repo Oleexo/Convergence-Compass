@@ -1,5 +1,32 @@
 {
   "lang": { "label": "Language" },
+  "gloss": {
+    "guardCounter": "Counterattack made right after blocking a hit with your guard. It quickly wears down the enemy's stance.",
+    "crit": "Riposte after a parry or a broken stance, or a backstab. It deals far more damage than a normal hit; the weapon's Critical stat multiplies it.",
+    "riposte": "Critical hit dealt right after parrying an attack or breaking an enemy's stance.",
+    "parry": "Shield or weapon skill that deflects an attack with the right timing and opens the enemy to a riposte.",
+    "poise": "Resistance to staggering: the higher it is, the less hits you take interrupt your attacks.",
+    "stance": "Hidden enemy gauge worn down by heavy, charged and jump attacks. Once broken, the enemy is open to a critical hit.",
+    "charged": "Heavy attack held before striking: slower, but more damage and more stance damage.",
+    "hyperarmor": "During some attacks, hits you take do not interrupt you (you still take the damage).",
+    "ash": "Skill applied to a regular weapon. It replaces the weapon's skill and can change its affinity.",
+    "load": "Weight of your gear against your maximum equip load. Light load: fast roll; heavy: slow roll; over the maximum, no roll.",
+    "fp": "Focus points: the blue bar spent on spells and weapon skills.",
+    "hp": "Hit points: the red bar; at zero, you die.",
+    "stamina": "The green bar spent on attacks, rolls, sprints and guarding. Endurance is the stat that raises it, along with equip load.",
+    "scaling": "Extra damage from your stats, rated from E (little) to S (a lot).",
+    "buildup": "Amount added to a status gauge on each hit. When the gauge fills, the effect triggers.",
+    "absorption": "Share of incoming damage cancelled by your armor and effects.",
+    "bleed": "Status that builds up on each hit. When the gauge fills, the target loses a chunk of its max HP at once.",
+    "frost": "Status that, when it triggers, deals damage, weakens the target's defense and slows its stamina recovery.",
+    "rot": "Scarlet Rot: when it triggers, drains HP over time, long and fast.",
+    "poison": "Status that, when it triggers, drains HP over time, slower than Scarlet Rot.",
+    "sleep": "Status that, when it triggers, puts the target to sleep for a few seconds.",
+    "madness": "Status that, when it triggers, deals damage and drains part of your FP. It affects players and few enemies.",
+    "discovery": "Chance of getting loot from enemies. It rises with Arcane.",
+    "arcane": "Stat behind discovery, bleed and poison, and some spells and weapons.",
+    "vigor": "Stat that raises max HP and fire resistance."
+  },
   "f": {
     "keyStats": "Key stats", "level": "Level", "start": "Start", "dmg": "Damage", "theme": "Theme", "armor": "Armor",
     "kit": "Gear", "set": "Set", "spells": "Spells", "place": "Location", "details": "Details", "all": "All"

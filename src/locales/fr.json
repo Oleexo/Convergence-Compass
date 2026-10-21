@@ -1,5 +1,32 @@
 {
   "lang": { "label": "Langue" },
+  "gloss": {
+    "guardCounter": "Contre-attaque lancée juste après avoir bloqué un coup avec la garde. Elle entame vite la posture de l'ennemi.",
+    "crit": "Riposte après une parade ou une posture brisée, ou attaque dans le dos. Elle fait bien plus de dégâts qu'un coup normal ; la stat « Critique » de l'arme la multiplie.",
+    "riposte": "Coup critique porté juste après avoir paré une attaque ou brisé la posture d'un ennemi.",
+    "parry": "Compétence de bouclier ou d'arme qui détourne une attaque au bon moment et ouvre l'ennemi à une riposte.",
+    "poise": "Résistance au vacillement : plus elle est haute, moins les coups reçus interrompent tes attaques.",
+    "stance": "Jauge cachée de l'ennemi qui baisse sous les coups lourds, chargés et sautés. Une fois brisée, il est exposé à un coup critique.",
+    "charged": "Attaque lourde maintenue avant de frapper : plus lente, mais plus de dégâts et de dégâts de posture.",
+    "hyperarmor": "Pendant certaines attaques, les coups reçus ne t'interrompent pas (tu prends quand même les dégâts).",
+    "ash": "Compétence qu'on fixe sur une arme ordinaire. Elle remplace la compétence de l'arme et peut changer son affinité.",
+    "load": "Poids de ton équipement par rapport à ta charge maximale. Charge légère : roulade rapide ; élevée : roulade lente ; au-delà du maximum, plus de roulade.",
+    "fp": "Points de concentration : jauge bleue dépensée par les sorts et les compétences d'arme.",
+    "hp": "Points de vie : jauge rouge ; à zéro, tu meurs.",
+    "stamina": "Jauge verte dépensée par les attaques, roulades, sprints et la garde. C'est aussi la statistique qui l'augmente, avec la charge d'équipement.",
+    "scaling": "Dégâts en plus selon tes statistiques, notés de E (peu) à S (énormément).",
+    "buildup": "Valeur ajoutée à chaque coup à la jauge d'une altération. Quand la jauge est pleine, l'effet se déclenche.",
+    "absorption": "Part des dégâts reçus annulée par ton armure et tes effets.",
+    "bleed": "Altération qui s'accumule à chaque coup. Quand la jauge est pleine, la cible perd d'un coup une part de ses PV max.",
+    "frost": "Altération qui, à son déclenchement, inflige des dégâts, affaiblit la défense de la cible et ralentit la récupération de son endurance.",
+    "rot": "Pourriture écarlate : à son déclenchement, fait perdre des PV en continu, longtemps et vite.",
+    "poison": "Altération qui, à son déclenchement, fait perdre des PV en continu, moins vite que la pourriture.",
+    "sleep": "Altération qui, à son déclenchement, endort la cible quelques secondes.",
+    "madness": "Altération qui, à son déclenchement, inflige des dégâts et vide une partie des PC. Elle touche les joueurs et peu d'ennemis.",
+    "discovery": "Chance d'obtenir du butin sur les ennemis. Elle monte avec les Arcanes.",
+    "arcane": "Statistique de la découverte, de l'hémorragie et du poison, et de certains sorts et armes.",
+    "vigor": "Statistique qui augmente les PV max et la résistance au feu."
+  },
   "f": {
     "keyStats": "Stats clés", "level": "Niveau", "start": "Départ", "dmg": "Dégâts", "theme": "Thème", "armor": "Armure",
     "kit": "Matériel", "set": "Set", "spells": "Sorts", "place": "Lieu", "details": "Détails", "all": "Toutes"
