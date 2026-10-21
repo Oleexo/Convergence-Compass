@@ -51,7 +51,9 @@ var WD: Row[] = [
   ["Carwyn's Épée", "Coffre de la flèche de Castle Morne"],
   ["Sulien's Razors", "Leyndell"],
   ["Emyr's Great Talons", "Champ de bataille près de Bridge of Iniquity"],
-  ["Black Bow", "Leyndell"]
+  ["Black Bow", "Leyndell"],
+  ["Bracelet of Shadow", "Mirage Rise"],
+  ["Nia's Passot", "Fog Rift Catacombs"]
 ];
 
 const DET: Record<string, Det> = {
