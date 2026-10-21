@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 
 const load = async p => (await runnerImport(new URL('../' + p, import.meta.url).pathname)).module.default;
 const json = p => JSON.parse(readFileSync(new URL('../' + p, import.meta.url), 'utf8'));
-const [CV, F, D, Z] = await Promise.all(['src/data/classes.ts', 'src/data/fiche.ts', 'src/data/det.ts', 'src/data/zones.ts'].map(load));
+const [CV, F, D, Z, B] = await Promise.all(['src/data/classes.ts', 'src/data/fiche.ts', 'src/data/det.ts', 'src/data/zones.ts', 'src/data/build.ts'].map(load));
 const EN = json('src/locales/en-data.json');
 
 const shown = new Set();
@@ -13,6 +13,8 @@ Object.values(CV.STAT_FR).forEach(add); Object.values(CV.FAM).forEach(add); CV.D
 F.OBT.forEach(o => add(o[1])); Object.values(F.OBT_SHORT).forEach(add); Z.list.forEach(z => add(z[1]));
 for (const x of CV.C) { [x.prim, x.dmg, x.theme, x.armor, x.place, x.blurb].forEach(add); x.kit.forEach(add); }
 for (const id in D) { add(D[id].note); add(D[id].wnote); }
+Object.values(B.TAL).forEach(t => t.forEach(add));
+for (const b of Object.values(B.B)) { add(b.stats); b.plan.forEach(add); b.combo.forEach(c => { add(c[0]); add(c[2]); }); }
 for (const x of CV.C) for (const e of F.entries(x.id)) {
   [e.name, e.detail, e.how, e.kind, e.group, e.badge].forEach(add);
   if (e.prec) { [e.prec.note, e.prec.alt, e.prec.place].forEach(add); (e.prec.acc || []).forEach(add); }

@@ -97,6 +97,14 @@
     "others": "Other classes",
     "modMap": "Mod interactive map ↗",
     "modWiki": "Mod wiki ↗",
+    "play": "Playing {{name}}",
+    "stats": "Stat priorities",
+    "route": "Route",
+    "phase": { "0": "Early", "1": "Mid", "2": "Late" },
+    "tal": "Recommended talismans",
+    "combos": "Gear combos",
+    "buildNote": "Talismans are the mod's own, with effects taken from its wiki: in Convergence they are crafted from Remnants. The route and combos are suggestions, not a mod source. Checked talismans are saved with your progress. Names link to the site's item database, or to the Fextralife wiki when it doesn't know them.",
+    "collect": "Class gear to collect",
     "footer": "Sources: class pages and rune pages from <site>convergencemod.com</site> (October 19, 2026); \"Details\" panels: <wiki>mod wiki</wiki> (October 20, 2026), currently available for Glint Sorcerer only. These sources sometimes disagree: such cases are flagged with ⚠. None gives the nearest site of grace. Zones and acquisition types are inferred (zones cross-checked on the wiki when possible; \"to confirm\" flags a doubt). Checked boxes are saved in your browser only. The weapons listed are the ones on the class page, not a build guide. Item names link to their page in the site's item database, which lists the links to the wikis; names it doesn't know link to the Fextralife wiki (base game). The mod's interactive map couldn't be tested from here."
   },
   "item": {

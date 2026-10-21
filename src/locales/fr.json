@@ -97,6 +97,14 @@
     "others": "Autres classes",
     "modMap": "Carte interactive du mod ↗",
     "modWiki": "Wiki du mod ↗",
+    "play": "Jouer {{name}}",
+    "stats": "Priorités de statistiques",
+    "route": "Parcours",
+    "phase": { "0": "Début", "1": "Milieu", "2": "Fin" },
+    "tal": "Talismans conseillés",
+    "combos": "Combinaisons d'équipement",
+    "buildNote": "Les talismans sont ceux du mod, avec leurs effets relevés sur son wiki : dans Convergence, ils se fabriquent à partir de Remnants. Le parcours et les combinaisons sont des suggestions, pas une source du mod. Les talismans cochés sont enregistrés avec ta progression. Les noms renvoient vers la base d'objets du site, ou vers le wiki Fextralife quand elle ne les connaît pas.",
+    "collect": "Équipement de la classe à récupérer",
     "footer": "Sources : fiches de classes et pages de runes de <site>convergencemod.com</site> (19 octobre 2026) ; onglets « Précisions » : <wiki>wiki du mod</wiki> (20 octobre 2026), disponibles pour l'instant sur Glint Sorcerer. Ces sources se contredisent parfois : le cas est alors signalé par ⚠. Aucune ne donne la grâce la plus proche. Les conditions d'obtention sont traduites, les noms d'objets et de lieux restent en anglais. Les zones et les types d'obtention sont déduits (zones recoupées sur le wiki quand c'était possible, « à préciser » signale un doute). Les cases cochées sont enregistrées dans ton navigateur uniquement. Les armes listées sont celles de la fiche de la classe, pas un guide de build. Les noms d'objets renvoient vers leur page de la base d'objets du site, qui propose les liens vers les wikis ; ceux qu'elle ne connaît pas renvoient vers le wiki Fextralife (jeu de base). La carte interactive du mod n'a pas pu être testée depuis ici."
   },
   "item": {

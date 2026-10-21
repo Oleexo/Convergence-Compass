@@ -188,6 +188,26 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f
   .kit { font-size: 14px; color: var(--muted); display: flex; flex-direction: column; gap: 3px; margin: 0; }
   .kit b { color: var(--ink); font-weight: 600; }
   
+  /* playing the class */
+  .sec { font-size: 28px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  .build { display: flex; flex-direction: column; gap: 14px; }
+  .build .note { margin: 0; }
+  .bgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+  .bgrid .panel { gap: 8px; align-self: stretch; }
+  .lead { margin: 0 0 8px; }
+  .plan { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .plan li { border-left: 3px solid var(--fam); padding-left: 10px; }
+  .plan b { display: block; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fam); }
+  .tals { list-style: none; margin: 0; padding: 0; }
+  .tals li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+  .tals li:last-child { border-bottom: 0; }
+  .tals .ckb { align-self: flex-start; margin-top: 3px; }
+  .tals .txt { font-weight: 600; }
+  .tals li.done .txt { text-decoration: line-through; }
+  .combos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .combo { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--fam); border-radius: 3px; padding: 12px 14px; }
+  .combo h3 { font-size: 21px; }
+
   /* where to look */
   .locate { display: block; }
   .filt { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 2fr); gap: 14px 28px; align-self: auto; }
@@ -270,7 +290,7 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f
     .filt > div:last-child { grid-column: auto; }
   }
   @media (max-width: 760px) {
-    .hero { grid-template-columns: 1fr; }
+    .hero, .bgrid { grid-template-columns: 1fr; }
   }
   @media (max-width: 520px) {
     .bars { grid-template-columns: 1fr; }

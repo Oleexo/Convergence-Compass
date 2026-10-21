@@ -66,8 +66,8 @@ function load() {
   try { var s = window.localStorage.getItem(KEY); if (s) mem = JSON.parse(s) || {}; } catch (e) { mem = {}; }
 }
 function save() { try { window.localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) { /* stockage indisponible : la coche reste en mémoire pour cette page */ } }
-function isDone(id: string, e: Entry) { load(); return !!mem[id + '|' + e.key]; }
-function setDone(id: string, e: Entry, v: boolean) { load(); if (v) mem[id + '|' + e.key] = 1; else delete mem[id + '|' + e.key]; save(); }
+function isDone(id: string, e: Pick<Entry, "key">) { load(); return !!mem[id + '|' + e.key]; }
+function setDone(id: string, e: Pick<Entry, "key">, v: boolean) { load(); if (v) mem[id + '|' + e.key] = 1; else delete mem[id + '|' + e.key]; save(); }
 function progress(id: string) {
   load();
   var t = 0, n = 0;
