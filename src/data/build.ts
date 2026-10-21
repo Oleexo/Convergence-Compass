@@ -260,7 +260,7 @@ var B: Record<string, Build> = {
       ["Radagon Icon", "Les sorts partent plus vite : moins d'ouvertures pour l'ennemi."],
       ["Cerulean Amber Medallion", "Plus de PC pour lancer plus longtemps."],
       ["Moon of Nokstella", "Tes paliers débloquent beaucoup de sorts : 2 emplacements en plus."],
-      ["Saboteur Heirloom", "Si tu joues Moonveil ou Carian Knight Sword (Intelligence et Dextérité).", 1],
+      ["Saboteur Heirloom", "Si tu joues Moonveil ou Carian Knight's Sword (Intelligence et Dextérité).", 1],
       ["Godfrey Icon", "Charge Comet ou Carian Greatsword pour 15 % de plus.", 1],
       ["Primal Glintstone Blade", "Sorts 10 % moins chers en PC.", 1],
       ["Carian Filigreed Crest", "La compétence de Moonveil coûte 25 % de PC en moins.", 1]
@@ -276,7 +276,7 @@ var B: Record<string, Build> = {
     stats: "Intelligence et Force pour les armes de gravité, Vigueur, un peu d'Esprit.",
     plan: [
       "Gravity Well pour attirer, Meteoric Ore Blade pour finir au contact.",
-      "Meteorite Staff + Rock Sling ou Meteorite pour la zone ; Alabaster Lord's Greatsword.",
+      "Meteorite Staff + Rock Sling ou Meteorite pour la zone ; Alabaster Lord's Sword.",
       "Starscourge Greatsword ou Ruins Greatsword avec General Radahn's Set."
     ],
     tal: [
@@ -293,7 +293,7 @@ var B: Record<string, Build> = {
       ["Gravité au contact", "Meteoric Ore Blade + Gravity Well + Godfrey Icon", "Attire, frappe, recommence : la gravité regroupe, l'épée finit."],
       ["Général", "Starscourge Greatsword + General Radahn's Set + Starscourge Heirloom", "Hommage à Radahn : grosse arme de gravité, Starscourge Heirloom pour la Force."],
       ["Pluie de météores", "Meteorite Staff + Meteorite + Moon of Nokstella", "Bombardement de zone à distance ; les emplacements en plus gardent Gravity Well en secours."],
-      ["Seigneur d'albâtre", "Alabaster Lord's Greatsword + Gaius Set + Two-Handed Sword Talisman", "Grande épée à deux mains avec projection de gravité ; le talisman renforce chaque coup."]
+      ["Seigneur d'albâtre", "Alabaster Lord's Sword + Gaius Set + Two-Handed Sword Talisman", "Grande épée à deux mains avec projection de gravité ; le talisman renforce chaque coup."]
     ]
   },
   underworld: {
@@ -349,7 +349,7 @@ var B: Record<string, Build> = {
     plan: [
       "Banished Knight's Halberd au contact, Storm Gust et Rebuff pour repousser.",
       "Storm Armament et Whirlwind ; Banished Knight Set.",
-      "Tempestcaller Staff + Tornado, Cloud Form pour te repositionner."
+      "Tempestcaller's Staff + Tornado, Cloud Form pour te repositionner."
     ],
     tal: [
       ["Midnight Heirloom", "+3 Intelligence et Foi, tes deux statistiques."],
@@ -363,7 +363,7 @@ var B: Record<string, Build> = {
     ],
     combo: [
       ["Chevalier banni", "Banished Knight's Halberd + Banished Knight Set + Storm Armament", "Hallebarde enchantée de vent : allonge et contrôle de foule."],
-      ["Œil du cyclone", "Tempestcaller Staff + Twister + Divine Beast Set", "Garde les ennemis à distance et frappe en tempête."],
+      ["Œil du cyclone", "Tempestcaller's Staff + Twister + Divine Beast Set", "Garde les ennemis à distance et frappe en tempête."],
       ["Lames du zéphyr", "Zephyr Blades + Set of Solitude + Two-Headed Turtle Talisman", "Lames rapides portées par le vent ; l'endurance remonte vite entre deux rafales."],
       ["Gargouille", "Gargoyle's Halberd + Divine Beast Set + Claw Talisman", "Saute et frappe, puis Storm Gust pour repousser."]
     ]
@@ -437,7 +437,7 @@ var B: Record<string, Build> = {
       ["Lame lunaire", "Dark Moon Greatsword + Blaidd's Set + Carian Filigreed Crest", "La compétence de l'épée coûte 25 % de PC en moins et gèle."],
       ["Tempête de givre", "Snow Witch Staff + Freezing Mist + Snow Witch Set", "Accumule le gel puis éclate tout : idéal contre les gros ennemis."],
       ["Zamor", "Zamor Curved Sword + Zamor Set + Godfrey Icon", "Charge la compétence de la lame Zamor pour 15 % de plus, gel au contact."],
-      ["Marteau d'Einar", "Einar's Hammer + Frozen Armament + Forbidden Heirloom", "Gel sur une arme lourde ; l'Heirloom monte Intelligence et Arcanes ensemble."]
+      ["Marteau d'Einar", "Einar's Greathammer + Frozen Armament + Forbidden Heirloom", "Gel sur une arme lourde ; l'Heirloom monte Intelligence et Arcanes ensemble."]
     ]
   },
   aberrant: {
@@ -565,7 +565,7 @@ var B: Record<string, Build> = {
     plan: [
       "Black Flame Dart à distance, Celebrant's Cleaver + Black Flame Blade au contact.",
       "Godskin Peeler, Scouring Black Flame ; Godskin Apostle Set.",
-      "Godslayer Seal + Black Flame Wave, Godslayer's Greatsword."
+      "Godslayer's Seal + Black Flame Wave, Godslayer's Greatsword."
     ],
     tal: [
       ["Godskin Swaddling Cloth", "Les enchaînements rendent des PV : idéal au contact."],
@@ -579,7 +579,7 @@ var B: Record<string, Build> = {
     ],
     combo: [
       ["Apôtre", "Godskin Peeler + Godskin Apostle Set + Godskin Swaddling Cloth", "La glaive tournoie en flamme noire, chaque enchaînement soigne."],
-      ["Tueur de dieux", "Godslayer's Greatsword + Godslayer Seal + Midnight Heirloom", "Flamme noire, Foi et Intelligence montées ensemble ; dégâts sur la durée contre les boss."],
+      ["Tueur de dieux", "Godslayer's Greatsword + Godslayer's Seal + Midnight Heirloom", "Flamme noire, Foi et Intelligence montées ensemble ; dégâts sur la durée contre les boss."],
       ["Fléau noir", "Black Knife + Blackflame Monk Set + Old Lord's Talisman", "Black Flame Blade sur une dague rapide, deux fois plus longtemps."],
       ["Lame de Maliketh", "Maliketh's Black Blade + Maliketh's Set + Godfrey Icon", "Charge la compétence de la lame noire pour 15 % de plus."]
     ]
@@ -653,7 +653,7 @@ var B: Record<string, Build> = {
       ["Valkyrie", "Hand of Malenia + Malenia's Set + Winged Sword Insignia", "Enchaînements rapides, l'insigne monte l'attaque à chaque coup."],
       ["Peste", "Seal of Rot + Poison Mist + Scorpion Heirloom", "Zone et usure ; Foi et Arcanes montées ensemble."],
       ["Chevalier immaculé", "Rotten Crystal Spear + Cleanrot Knight Set + Curative Horn Charm", "Traverse les marais de pourriture sans craindre le terrain ni ton arme."],
-      ["Dard du scorpion", "Scorpion Stinger + Millicent's Set + Perfume Heirloom", "Dague à pourriture qui scale sur Dextérité et Arcanes."]
+      ["Dard du scorpion", "Scorpion's Stinger + Millicent's Set + Perfume Heirloom", "Dague à pourriture qui scale sur Dextérité et Arcanes."]
     ]
   },
   mystic: {

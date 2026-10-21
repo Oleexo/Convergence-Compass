@@ -50,7 +50,7 @@ var WH: Row[] = [
   ["Gilded Quarterstaff", "Au nord de Church of Vows"],
   ["Red Branch Shortbow", "Au sud de Caria Manor"],
   ["Longbow", "Vendu par Twin Maiden Husks"],
-  ["Golem's Greatbow", "Castle Morne"],
+  ["Golem Greatbow", "Castle Morne"],
   ["Bracelet of Gold", "Leyndell, Capital Outskirts, en battant Ulcerated Tree Spirit près de la Minor Erdtree Church"],
   ["Cragsplitter", "Fort Faroth"]
 ];
@@ -139,7 +139,7 @@ const DET: Record<string, Det> = {
       ["Carian Golem Set", "Butin du Carian Golem à Caelid"]
     ],
     wpn: [
-      ["Carian Knight Sword", "The Four Belfries"],
+      ["Carian Knight's Sword", "The Four Belfries"],
       ["Celestial Blade", "Tour accessible par Academy Crystal Cave"],
       ["Rogier's Rapier", "Sorcerer Rogier"],
       ["Moonveil", "Altus Tunnel"],
@@ -173,7 +173,7 @@ const DET: Record<string, Det> = {
     ],
     wpn: [
       ["Sword of the Cosmos", "Caria Manor"],
-      ["Alabaster Lord's Greatsword", "Alabaster Lord, Redmane Castle"],
+      ["Alabaster Lord's Sword", "Alabaster Lord, Redmane Castle"],
       ["Wing of Astel", "Ainsel River"],
       ["Onyx Lord's Greatsword", "Woodfolk Ruins, Altus"],
       ["Meteoric Ore Blade", "Sellia Crystal Tunnel"],
@@ -243,7 +243,7 @@ const DET: Record<string, Det> = {
       ["Vortex of Eiglay; Magma Missile; Inferno; Embrace the Devourer", "Consecrated Snowfield : en battant Great Wyrm Theodorix"]
     ],
     cat: [["Lavastone Staff", "Après Magma Wyrm, près de Fort Laiedd"]],
-    uniq: ["Man-Serpent Shield", "Volcano Manor"]
+    uniq: ["Man-Serpent's Shield", "Volcano Manor"]
   },
   stormcaller: {
     set: "Stormcaller Set", rune: "Rune of the Storm",
@@ -262,7 +262,7 @@ const DET: Record<string, Det> = {
       ["Dyru's Greatsword", "Acheté à Enia après Dyru, Scavenger King"],
       ["Axe of Godrick", "Acheté après Godrick"],
       ["Eagle's Edge", "Chapel of Anticipation"],
-      ["Horned Warrior Greatsword", "Enir Elim"],
+      ["Horned Warrior's Greatsword", "Enir Elim"],
       ["Stormcaller Dirk", "Cliffbottom Catacombs, butin de Stormcaller Taran"]
     ],
     runes: [
@@ -272,8 +272,8 @@ const DET: Record<string, Det> = {
       ["Cyclone; Dematerialize; Suffocate; Storm Shatter", "Altus Plateau, Sainted Hero's Grave : en battant Ancient Hero of Zamor"],
       ["Tornado; Stormcaller's Sublimity; Tempest Form", "Crumbling Farum Azula : coffre dans une petite salle donnant sur un balcon de toit, gardé par un Banished Knight et des Stormhawks, au nord-ouest de la grâce Garden Courtyard"]
     ],
-    cat: [["Tempestcaller Staff", "Stormcaller Church, Altus"]],
-    uniq: ["Blue and White Wooden Shield", "Stormveil Castle"]
+    cat: [["Tempestcaller's Staff", "Stormcaller Church, Altus"]],
+    uniq: ["Blue-White Wooden Shield", "Stormveil Castle"]
   },
   nox: {
     set: "Nox Oracle Set", rune: "Rune of Night",
@@ -359,7 +359,7 @@ const DET: Record<string, Det> = {
       ["Icerind Hatchet", "Temple Quarter"],
       ["Royal Greatsword", "Butin de Blaidd"],
       ["Rimeheart", "Butin de Borealis"],
-      ["Einar's Hammer", "Acheté après Einar, Ice Guardian"],
+      ["Einar's Greathammer", "Acheté après Einar, Ice Guardian"],
       ["Crescent Moons", "Scadu Altus, Fort of Reprimand, en haut de la tour voisine de la grille fermée"]
     ],
     runes: [
@@ -538,7 +538,7 @@ const DET: Record<string, Det> = {
       ["Death Spark; Death Knight's Supplication; Death Lightning Stake; Death Lightning Barrage", "Scadu Altus, Fog Rift Catacombs : en battant le Death Knight"]
     ],
     cat: [["Dragon Cult Seal", "Leyndell"]],
-    uniq: ["Dragon Cult Crest", "Butin du Leyndell Knight, East Liurnia"]
+    uniq: ["Crest of the Dragon Cult", "Butin du Leyndell Knight, East Liurnia"]
   },
   godskin: {
     set: "Festive Set", rune: "Rune of Black Flame",
@@ -567,7 +567,7 @@ const DET: Record<string, Det> = {
       ["Black Firestorm; Black Flame Wave; Godslayer Sickle; Soul Annihilation", "Mountaintops of the Giants, Spiritcaller Cave : en battant Spiritcaller Snail"],
       ["Dusk Bolt; Deicide; Godslayer's Devotion; Wrath of the Queen", "Liurnia, Divine Tower of Liurnia : en battant Godskin Matriarch"]
     ],
-    cat: [["Godslayer Seal", "Dominula, Windmill Village"]],
+    cat: [["Godslayer's Seal", "Dominula, Windmill Village"]],
     uniq: ["Celebrant's Sickle", "Divine Tower of Caelid"]
   },
   frenzied: {
@@ -636,7 +636,7 @@ const DET: Record<string, Det> = {
       ["Millicent's Set", "Haligtree Town"]
     ],
     wpn: [
-      ["Scorpion Stinger", "Lake of Rot"],
+      ["Scorpion's Stinger", "Lake of Rot"],
       ["Rotten Crystal Sword", "Elphael"],
       ["Antspur Rapier", "Ainsel River"],
       ["Blade of Scarlet Bloom", "Lake of Rot"],

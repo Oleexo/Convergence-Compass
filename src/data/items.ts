@@ -45,15 +45,10 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
 const INDEX = index as unknown as Record<string, [ItemKind, string][]>;
 /** Noms écrits autrement sur les fiches de classe que sur le wiki (clé normalisée → nom du wiki). */
 const ALIAS: Record<string, string> = {
-  'carian knight sword': "Carian Knight's Sword",
   'palm-ax twinblade': 'Palm-Ax Twinblades',
-  'scorpion stinger': "Scorpion's Stinger",
-  'alabaster lords greatsword':"Alabaster Lord's Sword",
   'gaius set': "Gaius's Set",
   'hoslow set': "Hoslow's Set",
   'rakshasa set': "Rakshasa's Set",
-  'blue and white wooden shield': 'Blue-White Wooden Shield',
-  'man-serpent shield': "Man-Serpent's Shield",
 };
 /** Route d'une page détail : `#item/<type>/<nom>`. */
 export const itemHash = (kind: ItemKind, name: string) => '#item/' + kind + '/' + encodeURIComponent(name);
