@@ -154,6 +154,22 @@
       "dmg": "Damage", "guard": "Guard", "mul": "Spell power", "req": "Requirements", "scale": "Scaling", "status": "Status effects", "obtain": "How to obtain",
       "fp": "FP cost", "slots": "Memory slots", "debuff": "Summoning penalty", "cost": "Base cost"
     },
+    "tip": {
+      "weight": "Adds to your equip load: the heavier it is, the slower your roll.",
+      "upgrade": "Material used to reinforce the item. Smithing: regular weapon, its Ash of War can be changed. Somber: unique weapon, fixed skill. Glovewort: spirit ashes.",
+      "skill": "The weapon's skill, used with the skill button. Its FP cost is in brackets.",
+      "crit": "Multiplier for critical hits: ripostes after a parry, backstabs and hits on a downed enemy. 100% = normal; 130% = 30% more critical damage.",
+      "range": "Maximum shooting distance of the bow or crossbow.",
+      "dmg": "Base damage by type: Phy (physical), Mag (magic), Fire, Ltn (lightning), Hol (holy). Scaling adds to it based on your stats.",
+      "guard": "Share of damage blocked when guarding, by type (100 = fully blocked). Guard boost reduces the stamina lost on each blocked hit.",
+      "mul": "Power of spells cast with this catalyst, by damage type. 100% = full power.",
+      "req": "Minimum stats to wield the item properly: STR Strength, DEX Dexterity, INT Intelligence, FTH Faith, ARC Arcane. Below them, the item is heavily weakened.",
+      "scale": "Damage gained from each stat, from E (little) to S (a lot). Reinforcing the weapon raises this bonus.",
+      "status": "Buildup on each hit: when the enemy's gauge fills, the effect triggers. The higher the number, the sooner it triggers.",
+      "fp": "Focus points (FP) spent on each cast.",
+      "slots": "Memory slots the spell takes up once equipped.",
+      "debuff": "Reduces your HP, FP and stamina while the spirit is summoned."
+    },
     "status": { "bleed": "Bleed", "frost": "Frostbite", "rot": "Scarlet Rot", "poison": "Poison", "sleep": "Sleep", "madness": "Madness", "death": "Death Blight" },
     "flag": { "soul_burn": "Soul Burn", "immolation": "Immolation" },
     "types": {

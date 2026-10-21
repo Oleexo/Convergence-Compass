@@ -40,7 +40,8 @@ export function Lines({ text, tr, className = 'fx' }: { text: string; tr: Tr; cl
   );
 }
 
-const fact = (label: string, v: ReactNode) => v ? <><dt>{label}</dt><dd>{v}</dd></> : null;
+// Focusable so the explanation also opens on tap and keyboard, where a native `title` never shows.
+const fact = (label: string, v: ReactNode, tip?: string) => v ? <><dt>{tip ? <span className="tip" tabIndex={0}>{label}<span role="tooltip">{tip}</span></span> : label}</dt><dd>{v}</dd></> : null;
 
 function PieceView({ p, tr }: { p: Piece; tr: Tr }) {
   return (
@@ -58,26 +59,27 @@ export function ItemBody({ it, x }: { it: Item; x: ItemText }) {
   const { t, tr, typeLabel, skillLabel, dmgL, statL, pairs } = x;
   const status = it.status ? Object.entries(it.status).map(([k, v]) => t('items.status.' + k) + ' ' + v).join(' · ') : '';
   const flags = it.flags?.map(f => t('items.flag.' + f)).join(' · ');
+  const f = (k: string, v: ReactNode) => fact(t('items.f.' + k), v, t('items.tip.' + k, { defaultValue: '' }));
   return <>
     {it.desc && <p className="fl">{tr(it.desc)}</p>}
     <dl className="facts">
-      {fact(t('items.f.class'), it.cls)}
-      {fact(t('items.f.tier'), it.kind === 'armor' && it.tier ? typeLabel(it.tier) : undefined)}
-      {fact(t('items.f.fp'), it.fp)}
-      {fact(t('items.f.slots'), it.slots)}
-      {fact(t('items.f.weight'), it.weight)}
-      {fact(t('items.f.upgrade'), it.upgrade)}
-      {fact(t('items.f.skill'), it.skill && skillLabel(it.skill))}
-      {fact(t('items.f.crit'), it.crit)}
-      {fact(t('items.f.range'), it.range)}
-      {fact(t('items.f.dmg'), pairs(it.dmg, DMG_KEYS, dmgL))}
-      {fact(t('items.f.guard'), pairs(it.guard, [...DMG_KEYS, 'boost'], k => k === 'boost' ? t('items.dmg.boost') : dmgL(k)))}
-      {fact(t('items.f.mul'), pairs(it.mul, DMG_KEYS, dmgL))}
-      {fact(t('items.f.req'), pairs(it.req, STAT_KEYS, statL))}
-      {fact(t('items.f.scale'), pairs(it.scale, STAT_KEYS, statL))}
-      {fact(t('items.f.status'), [status, flags].filter(Boolean).join(' · '))}
-      {fact(t('items.f.debuff'), it.debuff && tr(it.debuff))}
-      {fact(t('items.f.cost'), it.cost)}
+      {f('class', it.cls)}
+      {f('tier', it.kind === 'armor' && it.tier ? typeLabel(it.tier) : undefined)}
+      {f('fp', it.fp)}
+      {f('slots', it.slots)}
+      {f('weight', it.weight)}
+      {f('upgrade', it.upgrade)}
+      {f('skill', it.skill && skillLabel(it.skill))}
+      {f('crit', it.crit)}
+      {f('range', it.range)}
+      {f('dmg', pairs(it.dmg, DMG_KEYS, dmgL))}
+      {f('guard', pairs(it.guard, [...DMG_KEYS, 'boost'], k => k === 'boost' ? t('items.dmg.boost') : dmgL(k)))}
+      {f('mul', pairs(it.mul, DMG_KEYS, dmgL))}
+      {f('req', pairs(it.req, STAT_KEYS, statL))}
+      {f('scale', pairs(it.scale, STAT_KEYS, statL))}
+      {f('status', [status, flags].filter(Boolean).join(' · '))}
+      {f('debuff', it.debuff && tr(it.debuff))}
+      {f('cost', it.cost)}
     </dl>
     {it.fx && <Lines text={it.fx} tr={tr} />}
     {it.pieces && <ul className="pieces">{it.pieces.map(p => <PieceView key={p.name} p={p} tr={tr} />)}</ul>}

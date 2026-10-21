@@ -154,6 +154,22 @@
       "dmg": "Dégâts", "guard": "Garde", "mul": "Puissance des sorts", "req": "Prérequis", "scale": "Scaling", "status": "Altérations", "obtain": "Obtention",
       "fp": "Coût en PC", "slots": "Emplacements", "debuff": "Malus à l'invocation", "cost": "Coût de base"
     },
+    "tip": {
+      "weight": "S'ajoute à ta charge d'équipement : plus elle est lourde, plus ta roulade est lente.",
+      "upgrade": "Matériau pour renforcer l'objet. Smithing : arme ordinaire, sa cendre de guerre peut être changée. Somber : arme unique, compétence fixe. Glovewort : cendres d'esprit.",
+      "skill": "Compétence de l'arme, lancée avec la touche de compétence. Son coût en PC est entre parenthèses.",
+      "crit": "Multiplicateur des coups critiques : riposte après une parade, attaque dans le dos ou sur un ennemi à terre. 100 % = normal ; 130 % = 30 % de dégâts critiques en plus.",
+      "range": "Distance de tir maximale de l'arc ou de l'arbalète.",
+      "dmg": "Dégâts de base par type : Phy (physique), Mag (magique), Feu, Fou (foudre), Sac (sacré). Le scaling s'y ajoute selon tes statistiques.",
+      "guard": "Part des dégâts bloqués quand tu gardes, par type (100 = tout est bloqué). Le bonus de garde réduit l'endurance perdue à chaque coup bloqué.",
+      "mul": "Puissance des sorts lancés avec ce catalyseur, selon leur type de dégâts. 100 % = pleine puissance.",
+      "req": "Statistiques minimales pour bien manier l'objet : STR Force, DEX Dextérité, INT Intelligence, FTH Foi, ARC Arcanes. En dessous, l'objet est très affaibli.",
+      "scale": "Dégâts gagnés grâce à chaque statistique, de E (peu) à S (énormément). Le renforcement de l'arme augmente ce bonus.",
+      "status": "Accumulation à chaque coup : quand la jauge de l'ennemi est pleine, l'effet se déclenche. Plus le chiffre est haut, plus il se déclenche vite.",
+      "fp": "Points de concentration (PC) dépensés à chaque lancement.",
+      "slots": "Emplacements de mémoire occupés par le sort une fois équipé.",
+      "debuff": "Réduction de tes PV, PC et endurance tant que l'esprit est invoqué."
+    },
     "status": { "bleed": "Hémorragie", "frost": "Gelure", "rot": "Pourriture", "poison": "Poison", "sleep": "Sommeil", "madness": "Folie", "death": "Mort" },
     "flag": { "soul_burn": "Brûlure d'âme", "immolation": "Immolation" },
     "types": {
