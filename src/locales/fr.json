@@ -218,5 +218,38 @@
       "rot_pots": "Pots de pourriture", "blood_pots": "Pots de sang", "frost_pots": "Pots de givre", "sleep_pots": "Pots de sommeil", "frenzy_pots": "Pots de frénésie", "misc_pots": "Pots divers"
     },
     "footer": "Source : <wiki>wiki du mod</wiki>, consulté le 20 octobre 2026. Les descriptions, effets et conditions d'obtention sont traduits de l'anglais par mes soins (PV, PC, absorption, équilibre… suivent le vocabulaire du jeu) ; les noms d'objets, de sorts, de compétences et de lieux restent en anglais. Une erreur de traduction est possible : le texte anglais reste visible en passant en EN. Certaines pages du wiki sont encore incomplètes (⚠), la plupart des cendres de guerre n'ont que leur lieu d'obtention, et le mod évolue : en cas de doute, fie-toi à ce que tu vois en jeu."
+  },
+  "bells": {
+    "docTitle": "Bell bearings · Convergence Compass",
+    "back": "← Toutes les classes",
+    "link": "Bell bearings : où trouver les pierres de forge à l'infini →",
+    "title": "Bell bearings des pierres de forge",
+    "intro": "Donne un bell bearing aux Twin Maiden Husks, à la Roundtable Hold, et elles vendent ensuite ses pierres sans limite. Voici où trouver chacun d'eux dans The Convergence, et jusqu'à quel niveau chaque pierre monte une arme.",
+    "unlocks": "Débloque chez les Twin Maiden Husks :",
+    "upTo": "jusqu'à +{{n}}",
+    "group": {
+      "smithing": "Smithing Stones (armes standard)",
+      "somber": "Somber Stones (armes uniques)",
+      "shadow": "Shadow Smithing Stones (Land of Shadow, armes standard)",
+      "somberShadow": "Somber Shadow Stones (Land of Shadow, armes uniques)"
+    },
+    "loc": {
+      "sm1": "Dans un coffre de Raya Lucaria Crystal Tunnel, gardé par une fourmi géante, avant le dernier ascenseur.",
+      "sm2": "Dans un coffre du Sealed Tunnel, dans la salle derrière le premier mur illusoire.",
+      "sm3": "Dans un coffre des Zamor Ruins, au sous-sol, dans l'angle sud-est des ruines.",
+      "sm4": "Sur un cadavre au nord-ouest de la grâce Garden Courtyard, sur le balcon après l'ascenseur circulaire.",
+      "so1": "Butin du boss Fallingstar Beast de Sellia Crystal Tunnel.",
+      "so2": "Butin du boss Crystalian Duo d'Altus Tunnel.",
+      "so3": "Sur un cadavre juste au nord de la grâce First Church of Marika.",
+      "so4": "Sur un cadavre juste au nord de la grâce Tempest-Facing Balcony.",
+      "so5": "Sur un cadavre près d'un autel, au nord-est de la grâce Dragon Temple Altar, en bas de l'ascenseur.",
+      "sh1": "Dans les mains de la statue de Hornsent, au sud-est des Ruins of Unte.",
+      "sh2": "Depuis la grâce Shadow Keep, Back Gate, va au nord par l'arche, suis le chemin derrière Gaius, passe la cabane et l'arche haute au nord : le bearing est sur les racines du Scadutree Chalice.",
+      "sh3": "Butin de Bayle the Dread, au Rest of the Dread Dragon, à l'est de la grâce Jagged Peak Summit.",
+      "ss1": "Après avoir vidé l'eau, va au nord de la grâce Sunken Chapel et entre dans le grand bâtiment à gauche ; continue tout droit après un Fire Knight : le bearing est derrière la grande statue de Marika.",
+      "ss2": "Depuis la grâce Ancient Ruins, Grand Stairway, descends l'escalier au nord-est jusqu'à la petite arène à droite : battre le Divine Beast Dancing Lion donne le bearing.",
+      "ss3": "Butin du combat contre les champions de Miquella, à l'est de la grâce Cleansing Chamber Anteroom (de 2 à 5 PNJ selon les quêtes terminées)."
+    },
+    "footer": "Source : <wiki>page Upgrade Materials du wiki du mod</wiki>, consultée le 22 octobre 2026. Le mod évolue : en cas de doute, fie-toi à ce que tu vois en jeu."
   }
 }

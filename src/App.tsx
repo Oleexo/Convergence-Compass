@@ -3,13 +3,14 @@ import Home from './Home';
 import Classe from './Classe';
 import Items from './Items';
 import ItemDetail from './ItemDetail';
+import Bells from './Bells';
 import { useTranslation } from 'react-i18next';
 import { LANGS } from './i18n';
 
 const dec = (s: string) => { try { return decodeURIComponent(s); } catch { return s; } };
 const hashRaw = () => location.hash.replace(/^#/, '');
 
-// Routes: "#" → comparatif, "#items" → base d'objets, "#item/<type>/<nom>" → page d'un objet, "#<id>" → fiche de la classe.
+// Routes: "#" → comparatif, "#items" → base d'objets, "#item/<type>/<nom>" → page d'un objet, "#bells" → bell bearings, "#<id>" → fiche de la classe.
 export default function App() {
   const [raw, setRaw] = useState(hashRaw);
   const [seenItems, setSeenItems] = useState(false);
@@ -40,7 +41,7 @@ export default function App() {
       {/* Home and the item list stay mounted so filters, search and the comparison survive a visit to a fiche or an item page. */}
       <div hidden={!!raw}><Home active={!raw} /></div>
       {seenItems && <div hidden={!onItems}><Items active={onItems} /></div>}
-      {item ? <ItemDetail key={raw} kind={dec(item[1])} name={dec(item[2])} /> : id && !onItems && <Classe key={id} id={id} />}
+      {item ? <ItemDetail key={raw} kind={dec(item[1])} name={dec(item[2])} /> : id === 'bells' ? <Bells /> : id && !onItems && <Classe key={id} id={id} />}
     </>
   );
 }

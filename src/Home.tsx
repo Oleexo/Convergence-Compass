@@ -187,6 +187,7 @@ export default function Home({ active }: { active: boolean }) {
           <h1>{t('home.title')}</h1>
           <p>{t('home.intro')}</p>
           <p><a className="det-btn" href="#items">{t('home.itemsLink')}</a></p>
+          <p><a className="det-btn" href="#bells">{t('bells.link')}</a></p>
         </header>
 
         <section aria-labelledby="h-styles">

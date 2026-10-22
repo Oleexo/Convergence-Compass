@@ -218,5 +218,38 @@
       "rot_pots": "Rot Pots", "blood_pots": "Blood Pots", "frost_pots": "Frost Pots", "sleep_pots": "Sleep Pots", "frenzy_pots": "Frenzy Pots", "misc_pots": "Misc Pots"
     },
     "footer": "Source: the <wiki>mod wiki</wiki>, accessed October 20, 2026. Descriptions, effects and locations are copied as written on the wiki, in English. Some wiki pages are still incomplete (⚠), most ashes of war only list where to get them, and the mod keeps evolving: when in doubt, trust what you see in game."
+  },
+  "bells": {
+    "docTitle": "Bell bearings · Convergence Compass",
+    "back": "← All classes",
+    "link": "Bell bearings: where to buy unlimited smithing stones →",
+    "title": "Smithing stone bell bearings",
+    "intro": "Give a bell bearing to the Twin Maiden Husks at the Roundtable Hold and they will sell its stones without limit. Here is where to find each one in The Convergence, and how far each stone upgrades a weapon.",
+    "unlocks": "Unlocks at the Twin Maiden Husks:",
+    "upTo": "up to +{{n}}",
+    "group": {
+      "smithing": "Smithing Stones (standard weapons)",
+      "somber": "Somber Stones (unique weapons)",
+      "shadow": "Shadow Smithing Stones (Land of Shadow, standard weapons)",
+      "somberShadow": "Somber Shadow Stones (Land of Shadow, unique weapons)"
+    },
+    "loc": {
+      "sm1": "In a chest in Raya Lucaria Crystal Tunnel, guarded by a Giant Ant, before the last lift.",
+      "sm2": "In a chest in the Sealed Tunnel, in the room past the first illusory wall.",
+      "sm3": "In a chest in Zamor Ruins, in a basement room in the south-east corner of the ruins.",
+      "sm4": "On a corpse north-west of the Garden Courtyard site of grace, on the balcony after the round lift.",
+      "so1": "Dropped by the Fallingstar Beast boss in Sellia Crystal Tunnel.",
+      "so2": "Dropped by the Crystalian Duo boss in Altus Tunnel.",
+      "so3": "On a corpse just north of the First Church of Marika site of grace.",
+      "so4": "On a corpse just north of the Tempest-Facing Balcony site of grace.",
+      "so5": "On a corpse near an altar north-east of the Dragon Temple Altar site of grace, down the lift.",
+      "sh1": "In the clutches of the Hornsent statue south-east of the Ruins of Unte.",
+      "sh2": "From the Shadow Keep, Back Gate site of grace, head north through the archway, follow the path behind Gaius, pass the shack and the tall arch to the north: the bearing sits on the roots of the Scadutree Chalice.",
+      "sh3": "Dropped by Bayle the Dread at the Rest of the Dread Dragon, east of the Jagged Peak Summit site of grace.",
+      "ss1": "After draining the water, head north from the Sunken Chapel site of grace and enter the large building on the left; keep going past a Fire Knight: the bearing is behind the large Marika statue.",
+      "ss2": "From the Ancient Ruins, Grand Stairway site of grace, go down the north-east staircase to the small arena on the right: defeating the Divine Beast Dancing Lion awards the bearing.",
+      "ss3": "Dropped by the Miquella's champions fight east of the Cleansing Chamber Anteroom site of grace (2 to 5 NPCs depending on the questlines you completed)."
+    },
+    "footer": "Source: the mod wiki's <wiki>Upgrade Materials page</wiki>, read on 22 October 2026. The mod keeps changing: when in doubt, trust what you see in game."
   }
 }
