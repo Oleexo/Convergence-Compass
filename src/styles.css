@@ -386,6 +386,57 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f
   }
 }
 
+/* Remnants page: an .items page with a progress panel, type and zone filters, and tickable locations. */
+.remn {
+  .t-combat { --rc: var(--c-martial); } .t-enchanted { --rc: var(--c-sorcery); } .t-heirloom { --rc: var(--c-special); } .t-warding { --rc: var(--c-incant); }
+  .t-faint { --rc: color-mix(in srgb, var(--accent) 35%, var(--muted)); } .t-shimmering { --rc: color-mix(in srgb, var(--accent) 60%, var(--muted)); }
+  .t-glowing { --rc: color-mix(in srgb, var(--accent) 85%, var(--muted)); } .t-shining { --rc: var(--accent); }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--rc); margin-right: 6px; flex: none; }
+  .t-shining .dot { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent); }
+
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; padding: 14px; }
+  .filt { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 2fr); gap: 14px 28px; }
+  .filt > div { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .prog-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .prog-top b { font-family: var(--font-display); font-weight: 400; font-size: 22px; }
+  .link { background: none; border: 0; color: var(--accent); text-decoration: underline; padding: 2px; font-size: 14px; }
+  .pbar { height: 8px; border-radius: 2px; background: var(--line); overflow: hidden; }
+  .pbar i { display: block; height: 100%; background: var(--accent); transition: width 0.2s; }
+  .mini { list-style: none; margin: 4px 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; font-size: 13px; color: var(--muted); }
+  .mini li { display: flex; align-items: center; }
+  .mini .mono { margin-left: auto; padding-left: 8px; }
+  .mini li.full { color: var(--ink); font-weight: 600; }
+  .opt { display: flex; align-items: center; gap: 8px; font-size: 14px; margin-top: 4px; }
+  .ckb { width: 17px; height: 17px; margin: 0; accent-color: var(--accent); flex: none; cursor: pointer; }
+  .chips { margin-bottom: 8px; }
+  .chip { display: inline-flex; align-items: center; font-size: 13px; padding: 2px 11px; }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .chip[aria-pressed="true"] .n { color: inherit; opacity: 0.75; }
+  .tools .count { margin-left: auto; }
+
+  main { display: flex; flex-direction: column; gap: 28px; }
+  .grp .sub { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; }
+  .grp .sub a { text-decoration: none; }
+  .grp .sub a:hover { text-decoration: underline; }
+  .grp .sub .n { font-size: 13px; color: var(--muted); margin-left: auto; }
+  .grp > .ob { margin: -4px 0 10px; font-size: 14px; }
+  .rem { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 8px 24px; }
+  .rem li { display: flex; gap: 10px; padding: 8px 10px; border: 1px solid var(--line); border-left: 3px solid var(--rc, var(--line)); border-radius: 3px; background: var(--surface); }
+  .rem .ckb { margin-top: 2px; }
+  .rem li > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .rem .hd { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+  .rem .pl { overflow-wrap: anywhere; }
+  .rem p { margin: 0; font-size: 14px; color: var(--muted); }
+  .rem .ty { font-size: 11px; border: 1px solid var(--rc); color: var(--ink); border-radius: 99px; padding: 0 7px; white-space: nowrap; }
+  .rem li.done { opacity: 0.55; }
+  .rem li.done .pl { text-decoration: line-through; }
+  @media (max-width: 720px) {
+    .filt { grid-template-columns: 1fr; }
+    .rem { grid-template-columns: 1fr; }
+    .tools .count { margin-left: 0; }
+  }
+}
+
 /* Language switch, shared by both pages. */
 .lang { position: absolute; top: 12px; right: max(16px, env(safe-area-inset-right, 0px)); z-index: 5; display: inline-flex; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; background: var(--surface); }
 .lang button { font: 600 12px var(--font-mono); color: inherit; cursor: pointer; background: transparent; border: 0; padding: 4px 9px; }

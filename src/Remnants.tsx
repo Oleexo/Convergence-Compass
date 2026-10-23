@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { EXT } from './ItemView';
 import { wikiUrl } from './data/items';
@@ -66,11 +66,72 @@ const GROUPS: [string, string, Spot[]][] = [
   ]],
 ];
 
+/** Regions in the order a playthrough usually reaches them; the Land of Shadow comes last. */
+const REGIONS = ['Limgrave', WP, LI, 'Caelid', DB, AP, MG, LR, SR, 'Ainsel River', 'Deeproot Depths', 'Mohgwyn Palace', 'Mountaintops of the Giants',
+  'Consecrated Snowfield', "Miquella's Haligtree", FA, GP, 'Belurat, Tower Settlement', SA, 'Cerulean Coast', RB, 'Ancient Ruins of Rauh', 'Abyssal Woods'];
+type Row = { k: string; g: string; page: string; region: string; place: string };
+const ROWS: Row[] = GROUPS.flatMap(([g, page, spots]) => spots.map(([k, region, place]) => ({ k, g, page, region, place })));
+const TYPES = GROUPS.map(x => x[0]), PAGE = Object.fromEntries(GROUPS.map(x => [x[0], x[1]]));
+
+/* Collected remnants, per browser. */
+const KEY = 'cv-remnants-v1';
+function load(): Set<string> {
+  try { return new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); } catch { return new Set(); }
+}
+function save(s: Set<string>) { try { localStorage.setItem(KEY, JSON.stringify([...s])); } catch { /* storage unavailable: the ticks last for this visit */ } }
+
+type View = 'type' | 'zone';
+const tally = (rows: Row[], got: Set<string>) => rows.filter(r => got.has(r.k)).length + '/' + rows.length;
+
 export default function Remnants() {
   const { t } = useTranslation();
   useEffect(() => { document.title = t('remnants.docTitle'); }, [t]);
+  const [got, setGot] = useState(load);
+  const [view, setView] = useState<View>('type');
+  const [type, setType] = useState('all');
+  const [zone, setZone] = useState('all');
+  const [q, setQ] = useState('');
+  const [hide, setHide] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+
+  const toggle = (k: string, on: boolean) => setGot(prev => { const s = new Set(prev); if (on) s.add(k); else s.delete(k); save(s); return s; });
+  const reset = () => { if (confirm) { const s = new Set<string>(); save(s); setGot(s); setConfirm(false); } else setConfirm(true); };
+
+  const needle = q.trim().toLowerCase();
+  const shown = ROWS.filter(r => (type === 'all' || r.g === type) && (zone === 'all' || r.region === zone) && !(hide && got.has(r.k))
+    && (!needle || [r.place, r.region, t('remnants.loc.' + r.k), t('remnants.group.' + r.g)].some(s => s.toLowerCase().includes(needle))));
+  const dn = ROWS.filter(r => got.has(r.k)).length;
+
+  const item = (r: Row) => {
+    const on = got.has(r.k);
+    return <li key={r.k} className={'t-' + r.g + (on ? ' done' : '')}>
+      <input type="checkbox" className="ckb" checked={on} onChange={e => toggle(r.k, e.target.checked)} aria-label={t('remnants.got', { name: t('remnants.group.' + r.g), place: r.place })} />
+      <div>
+        <span className="hd"><b className="pl">{linkify(r.place)}</b>
+          {view === 'zone' ? <span className={'ty t-' + r.g}>{t('remnants.short.' + r.g)}</span> : r.place !== r.region && <span className="src">{linkify(r.region)}</span>}
+        </span>
+        <p>{linkify(t('remnants.loc.' + r.k))}</p>
+      </div>
+    </li>;
+  };
+  const head = (title: ReactNode, rows: Row[]) => <h2 className="sub">{title} <span className="n mono">{tally(rows, got)}</span></h2>;
+
+  const sections = view === 'type'
+    ? TYPES.map(g => [g, shown.filter(r => r.g === g)] as const).filter(([, rs]) => rs.length).map(([g, rs]) => <section key={g} className={'grp t-' + g}>
+      {head(<><i className="dot" /><a href={wikiUrl(PAGE[g])} {...EXT}>{t('remnants.group.' + g)}</a></>, ROWS.filter(r => r.g === g))}
+      <p className="ob">{t('remnants.crafts.' + g)}</p>
+      <ul className="rem">{rs.map(item)}</ul>
+    </section>)
+    : REGIONS.map(z => [z, shown.filter(r => r.region === z)] as const).filter(([, rs]) => rs.length).map(([z, rs]) => <section key={z} className="grp">
+      {head(linkify(z), ROWS.filter(r => r.region === z))}
+      <ul className="rem">{rs.map(item)}</ul>
+    </section>);
+
+  const chip = (on: boolean, pick: () => void, label: ReactNode, n: string, cls = '') =>
+    <button className={'chip ' + cls} aria-pressed={on} onClick={pick}>{label}<span className="n mono">{n}</span></button>;
+
   return (
-    <div className="items"><div className="wrap">
+    <div className="items remn"><div className="wrap">
       <a className="back" href="#">{t('remnants.back')}</a>
       <header className="mast">
         <span className="eyebrow">{t('home.eyebrow')}</span>
@@ -78,16 +139,38 @@ export default function Remnants() {
         <p>{t('remnants.intro')}</p>
       </header>
 
-      {GROUPS.map(([g, page, spots]) => <section key={g}>
-        <h2 className="sub"><a href={wikiUrl(page)} {...EXT}>{t('remnants.group.' + g)}</a> <span className="src">· {t('remnants.count', { count: spots.length })}</span></h2>
-        <p className="ob">{t('remnants.crafts.' + g)}</p>
-        <ul className="pieces">
-          {spots.map(([k, region, place]) => <li key={k}>
-            <span><b>{linkify(place)}</b>{place !== region && <span className="src"> · {linkify(region)}</span>}</span>
-            <span>{linkify(t('remnants.loc.' + k))}</span>
-          </li>)}
-        </ul>
-      </section>)}
+      <div className="panel filt">
+        <div>
+          <div className="prog-top"><b>{t('remnants.progress', { dn, tot: ROWS.length })}</b>
+            {dn > 0 && <button className="link" onClick={reset} onBlur={() => setConfirm(false)}>{confirm ? t('remnants.confirmReset') : t('remnants.reset')}</button>}</div>
+          <div className="pbar"><i style={{ width: dn / ROWS.length * 100 + '%' }} /></div>
+          <ul className="mini">{TYPES.map(g => { const rs = ROWS.filter(r => r.g === g), d = rs.filter(r => got.has(r.k)).length;
+            return <li key={g} className={'t-' + g + (d === rs.length ? ' full' : '')}><i className="dot" />{t('remnants.short.' + g)}<span className="mono">{d}/{rs.length}</span></li>; })}</ul>
+          <label className="opt"><input type="checkbox" className="ckb" checked={hide} onChange={e => setHide(e.target.checked)} /> {t('remnants.hideDone')}</label>
+        </div>
+        <div>
+          <span className="eyebrow">{t('remnants.byType')}</span>
+          <div className="chips" role="group" aria-label={t('remnants.filterType')}>
+            {chip(type === 'all', () => setType('all'), t('remnants.all'), tally(ROWS, got))}
+            {TYPES.map(g => <Fragment key={g}>{chip(type === g, () => setType(g), <><i className="dot" />{t('remnants.short.' + g)}</>, tally(ROWS.filter(r => r.g === g), got), 't-' + g)}</Fragment>)}
+          </div>
+          <span className="eyebrow">{t('remnants.byZone')}</span>
+          <div className="chips" role="group" aria-label={t('remnants.filterZone')}>
+            {chip(zone === 'all', () => setZone('all'), t('remnants.all'), tally(ROWS, got))}
+            {REGIONS.map(z => <Fragment key={z}>{chip(zone === z, () => setZone(z), z, tally(ROWS.filter(r => r.region === z), got))}</Fragment>)}
+          </div>
+        </div>
+      </div>
+
+      <div className="bar-sticky"><div className="tools">
+        <div className="seg" role="group" aria-label={t('remnants.groupBy')}>
+          {(['type', 'zone'] as View[]).map(v => <button key={v} aria-pressed={view === v} onClick={() => setView(v)}>{t('remnants.view.' + v)}</button>)}
+        </div>
+        <input type="search" placeholder={t('remnants.search')} aria-label={t('remnants.search')} value={q} onChange={e => setQ(e.target.value)} />
+        <p className="count">{t('remnants.shown', { count: shown.length })}</p>
+      </div></div>
+
+      <main>{sections.length ? sections : <p className="empty">{t('remnants.empty')}</p>}</main>
 
       <footer><Trans i18nKey="remnants.footer" components={{ wiki: <a href={WIKI} {...EXT} /> }} /></footer>
     </div></div>
