@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DMG_KEYS, STAT_KEYS, loadFr, slug, type ByDmg, type ByStat, type Item, type Piece } from './data/items';
 import { Tip, useGloss } from './Gloss';
+import { linkify } from './Links';
 
 export const EXT = { target: '_blank', rel: 'noopener' };
 type Tr = (line: string) => string;
@@ -28,10 +29,11 @@ export function useItemText() {
 }
 export type ItemText = ReturnType<typeof useItemText>;
 
-/** Wiki text: "- " lines are bullets (indented two spaces per level), other lines are paragraphs. Each line goes through `tr`; with `gloss`, game terms get an explanation. */
-export function Lines({ text, tr, className = 'fx', gloss }: { text: string; tr: Tr; className?: string; gloss?: boolean }) {
+/** Wiki text: "- " lines are bullets (indented two spaces per level), other lines are paragraphs. Each line goes through `tr`, then names become links
+ *  (except `self`, the item shown); with `gloss`, game terms get an explanation. */
+export function Lines({ text, tr, className = 'fx', gloss, self }: { text: string; tr: Tr; className?: string; gloss?: boolean; self?: string }) {
   const g = useGloss(), seen = new Set<string>();
-  const out = (s: string) => gloss ? g(tr(s), seen) : tr(s);
+  const out = (s: string) => linkify(tr(s), self, gloss ? x => g(x, seen) : undefined);
   return (
     <div className={className}>
       {text.split('\n').map((l, i) => {
@@ -45,13 +47,13 @@ export function Lines({ text, tr, className = 'fx', gloss }: { text: string; tr:
 
 const fact = (label: string, v: ReactNode, tip?: string) => v ? <><dt>{tip ? <Tip tip={tip}>{label}</Tip> : label}</dt><dd>{v}</dd></> : null;
 
-function PieceView({ p, tr }: { p: Piece; tr: Tr }) {
+function PieceView({ p, tr, self }: { p: Piece; tr: Tr; self: string }) {
   return (
     <li>
       <b>{p.name}</b>
-      {p.desc && <Lines text={p.desc} tr={tr} className="fx fl" />}
-      {p.effect && <Lines text={p.effect} tr={tr} gloss />}
-      {p.obtain && <Lines text={p.obtain} tr={tr} className="fx ob" />}
+      {p.desc && <Lines text={p.desc} tr={tr} className="fx fl" self={self} />}
+      {p.effect && <Lines text={p.effect} tr={tr} gloss self={self} />}
+      {p.obtain && <Lines text={p.obtain} tr={tr} className="fx ob" self={self} />}
     </li>
   );
 }
@@ -63,7 +65,7 @@ export function ItemBody({ it, x }: { it: Item; x: ItemText }) {
   const flags = it.flags?.map(f => t('items.flag.' + f)).join(' · ');
   const f = (k: string, v: ReactNode) => fact(t('items.f.' + k), v, t('items.tip.' + k, { defaultValue: '' }));
   return <>
-    {it.desc && <p className="fl">{tr(it.desc)}</p>}
+    {it.desc && <p className="fl">{linkify(tr(it.desc), it.name)}</p>}
     <dl className="facts">
       {f('class', it.cls)}
       {f('tier', it.kind === 'armor' && it.tier ? typeLabel(it.tier) : undefined)}
@@ -83,8 +85,8 @@ export function ItemBody({ it, x }: { it: Item; x: ItemText }) {
       {f('debuff', it.debuff && tr(it.debuff))}
       {f('cost', it.cost)}
     </dl>
-    {it.fx && <Lines text={it.fx} tr={tr} gloss />}
-    {it.pieces && <ul className="pieces">{it.pieces.map(p => <PieceView key={p.name} p={p} tr={tr} />)}</ul>}
-    {it.obtain && <p className="ob"><b>{t('items.f.obtain')}</b> {tr(it.obtain)}</p>}
+    {it.fx && <Lines text={it.fx} tr={tr} gloss self={it.name} />}
+    {it.pieces && <ul className="pieces">{it.pieces.map(p => <PieceView key={p.name} p={p} tr={tr} self={it.name} />)}</ul>}
+    {it.obtain && <p className="ob"><b>{t('items.f.obtain')}</b> {linkify(tr(it.obtain), it.name)}</p>}
   </>;
 }

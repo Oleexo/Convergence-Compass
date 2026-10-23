@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "check:i18n": "node scripts/check-i18n.mjs",
     "wiki:fetch": "node scripts/wiki-fetch.mjs",
-    "wiki:build": "node scripts/wiki-build.mjs"
+    "wiki:build": "node scripts/wiki-build.mjs",
+    "links:build": "node scripts/links-build.mjs"
   },
   "dependencies": {
     "i18next": "^26.5.2",

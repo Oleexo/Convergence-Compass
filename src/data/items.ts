@@ -59,5 +59,7 @@ export function findItem(name: string, prefer?: ItemKind): { kind: ItemKind; nam
   const h = hits.find(x => x[0] === prefer) ?? hits[0];
   return { kind: h[0], name: h[1] };
 }
+/** Noms à repérer dans les textes. Les cendres de guerre et sorts d'un seul mot (Parry, Endure, Comet…) sont aussi des mots courants : ils restent du texte. */
+export const itemNames = (): string[] => [...new Set(Object.values(INDEX).flat().filter(([k, n]) => n.includes(' ') || (k !== 'ash' && k !== 'spell')).map(h => h[1]))];
 /** Type attendu d'un objet selon la rubrique de la fiche de classe (le nom seul est ambigu : une arme et un catalyseur peuvent porter le même). */
 export const PREFER_KIND: Record<string, ItemKind> = { Armure: 'armor', Départ: 'armor', Arme: 'weapon', Catalyseur: 'tool', Sorts: 'spell' };

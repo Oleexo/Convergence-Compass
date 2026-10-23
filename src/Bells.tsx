@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { EXT } from './ItemView';
 import { fextraUrl, wikiUrl } from './data/items';
+import { linkify } from './Links';
 
 const WIKI = 'https://wiki.convergencemod.com/index.php?title=Upgrade_Materials';
 
@@ -52,9 +53,9 @@ export default function Bells() {
         <h2 className="sub">{t('bells.group.' + g)}</h2>
         <ul className="pieces">
           {bells.map(([k, name, region, place, items]) => <li key={k}>
-            <span><b>{name}</b> <span className="src">· {zone(region)}{place && <> · {zone(place)}</>}</span></span>
-            <span>{t('bells.loc.' + k)}</span>
-            <span className="ob">{t('bells.unlocks')} {items.map(([n, cap], i) => <span key={n}>{i > 0 && ', '}<b>{n}</b>{cap && ' (' + t('bells.upTo', { n: cap }) + ')'}</span>)}</span>
+            <span><b>{name}</b> <span className="src">· {zone(region)}{place && !t('bells.loc.' + k).includes(place) && <> · {zone(place)}</>}</span></span>
+            <span>{linkify(t('bells.loc.' + k))}</span>
+            <span className="ob">{linkify(t('bells.unlocks'))} {items.map(([n, cap], i) => <span key={n}>{i > 0 && ', '}<b>{linkify(n)}</b>{cap && ' (' + t('bells.upTo', { n: cap }) + ')'}</span>)}</span>
           </li>)}
         </ul>
       </section>)}

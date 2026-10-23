@@ -10,6 +10,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import i18n, { td } from './i18n';
 import { PREFER_KIND, findItem, itemHash } from './data/items';
 import { useGloss } from './Gloss';
+import { linkify } from './Links';
 
 const { FAM, C, BY } = CV;
 const ZL: Record<string, string> = {}, ZO: Record<string, number> = {};
@@ -45,7 +46,7 @@ function cleanName(s: string): string | null {
 }
 function link(label: string, name?: string): ReactNode {
   const n = name && cleanName(name);
-  return n ? <a className="wk" href={wiki(n)} {...EXT} title={i18n.t('cls.wikiFext')}>{label}</a> : label;
+  return n ? <a className="wk" href={wiki(n)} {...EXT} title={i18n.t('cls.wikiFext')}>{label}</a> : linkify(label);
 }
 /* Lien vers la page interne de l'objet quand la base d'objets le connaît. */
 function inLink(label: ReactNode, name: string, kind?: string, cls = 'wk'): ReactNode {
@@ -92,8 +93,8 @@ function Pdet({ e }: { e: Entry }) {
     <details className="pd">
       <summary>{i18n.t('cls.prec')}{p.alt && <> <span className="warn" title={i18n.t('cls.diverge')}>⚠</span></>}</summary>
       <div className="pd-b">
-        <p>{td(p.note)}</p>
-        {p.alt && <p className="alt">⚠ {td(p.alt)}</p>}
+        <p>{linkify(td(p.note))}</p>
+        {p.alt && <p className="alt">⚠ {linkify(td(p.alt))}</p>}
         {(p.maps || []).map(f => <MapImg key={f} e={e} f={f} />)}
         <p className="src"><Trans i18nKey="cls.precSource" components={{ wiki: <a className="wk" href={WIKI + p.page} {...EXT} /> }} /></p>
       </div>
@@ -111,6 +112,8 @@ function Tags({ e }: { e: Entry }) {
 export default function Classe({ id }: { id: string }) {
   const { t } = useTranslation();
   const g = useGloss();
+  /** Names become links, game terms get an explanation (each term once per text). */
+  const gl = (s: string) => { const seen = new Set<string>(); return linkify(s, undefined, x => g(x, seen)); };
   const x = BY[id], d = D[id];
   const [S, setS] = useState<State>({ tab: 'armor', v: 'tab', z: 'all', t: 'all', q: '', hide: false, rs: false });
   const [, setRev] = useState(0); // progression lives in fiche.ts; bump to re-render after a change
@@ -136,8 +139,8 @@ export default function Classe({ id }: { id: string }) {
   const ck = (e: Entry) => e.check
     ? <input type="checkbox" className="ckb" checked={done(e)} onChange={ev => { F.setDone(id, e, ev.target.checked); setRev(r => r + 1); }} aria-label={t('cls.got', { name: td(e.name) + (e.label ? ' (' + e.label + ')' : '') })} />
     : <span className="ck0" />;
-  const labelled = (e: Entry) => <>{e.label && <><b>{e.label}</b> </>}{e.nolink ? td(e.detail) : link(td(e.detail), e.detail)}</>;
-  const spellLoc = (e: Entry) => <><b>{link(td(e.detail), e.detail)}</b>{e.how && ' · ' + td(e.how)}<Tags e={e} /></>;
+  const labelled = (e: Entry) => <>{e.label && <><b>{e.label}</b> </>}{e.nolink ? linkify(td(e.detail)) : link(td(e.detail), e.detail)}</>;
+  const spellLoc = (e: Entry) => <><b>{link(td(e.detail), e.detail)}</b>{e.how && <> · {linkify(td(e.how))}</>}<Tags e={e} /></>;
 
   /* ----- vue par rubrique ----- */
   const piece = (e: Entry) => (
@@ -177,8 +180,8 @@ export default function Classe({ id }: { id: string }) {
     const tab = S.tab, es = list.filter(e => e.tab === tab);
     const groups = TAB_GROUPS[tab].map(g => [g, es.filter(e => e.group === g)] as const).filter(g => g[1].length);
     return <>
-      {tab === 'armor' && d.note && <p className="note">{td(d.note)}</p>}
-      {tab === 'wpn' && d.wnote && <p className="note">{td(d.wnote)}</p>}
+      {tab === 'armor' && d.note && <p className="note">{linkify(td(d.note))}</p>}
+      {tab === 'wpn' && d.wnote && <p className="note">{linkify(td(d.wnote))}</p>}
       {groups.map(([g, ge]) => {
         const rows: { name: string; items: Entry[] }[] = [];
         ge.forEach(e => { const last = rows[rows.length - 1]; if (last && last.name === e.name) last.items.push(e); else rows.push({ name: e.name, items: [e] }); });
@@ -206,7 +209,7 @@ export default function Classe({ id }: { id: string }) {
     order.sort((a, b) => pl[b].length - pl[a].length);
     return (
       <div key={z}>{grp(z, es.length)}
-        {order.map(k => <div key={k}><h3 className="plc">{k}{pl[k].length > 1 && <span className="mono">{t('cls.nItems', { n: pl[k].length })}</span>}</h3><ul className="its">{pl[k].map(flat)}</ul></div>)}
+        {order.map(k => <div key={k}><h3 className="plc">{linkify(k)}{pl[k].length > 1 && <span className="mono">{t('cls.nItems', { n: pl[k].length })}</span>}</h3><ul className="its">{pl[k].map(flat)}</ul></div>)}
       </div>
     );
   }) : none();
@@ -235,9 +238,9 @@ export default function Classe({ id }: { id: string }) {
       <div style={{ '--fam': famVar(x), display: 'flex', flexDirection: 'column', gap: 24 } as CSSProperties}>
         <header className="hero">
           <div className="hero-id">
-            <span className="tag">{td(FAM[x.fam])}</span><h1>{x.name}</h1><p className="blurb">{td(x.blurb)}</p>
+            <span className="tag">{td(FAM[x.fam])}</span><h1>{x.name}</h1><p className="blurb">{linkify(td(x.blurb), x.name)}</p>
             <dl className="facts">
-              <dt>{t('f.start')}</dt><dd>{x.region}, {td(x.place)}</dd><dt>{t('f.level')}</dt><dd className="mono">{x.lvl}</dd><dt>{t('f.keyStats')}</dt><dd className="mono">{td(x.prim)}</dd>
+              <dt>{t('f.start')}</dt><dd>{linkify(x.region)}, {linkify(td(x.place))}</dd><dt>{t('f.level')}</dt><dd className="mono">{x.lvl}</dd><dt>{t('f.keyStats')}</dt><dd className="mono">{td(x.prim)}</dd>
               {x.dmg ? <><dt>{t('f.dmg')}</dt><dd>{td(x.dmg)}{x.theme && ' · ' + td(x.theme)}</dd></> : x.theme && <><dt>{t('f.theme')}</dt><dd>{td(x.theme)}</dd></>}
               {x.armor && <><dt>{t('f.armor')}</dt><dd>{td(x.armor)}</dd></>}
             </dl>
@@ -245,16 +248,16 @@ export default function Classe({ id }: { id: string }) {
           </div>
           <aside className="panel">
             <h2>{t('f.start')}</h2><Bars x={x} />
-            <p className="kit"><span><b>{t('f.kit')}</b> {kitList(x)}</span><span><b>{t('f.set')}</b> {d.set}</span>{x.spells && <span><b>{t('f.spells')}</b> {x.spells.join(' · ')}</span>}</p>
+            <p className="kit"><span><b>{t('f.kit')}</b> {linkify(kitList(x))}</span><span><b>{t('f.set')}</b> {linkify(d.set)}</span>{x.spells && <span><b>{t('f.spells')}</b> {linkify(x.spells.join(' · '))}</span>}</p>
           </aside>
         </header>
 
         {b && <section className="build" aria-labelledby="play">
           <h2 id="play" className="sec">{t('cls.play', { name: x.name })}</h2>
           <div className="panel">
-            <span className="eyebrow">{t('cls.stats')}</span><p className="lead">{g(td(b.stats))}</p>
+            <span className="eyebrow">{t('cls.stats')}</span><p className="lead">{gl(td(b.stats))}</p>
             <span className="eyebrow">{t('cls.route')}</span>
-            <ol className="plan">{b.plan.map((p, i) => <li key={i}><b>{t('cls.phase.' + i)}</b>{g(td(p))}</li>)}</ol>
+            <ol className="plan">{b.plan.map((p, i) => <li key={i}><b>{t('cls.phase.' + i)}</b>{gl(td(p))}</li>)}</ol>
           </div>
           <div className="prog-top"><span className="eyebrow">{t('cls.tal')}</span><span className="mono">{talDone} / {b.tal.length}</span></div>
           <div className="bgrid">
@@ -267,8 +270,8 @@ export default function Classe({ id }: { id: string }) {
                     <input type="checkbox" className="ckb" checked={on} onChange={ev => { F.setDone(id, k, ev.target.checked); setRev(r => r + 1); }} aria-label={t('cls.got', { name: n })} />
                     <div>
                       <span className="txt">{inLink(n, n) ?? link(n, n)}</span>
-                      <p className="why">{g(td(why))}</p>
-                      <span className="loc">{g(td(fx))} · <i>{td(where)}</i></span>
+                      <p className="why">{gl(td(why))}</p>
+                      <span className="loc">{gl(td(fx))} · <i>{linkify(td(where))}</i></span>
                     </div>
                   </li>;
                 })}</ul>
@@ -280,7 +283,7 @@ export default function Classe({ id }: { id: string }) {
             <article key={title} className="combo">
               <h3>{td(title)}</h3>
               <div className="sps">{items.split(' + ').map(s => <span key={s} className="sp">{inLink(s, s) ?? link(s, s)}</span>)}</div>
-              <p className="loc">{g(td(why))}</p>
+              <p className="loc">{gl(td(why))}</p>
             </article>
           ))}</div>
           <p className="note">{t('cls.buildNote')}</p>
