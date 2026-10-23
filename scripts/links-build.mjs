@@ -18,7 +18,7 @@ const json = p => JSON.parse(file(p));
 const items = json('src/data/items.json').items;
 const texts = [
   ...items.flatMap(i => [i.desc, i.fx, i.obtain, ...(i.pieces ?? []).flatMap(p => [p.desc, p.effect, p.obtain])]),
-  ...['src/data/det.ts', 'src/data/prec.ts', 'src/data/build.ts', 'src/data/classes.ts', 'src/data/zones.ts', 'src/locales/fr.json', 'src/locales/en.json'].map(file),
+  ...['src/data/det.ts', 'src/data/prec.ts', 'src/data/build.ts', 'src/data/classes.ts', 'src/data/zones.ts', 'src/Remnants.tsx', 'src/locales/fr.json', 'src/locales/en.json'].map(file),
   ...Object.values(json('src/locales/en-data.json')),
 ].filter(Boolean).join('\n').replace(/’/g, "'");
 const W = "[A-Z][A-Za-z0-9'.-]*";
