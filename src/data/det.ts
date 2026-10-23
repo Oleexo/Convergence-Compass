@@ -11,7 +11,7 @@ var WK: Row[] = [
   ["Osian's Greatsword", "Au nord-est de Gatefront, Limgrave"],
   ["Reaver's Odachi", "Fort Faroth"],
   ["Blade of Valor", "Stormveil"],
-  ["Gargoyle's Great Axe", "Après Valiant Gargoyle, Altus"],
+  ["Gargoyle's Great Axe", "Leyndell, Capital Outskirts, après Valiant Gargoyle, au nord-est de la grâce Outer Wall Phantom Tree"],
   ["Palm-Ax Twinblade", "Auriza Side Tomb"],
   ["Phalanx Pike", "Castle Morne"],
   ["Composite Bow", "Acheté au marchand de Bellum Highway"],
@@ -44,7 +44,7 @@ var WH: Row[] = [
   ["Leaden Maul", "Highroad Cave"],
   ["Axe of Rust", "Subterranean Shunning-Grounds"],
   ["Axe of Godfrey", "Vendu par Enia après Hoarah Loux"],
-  ["Sigur's Greatmace", "Après Sigur"],
+  ["Sigur's Greatmace", "Leyndell, butin de Sigur, Night's Captain"],
   ["Grafted Blade Greatsword", "Castle Morne"],
   ["War Scythe", "Cimetière au nord de Stormveil"],
   ["Gilded Quarterstaff", "Au nord de Church of Vows"],
@@ -60,7 +60,7 @@ var WD: Row[] = [
   ["Bloodhound Hookblade", "Au sud-est de Main Academy Gate"],
   ["Carwyn's Épée", "Coffre de la flèche de Castle Morne"],
   ["Sulien's Razors", "Leyndell"],
-  ["Emyr's Great Talons", "Champ de bataille près de Bridge of Iniquity"],
+  ["Emyr's Great Talons", "Volcano Manor, près des Abductor Virgins, avant la longue échelle passé la grâce Bridge of Iniquity"],
   ["Black Bow", "Leyndell"],
   ["Bracelet of Shadow", "Altus Plateau, sommet de Mirage Rise, après l'énigme des environs"],
   ["Nia's Passot", "Scadu Altus, Fog Rift Catacombs, coffre au pied de la statue de Marika, derrière le Godskin Knight"]
@@ -120,7 +120,7 @@ const DET: Record<string, Det> = {
   rogue: {
     set: "Bandit Set", note: NOTE_M, wpn: WD,
     armor: [
-      ["Leather Set", "Gloves : Slumbering Wolf Shack · Boots : Volcano Manor, juste après Temple of Eiglay · Armor : corniche de Gaol Cave · Black Hood : Chelona's Rise"],
+      ["Leather Set", "Gloves : Slumbering Wolf Shack · Boots : Volcano Manor, juste passé Temple of Eiglay · Armor : corniche de Gaol Cave · Black Hood : Chelona's Rise"],
       ["Raptor's Set", "Gloves : toits de Stormveil · Boots : Sage's Cave · Black Feathers : Deathrite Bird de Caelid · Skeletal Mask : Giant's Mountaintops Catacombs"],
       ["Braided Cord Set", "Armwraps : Jarburg · Loincloth : Auriza Side Tomb · Robe : Queen's Bedchamber · Caterpillar Mask : sur le corps de Hornsent"],
       ["Blackguard's Iron Mask", "Fin de la quête de Boggart"]
@@ -179,7 +179,7 @@ const DET: Record<string, Det> = {
       ["Meteoric Ore Blade", "Sellia Crystal Tunnel"],
       ["Bastard's Stars", "Acheté après Astel"],
       ["Fallingstar Beast Jaw", "Full-grown Fallingstar Beast, Mt. Gelmir"],
-      ["Ruins Greatsword", "Après Dakk"],
+      ["Ruins Greatsword", "Redmane Castle, butin de Dakk, Starcaller Lord"],
       ["Starscourge Greatsword", "Acheté après Radahn"],
       ["Starcaller's Mattock", "Redmane Castle, cadavre au pied d'un grand arbre, à l'est de la grâce Redmane Staging Area"]
     ],
@@ -292,7 +292,7 @@ const DET: Record<string, Det> = {
       ["Sword of Darkness", "Obtenue en convertissant la Stone-Sheathed Sword ou la Sword of Light"],
       ["Sword of Night", "Iris of Occultation utilisé sur Jolán, Cathedral of Manus Metyr"],
       ["Claws of Night", "Butin de Swordhand of Night Anna, Finger Ruins of Miyr"],
-      ["Fingerslayer Blade", "Donné par Ranni en échange de la Fingerslayer Blade (quête de Ranni)"],
+      ["Fingerslayer Blade", "Liurnia, Ranni's Rise, donné par Ranni en échange de la Fingerslayer Blade (quête de Ranni)"],
       ["Quicksilver Fragment", "Noxumbra, Forsaken City, en battant le Quicksilver Husk"]
     ],
     runes: [
@@ -404,7 +404,7 @@ const DET: Record<string, Det> = {
   flame: {
     set: "Prophet Set", rune: "Rune of Fell Flame",
     armor: [
-      ["Fire Monk Set", "Guardian's Garrison"],
+      ["Fire Monk Set", "Fort Laiedd"],
       ["Fire Prelate Set", "Mountaintops of the Giants"],
       ["Fire Knight Set", "Shadow Keep, Specimen Storehouse"],
       ["Salza's Hood", "Shadow Keep Bridge"],
@@ -448,7 +448,7 @@ const DET: Record<string, Det> = {
       ["Circlet of Light", "Après Promised Consort"]
     ],
     wpn: [
-      ["Axe of Epiphany", "Près de Lift of Rold"],
+      ["Axe of Epiphany", "Leyndell, Divine Bridge, cadavre sur le chemin des Mountaintops"],
       ["Ornamental Straight Sword", "Chapel of Anticipation"],
       ["Guardian's Spearblade", "Plateau d'Altus, près de Minor Erdtree Church"],
       ["Envoy's Horn", "Fortified Manor, Leyndell"],
@@ -469,7 +469,7 @@ const DET: Record<string, Det> = {
       ["Heal from Afar; Minor Erdtree; Wrath from Afar; Multilayered Ring of Light", "Hinterlands, Shaman Village : devant une statue dans un tronc creux"]
     ],
     cat: [["Golden Order Seal", "Sealed Tunnel"]],
-    uniq: ["Erdsteel Dagger", "Quête de Kenneth Haight"]
+    uniq: ["Erdsteel Dagger", "Limgrave, donné par Kenneth Haight une fois Fort Haight nettoyé"]
   },
   bestial: {
     set: "Vulgar Militia Set", rune: "Rune of Beasts",
@@ -508,7 +508,7 @@ const DET: Record<string, Det> = {
       ["Earthbreaker Seal", "Auriza Hero's Grave"],
       ["Aegis of Hadea", "Coffre de Hidden Path to the Haligtree", "Catalyseur-arme de rang 2"]
     ],
-    uniq: ["Cinquedea", "Sanctum Undercroft"]
+    uniq: ["Cinquedea", "Caelid, Sanctum Undercroft, au fond du Bestial Sanctum près de la grâce"]
   },
   dragoncultist: {
     set: "Dragon Cult Set", rune: "Rune of Lightning",
@@ -521,7 +521,7 @@ const DET: Record<string, Det> = {
     wpn: [
       ["Blades of the Prince", "Plateau d'Altus, près de Rampartside Path"],
       ["Draconic Epitaph", "Fourth Church of Marika"],
-      ["Godwyn's Cragblades", "Butin de Dragon Cultist Seki"],
+      ["Godwyn's Cragblades", "Leyndell, butin de Dragon Cultist Seki, sous la grâce Avenue Balcony"],
       ["Glaive of the Ancients", "Butin de Seera"],
       ["Dragon Greatclaw", "Après Draconic Tree Sentinel"],
       ["Gravelstone Arcblades", "Wyndham Catacombs"],
@@ -579,7 +579,7 @@ const DET: Record<string, Det> = {
       ["Midra's Gaze", "Butin de Midra"]
     ],
     wpn: [
-      ["Nomad's Kilij", "Butin de Shabriri's Chosen"],
+      ["Nomad's Kilij", "Weeping Peninsula, butin de Shabriri's Chosen, evergaol de la côte ouest de Castle Morne Town"],
       ["Three Finger Blade", "Yelough Anix Ruins"],
       ["Vyke's War Spear", "Butin de Festering Fingerprint Vyke"],
       ["Blade of Distant Light", "Abandoned Church"],
@@ -607,14 +607,14 @@ const DET: Record<string, Det> = {
       ["Rakshasa Set", "Eastern Nameless Mausoleum"]
     ],
     wpn: [
-      ["Reduvia", "Après l'invasion de Bloody Finger Nerijus"],
+      ["Reduvia", "Limgrave, invasion de Bloody Finger Nerijus près de Murkwater Cave"],
       ["Bloody Helice", "Writheblood Ruins"],
       ["Morgott's Cursed Sword", "Acheté après Morgott"],
-      ["Eleonora's Poleblade", "Après l'invasion d'Eleonora, Violet Bloody Finger"],
-      ["Mohgwyn Censer", "Leyndell Catacombs"],
+      ["Eleonora's Poleblade", "Altus Plateau, après l'invasion d'Eleonora, Violet Bloody Finger"],
+      ["Mohgwyn Censer", "Subterranean Shunning-Grounds, Leyndell Catacombs, en battant Esgar, Priest of Blood"],
       ["Mohgwyn's Sacred Spear", "Vendu par Enia après Mohg"],
       ["Varre's Bouquet", "Après l'invasion de White-Faced Varre"],
-      ["Rivers of Blood", "Après l'invasion de Bloody Finger Okina"],
+      ["Rivers of Blood", "Mountaintops of the Giants, invasion de Bloody Finger Okina devant Church of Repose"],
       ["Bloodflame Kamas", "Sur un Sanguine Noble envahisseur, Consecrated Snowfield"],
       ["Konrad's Bloodletter", "Mohgwyn Palace, butin de Konrad, Pureblood Knight"]
     ],
@@ -625,7 +625,7 @@ const DET: Record<string, Det> = {
       ["Outer Realm's Gift; Hex of Mohgwyn; Bloodflame Missile; Bloodflame Scatter", "Mountaintops of the Giants, Church of Repose : en battant Bloody Finger Okina"],
       ["Blood Rain; Blood Pact; Hidden Mother's Blessing", "Mohgwyn Palace : butin de Konrad, Pureblood Knight"]
     ],
-    cat: [["Mohgwyn Seal", "Quête de Varre, après avoir envahi Magnus the Beast Claw"]],
+    cat: [["Mohgwyn Seal", "Liurnia, Rose Church, donné par Varre après avoir envahi Magnus the Beast Claw"]],
     uniq: ["Surgeon's Catling", "Second Church of Marika, Altus"]
   },
   rot: {
@@ -675,7 +675,7 @@ const DET: Record<string, Det> = {
       ["Winged Greathorn", "Vendu par Enia après Regal Ancestor Spirit"],
       ["Spear of Tranquility", "Lake of Rot"],
       ["Caimar's Battlestaff", "Acheté après Spiritshaper Caimar"],
-      ["Spear of the Dreaming", "Volcano Cave"],
+      ["Spear of the Dreaming", "Crumbling Farum Azula, butin de la Mystic Huntress of the Lost Tribe"],
       ["Goras' Claws", "Nokron, butin de Goras, Scourge of Dreams, sur le chemin du Siofra Plateau"],
       ["Velvet Sword of St. Trina", "Cerulean Coast, petite grotte deux plateformes plus bas, au nord-ouest de la grâce Fissure Cross"]
     ],
@@ -700,10 +700,10 @@ const DET: Record<string, Det> = {
       ["Perfumer Set", "Perfumer's Grotto"]
     ],
     wpn: [
-      ["Sword of Milos", "Quête du Dung Eater"],
+      ["Sword of Milos", "Leyndell, butin du Dung Eater qui envahit dans les douves (quête du Dung Eater)"],
       ["Ripple Blade", "Vendu par Pidia"],
-      ["Ripple Crescent Halberd", "À l'ouest de Scenic Isle"],
-      ["Firespark Perfume Bottle", "Au sud de la grâce Castle Front"],
+      ["Ripple Crescent Halberd", "Liurnia, îlot au nord-ouest de la grâce Scenic Isle, gardé par trois Albinaurics"],
+      ["Firespark Perfume Bottle", "Gravesite Plain, coffre au sud de la grâce Castle Front"],
       ["Chilling Perfume Bottle", "Lamenter's Gaol"],
       ["Frenzyflame Perfume Bottle", "Abyssal Woods"],
       ["Lightning Perfume Bottle", "Au nord-est de la grâce Cerulean Coast"],

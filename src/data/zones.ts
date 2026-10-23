@@ -9,8 +9,7 @@ var LIST: [string, string][] = [
 ];
 /* Atomes entiers dont le classement est connu avec certitude. */
 var EXACT: Record<string, string> = {
-  'sur le corps de d': 'limgrave', 'après dakk': 'quest', 'après ensha': 'round', 'après draconic tree sentinel': 'altus',
-  'castle front': 'unk', 'au sud de la grâce castle front': 'unk', 'weeping harborage': 'unk', 'à l\'ouest de scenic isle': 'unk', 'sanctum undercroft': 'unk',
+  'sur le corps de d': 'limgrave', 'après ensha': 'round', 'après draconic tree sentinel': 'altus', 'weeping harborage': 'unk',
   'butin de festering fingerprint vyke': 'liurnia', 'butin de roundtable knight vyke': 'mount'
 };
 /* Préfixe de région explicite : « Liurnia, Rose Church ». */
@@ -28,19 +27,19 @@ var SUFFIX: [string, string][] = [
 var RULES: [string, string[]][] = [
   ['dlc', ['shadow keep', 'gravesite plain', 'scadu altus', 'cerulean coast', 'hinterlands', 'belurat', 'enir', 'finger ruins of', 'cathedral of manus', 'rauh', 'ruins of unte', 'charo', 'jarburg', 'abyssal woods', 'lamenter', 'bonny gaol', 'garden of deep purple', 'promised consort', 'messmer', 'thiollier', 'midra', 'hornsent', 'swordhand of night', 'ansbach', 'moore', 'nameless mausoleum', 'temple town ruins', 'count ymir', 'church of benediction', 'abandoned church', 'moorth ruins']],
   ['round', ['enia', 'roundtable hold', 'acheté après', 'twin maiden']],
-  ['quest', ['invasion', 'butin d\'istvan', 'obtenue en convertissant', 'dakk', 'sigur', 'devonia', 'rugalea', 'ralva', 'shabriri', 'bridge of iniquity', 'gateway to the forge', 'seki', 'juno hoslow', 'butin de blaidd', 'eleonora', 'quête', 'donné par', 'en aidant', 'vendu par patches', 'tableau', 'fin de la quête', 'frenzied flame proscription']],
+  ['quest', ['invasion', 'butin d\'istvan', 'obtenue en convertissant', 'devonia', 'rugalea', 'ralva', 'shabriri', 'gateway to the forge', 'seki', 'juno hoslow', 'butin de blaidd', 'eleonora', 'quête', 'donné par', 'en aidant', 'vendu par patches', 'tableau', 'fin de la quête']],
   ['farum', ['farum azula', 'seera']],
   ['hali', ['haligtree', 'elphael']],
   ['snow', ['consecrated snowfield', 'hidden path to the haligtree', 'yelough', 'sanctum of eiglay', 'ordina', 'albinauric rise', 'grave warden duelist', 'cave of the forlorn']],
   ['mount', ['mountaintops', 'giant-conquering', 'guardian', 'castle sol', 'forbidden lands', 'stargazers', 'church of repose', 'spiritcaller cave', 'spirit caller cave', 'lord contender', 'giant\'s mountaintops', 'fire giant', 'borealis', 'black blade kindred', 'commander niall', 'après niall', 'zamor ruins']],
-  ['under', ['siluria', 'noxumbra', 'siofra', 'ainsel', 'nokron', 'deeproot', 'lake of rot', 'mohgwyn', 'mohg\'s', 'subterranean shunning', 'dragonkin soldier']],
+  ['under', ['siluria', 'noxumbra', 'siofra', 'ainsel', 'nokron', 'deeproot', 'lake of rot', 'mohgwyn', 'mohg\'s', 'subterranean shunning', 'frenzied flame proscription', 'dragonkin soldier']],
   ['leyndell', ['fell twins', 'leyndell', 'erdtree sanctuary', 'fortified manor', 'queen\'s bedchamber', 'sealed tunnel']],
-  ['gelmir', ['fort laiedd', 'gelmir', 'volcano', 'seethewater', 'craftsman', 'frenzied flame camp', 'temple of eiglay', 'hermit village']],
+  ['gelmir', ['fort laiedd', 'gelmir', 'volcano', 'seethewater', 'craftsman', 'frenzied flame camp', 'temple of eiglay', 'hermit village', 'bridge of iniquity']],
   ['altus', ['elemer', 'altus', 'dominula', 'windmill', 'woodfolk', 'rampartside', 'minor erdtree church', 'shaded castle', 'writheblood', 'unsightly', 'sainted hero', 'auriza', 'mirage rise', 'second church of marika', 'stormcaller church', 'highway lookout', 'tree sentinel', 'lift of rold', 'sage\'s cave', 'fallingstar beast du', 'old altus', 'perfumer\'s ruins', 'perfumer\'s grotto', 'perfumer grotto', 'fourth church', 'wyndham', 'golden lineage']],
   ['caelid', ['redmane', 'fort gael', 'gael tunnel', 'fort faroth', 'commander o\'neil', 'caelid', 'caelem', 'dragonbarrow', 'gaol cave', 'swamp of aeonia', 'swamp lookout', 'smoldering', 'divine tower of caelid', 'gowry', 'waypoint ruins', 'minor erdtree catacombs', 'abandoned cave', 'radahn', 'war-dead', 'sellia', 'impaler']],
   ['weeping', ['weeping', 'witchbane', 'forest lookout', 'castle morne', 'morne', 'tombsward', 'earthbore', 'crater-pocked', 'church of pilgrimage', 'ailing village']],
-  ['limgrave', ['bernahl', 'great horned tragoth', 'limgrave', 'stormveil', 'stormhill', 'stormfoot', 'groveside', 'gatefront', 'agheel', 'murkwater', 'coastal cave', 'fringefolk', 'third church of marika', 'forlorn hound', 'deathtouched', 'highroad cave', 'fort haight', 'chapel of anticipation', 'mistwood', 'warmaster', 'carriage en limgrave', 'cimetière au nord de stormveil', 'summonwater', 'necromancer domo']],
-  ['liurnia', ['liurnia', 'academy', 'raya lucaria', 'caria', 'carian', 'ranni', 'rose church', 'uld palace', 'converted fringe', 'church of inhibition', 'cliffbottom', 'lakeside', 'malefactor', 'royal grave', 'road\'s end', 'black knife', 'kingsrealm', 'four belfries', 'renna\'s rise', 'rogier', 'moongrum', 'azur', 'main academy', 'cuckoo evergaol', 'cave of knowledge', 'chelona', 'stillwater', 'heretical rise', 'temple quarter', 'ruin-strewn', 'east liurnia', 'tour accessible', 'blaidd', 'pidia', 'edgar', 'three sisters', 'bellum', 'church of vows', 'slumbering wolf', 'artist', 'death bird en liurnia']]
+  ['limgrave', ['bernahl', 'great horned tragoth', 'limgrave', 'stormveil', 'stormhill', 'stormfoot', 'groveside', 'gatefront', 'agheel', 'murkwater', 'coastal cave', 'fringefolk', 'third church of marika', 'forlorn hound', 'deathtouched', 'highroad cave', 'fort haight', 'chapel of anticipation', 'mistwood', 'warmaster', 'carriage en limgrave', 'cimetière au nord de stormveil', 'summonwater', 'necromancer domo', 'cave of knowledge']],
+  ['liurnia', ['liurnia', 'academy', 'raya lucaria', 'caria', 'carian', 'ranni', 'rose church', 'uld palace', 'converted fringe', 'church of inhibition', 'cliffbottom', 'lakeside', 'malefactor', 'royal grave', 'road\'s end', 'black knife', 'kingsrealm', 'four belfries', 'renna\'s rise', 'rogier', 'moongrum', 'azur', 'main academy', 'cuckoo evergaol', 'chelona', 'stillwater', 'heretical rise', 'temple quarter', 'ruin-strewn', 'east liurnia', 'tour accessible', 'blaidd', 'pidia', 'edgar', 'three sisters', 'bellum', 'church of vows', 'slumbering wolf', 'artist', 'death bird en liurnia']]
 ];
 function zoneOf(atom: string): string | null {
   var a = atom.toLowerCase().trim(), i, j;
